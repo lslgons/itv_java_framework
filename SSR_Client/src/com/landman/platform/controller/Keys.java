@@ -1,4 +1,4 @@
-package com.landman.ssr.controller;
+package com.landman.platform.controller;
 
 import org.havi.ui.event.HRcEvent;
 

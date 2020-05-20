@@ -1,4 +1,4 @@
-package com.landman.ssr.dmc.interfaces;
+package com.landman.platform.dmc.interfaces;
 
 /**
  * Created by daegon.kim on 2016-12-05.

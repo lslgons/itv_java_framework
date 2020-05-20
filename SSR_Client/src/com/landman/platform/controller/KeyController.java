@@ -1,4 +1,4 @@
-package com.landman.ssr.controller;
+package com.landman.platform.controller;
 
 
 import com.cj.tvui.Keys;

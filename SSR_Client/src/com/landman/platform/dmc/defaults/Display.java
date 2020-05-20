@@ -1,4 +1,4 @@
-package com.landman.ssr.dmc.defaults;
+package com.landman.platform.dmc.defaults;
 
 import java.awt.Container;
 import java.awt.event.KeyListener;

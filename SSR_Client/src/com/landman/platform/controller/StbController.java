@@ -1,4 +1,4 @@
-package com.landman.ssr.controller;
+package com.landman.platform.controller;
 
 import com.cj.tvui.dmc.interfaces.StbInterface;
 import com.cj.tvui.util.RemoteClassLoader;

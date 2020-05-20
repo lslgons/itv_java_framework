@@ -1,4 +1,4 @@
-package com.landman.ssr.dmc.defaults;
+package com.landman.platform.dmc.defaults;
 
 import com.cj.tvui.dmc.interfaces.StbInterface;
 

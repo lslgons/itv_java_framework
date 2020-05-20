@@ -1,4 +1,4 @@
-package com.landman.ssr.dmc.interfaces;
+package com.landman.platform.dmc.interfaces;
 
 import java.awt.Rectangle;
 

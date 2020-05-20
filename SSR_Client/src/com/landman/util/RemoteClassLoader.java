@@ -1,11 +1,12 @@
 package com.landman.util;
 
-import com.cj.tvui.Constants;
-import com.cj.tvui.controller.StbController;
-import com.cj.tvui.dmc.interfaces.AVInterface;
-import com.cj.tvui.dmc.interfaces.DisplayInterface;
-import com.cj.tvui.dmc.interfaces.KeymapInterface;
-import com.cj.tvui.dmc.interfaces.StbInterface;
+
+import com.landman.platform.controller.StbController;
+import com.landman.platform.dmc.interfaces.AVInterface;
+import com.landman.platform.dmc.interfaces.DisplayInterface;
+import com.landman.platform.dmc.interfaces.KeymapInterface;
+import com.landman.platform.dmc.interfaces.StbInterface;
+import com.landman.ssr.SSRConfig;
 import org.dvb.lang.DVBClassLoader;
 
 import java.lang.reflect.Constructor;
@@ -43,10 +44,10 @@ public final class RemoteClassLoader {
     private static Object _loadIntfFromString(final String target) {
         Object obj = null;
         try {
-            if(Constants.IS_EMUL) {
+            if(SSRConfig.getInstance().IS_EMUL) {
                 obj = RemoteClassLoader.loadClass("com.cj.tvui.dmc.defaults."+target).newInstance();
             } else {
-                obj = RemoteClassLoader.loadClass("com.cj.tvui.dmc."+Constants.DMC_NAME.toLowerCase()+"."+target).newInstance();
+                obj = RemoteClassLoader.loadClass("com.cj.tvui.dmc."+SSRConfig.getInstance().DMC_NAME.toLowerCase()+"."+target).newInstance();
             }
         } catch (InstantiationException e) {
             e.printStackTrace();
@@ -125,18 +126,16 @@ public final class RemoteClassLoader {
         LOG.print("load package : "+packagePath);
         LOG.print(klasses);
         if(klasses == null) klasses = new HashMap();
-        if (Constants.USE_CLASS_CACHE) {
-            k = (Class) klasses.get(packagePath);
-        }
+        k = (Class) klasses.get(packagePath);
+
         if (k == null) {
             LOG.print("Class cache miss!!!");
             //load class from file
             try {
                 Class cls = Class.forName(packagePath);
-                if(Constants.USE_CLASS_CACHE) {
-                    klasses.put(packagePath, cls);
-                    LOG.print("######### Loaded Class ########## : "+ klasses.size());
-                }
+                klasses.put(packagePath, cls);
+                LOG.print("######### Loaded Class ########## : "+ klasses.size());
+
 
                 return cls;
             } catch (ClassNotFoundException e) {
@@ -144,10 +143,9 @@ public final class RemoteClassLoader {
                 System.out.println("Class not found in local...");
             }
             Class ucls = _loadClassFromUrl(packagePath);
-            if(Constants.USE_CLASS_CACHE && ucls != null) {
-                klasses.put(packagePath, ucls);
-                LOG.print("######### Loaded Class ########## : "+ klasses.size());
-            }
+            klasses.put(packagePath, ucls);
+            LOG.print("######### Loaded Class ########## : "+ klasses.size());
+
 
 
             return ucls;
@@ -165,44 +163,44 @@ public final class RemoteClassLoader {
 
     }
 
-    private static Class _loadClassFromUrl(final String packagePath) {
-        try {
-
-            LOG.print("**************** Load class from URL");
-            String u = Constants.DCL_HOST;
-            URL[] url = {new URL(u)};
-            if(!Constants.IS_EMUL) {
-                DVBClassLoader urlClassLoader = DVBClassLoader.newInstance(url);
-                Class cls = urlClassLoader.loadClass(packagePath);
-                return cls;
-            } else {
-                URLClassLoader urlClassLoader = new URLClassLoader(url);
-                Class cls = urlClassLoader.loadClass(packagePath);
-                return cls;
-            }
-        } catch (MalformedURLException e1) {
-            //e.printStackTrace();
-            LOG.print("Class load malformedURLException");
-            StbController.ClassLoadErrorListener listener = StbController.getInstance().getClassLoadErrorListener();
-            if(listener !=null) {
-                listener.onLoadError("MalformedURLException");
-            }
-        } catch(ClassNotFoundException e2) {
-            //e.printStackTrace();
-            LOG.print("Class load ClassNotFoundException");
-            StbController.ClassLoadErrorListener listener = StbController.getInstance().getClassLoadErrorListener();
-            if(listener !=null) {
-                listener.onLoadError("ClassNotFoundException");
-            }
-        } catch(Exception e3) {
-            LOG.print("Class load Unknown Exception");
-            StbController.ClassLoadErrorListener listener = StbController.getInstance().getClassLoadErrorListener();
-            if(listener !=null) {
-                listener.onLoadError("UnknownException");
-            }
-        }
-        return null;
-    }
+//    private static Class _loadClassFromUrl(final String packagePath) {
+//        try {
+//
+//            LOG.print("**************** Load class from URL");
+//            String u = Constants.DCL_HOST;
+//            URL[] url = {new URL(u)};
+//            if(!Constants.IS_EMUL) {
+//                DVBClassLoader urlClassLoader = DVBClassLoader.newInstance(url);
+//                Class cls = urlClassLoader.loadClass(packagePath);
+//                return cls;
+//            } else {
+//                URLClassLoader urlClassLoader = new URLClassLoader(url);
+//                Class cls = urlClassLoader.loadClass(packagePath);
+//                return cls;
+//            }
+//        } catch (MalformedURLException e1) {
+//            //e.printStackTrace();
+//            LOG.print("Class load malformedURLException");
+//            StbController.ClassLoadErrorListener listener = StbController.getInstance().getClassLoadErrorListener();
+//            if(listener !=null) {
+//                listener.onLoadError("MalformedURLException");
+//            }
+//        } catch(ClassNotFoundException e2) {
+//            //e.printStackTrace();
+//            LOG.print("Class load ClassNotFoundException");
+//            StbController.ClassLoadErrorListener listener = StbController.getInstance().getClassLoadErrorListener();
+//            if(listener !=null) {
+//                listener.onLoadError("ClassNotFoundException");
+//            }
+//        } catch(Exception e3) {
+//            LOG.print("Class load Unknown Exception");
+//            StbController.ClassLoadErrorListener listener = StbController.getInstance().getClassLoadErrorListener();
+//            if(listener !=null) {
+//                listener.onLoadError("UnknownException");
+//            }
+//        }
+//        return null;
+//    }
 
 
 }

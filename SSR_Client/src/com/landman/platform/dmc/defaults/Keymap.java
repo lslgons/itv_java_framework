@@ -1,4 +1,4 @@
-package com.landman.ssr.dmc.defaults;
+package com.landman.platform.dmc.defaults;
 
 import com.cj.tvui.Keys;
 import com.cj.tvui.controller.SceneController;
