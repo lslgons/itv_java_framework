@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="com/cj/tvui/dmc/cjhv/**" kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry excluding="com/cj/tvui/dmc/cjhv/**" kind="src" path="run"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="libs/emul/havi.zip"/>
+	<classpathentry kind="lib" path="libs/emul/havimagic.jar"/>
+	<classpathentry kind="lib" path="libs/emul/mhpstubs.zip"/>
+	<classpathentry kind="lib" path="libs/emul/OCAPStub.zip"/>
+	<classpathentry kind="lib" path="libs/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="libs/kt/alticast-lrpp-client-3.0s.jar"/>
+	<classpathentry kind="lib" path="libs/kt/KT_ChannelController_add_stub.zip"/>
+	<classpathentry kind="lib" path="libs/kt/kt_iptv_1.0.3_add.jar"/>
+	<classpathentry kind="lib" path="libs/kt/kt_iptv_1.0.3.jar"/>
+	<classpathentry kind="lib" path="libs/kt/ktiptv-unicast-live-client-stub-v1.0.jar"/>
+	<classpathentry kind="lib" path="libs/kt/ktiptv-usage-stub-v0.3.jar"/>
+	<classpathentry kind="lib" path="libs/kt/ssoclient_hd_0.0.4_20081104.zip"/>
+	<classpathentry kind="lib" path="libs/kt/tvpay_client_interface_cj_2016-04-11.zip"/>
+	<classpathentry kind="lib" path="libs/kt/tvpay_stub_20160902.zip"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

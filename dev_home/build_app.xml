@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="CJ TV UI Framework Application builder"  basedir="./" default="build">
+
+    <property name="version" value="0.1.0" />
+    <!-- Application Source Folder -->
+    <property name="SRC_DIR" value="${basedir}/src"/>
+    <!-- Library Path -->
+    <property name="LIBS_DIR" value="${basedir}/libs"/>
+    <!-- Resource Path -->
+    <property name="RES_DIR" value="${basedir}/res"/>
+    <!-- 20180808, daegon.kim, local source -->
+    <property name="LOCAL_DIR" value="${basedir}/local/src" />
+    <property name="LOCAL_RES" value="${basedir}/local/res" />
+    <tstamp>
+        <format property="TODAY" pattern="yyyyMMddhhmm"/>
+    </tstamp>
+    <!-- 빌드되는 경로와 output파일 경로 정의한다. -->
+    <property name="build" location="build"/>
+    <property name="build_space" location="build_space" />
+    <property name="output" location="output-${TODAY}" />
+    <property name="build" location="build"/>
+    <property name="output-dcl" location="${output}/dcl" />
+
+    <property name="output-standalone" location="${output}/standalone" />
+
+    <!-- 파일생성 날짜시간 스템프 -->
+    <target name="init">
+        <mkdir dir="${output}" />
+        <mkdir dir="${output-dcl}" />
+        <mkdir dir="${output-standalone}" />
+    </target>
+
+    <target name="build" depends="build-standalone, build-dcl"/>
+
+    <target name="build-standalone" depends="init, build-standalone-default, build-standalone-kt, build-standalone-cjhv, build-standalone-skylife">
+    </target>
+
+    <target name="build-dcl" depends="build-dcl-default, build-dcl-kt, build-dcl-cjhv, build-dcl-skylife">
+    </target>
+
+    <target name="build-standalone-default" depends="init">
+
+        <echo message="*************************************************" />
+        <echo message="*  (Standalone) Build for PC Emulator"/>
+        <echo message="*************************************************" />
+        <delete dir="${build}" />
+        <mkdir dir="${build}" />
+        <echo message="Extract library files to destination..."/>
+        <unzip dest="${build}">
+            <fileset dir="${LIBS_DIR}">
+                <include name="libCJTVUI-*.zip"/>
+            </fileset>
+        </unzip>
+        <echo message="Compile Default Target"/>
+        <copy file="${basedir}/config.properties" toFile="${build}/config.properties"/>
+        <copy todir="${build}/res">
+            <fileset dir="${RES_DIR}"/>
+            <fileset dir="${LOCAL_RES}" />
+        </copy>
+        <copy todir="${build_space}">
+            <fileset dir="${SRC_DIR}" />
+            <fileset dir="${LOCAL_DIR}" />
+        </copy>
+
+        <copy file="run.bat" toFile="${build}/run.bat"/>
+
+        <replace encoding="utf-8" file="${build}/config.properties">
+            <replacefilter token="@DMC@" value="defaults"/>
+        </replace>
+
+
+        <!-- Example excludes="com/cj/oshop/dmc/kt/**, com/cj/oshop/dmc/sk/**" -->
+        <javac srcdir="${build_space}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/cj/tvui/dmc/kt/**, com/cj/tvui/dmc/cjhv/**">            <classpath>
+            <fileset dir="${LIBS_DIR}">
+                <include name="libCJTVUI-dev-*.zip"/>
+            </fileset>
+        </classpath>
+        </javac>
+        <delete dir="${build}/META-INF" />
+        <zip zipfile="${output-standalone}/App-dev-${DSTAMP}.zip" basedir="${build}" />
+        <delete dir="${build_space}"/>
+    </target>
+
+
+    <target name="build-standalone-kt" depends="init">
+
+        <echo message="*************************************************" />
+        <echo message="*  (Standalone) Build for KT"/>
+        <echo message="*************************************************" />
+        <delete dir="${build}" />
+        <mkdir dir="${build}" />
+        <echo message="Extract library files to destination..."/>
+        <unzip dest="${build}">
+            <fileset dir="${LIBS_DIR}">
+                <include name="CJTVUI-kt-*.zip"/>
+            </fileset>
+        </unzip>
+        <echo message="Compile Default Target"/>
+        <copy file="${basedir}/config.properties" toFile="${build}/config.properties"/>
+        <copy todir="${build}/res">
+            <fileset dir="${RES_DIR}"/>
+            <fileset dir="${LOCAL_RES}" />
+        </copy>
+        <copy file="run.bat" toFile="${build}/run.bat"/>
+
+        <replace encoding="utf-8" file="${build}/config.properties">
+            <replacefilter token="@DMC@" value="kt"/>
+        </replace>
+
+
+        <!-- Example excludes="com/cj/oshop/dmc/kt/**, com/cj/oshop/dmc/sk/**" -->
+        <javac srcdir="${SRC_DIR};${LOCAL_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/cj/tvui/dmc/defaults/**, com/cj/tvui/dmc/cjhv/**, com/cj/tvui/dmc/skylife/**">
+            <classpath>
+                <fileset dir="${LIBS_DIR}">
+                    <include name="CJTVUI-kt*.zip"/>
+                </fileset>
+            </classpath>
+        </javac>
+        <delete dir="${build}/META-INF" />
+        <zip zipfile="${output-standalone}/App-kt-${DSTAMP}.zip" basedir="${build}" />
+    </target>
+
+    <!-- Skylife build script 추가 -->
+    <target name="build-standalone-skylife" depends="init">
+
+        <echo message="*************************************************" />
+        <echo message="*  (Standalone) Build for Skylife"/>
+        <echo message="*************************************************" />
+        <delete dir="${build}" />
+        <mkdir dir="${build}" />
+        <echo message="Extract library files to destination..."/>
+        <unzip dest="${build}">
+            <fileset dir="${LIBS_DIR}">
+                <include name="CJTVUI-skylife-*.zip"/>
+            </fileset>
+        </unzip>
+        <echo message="Compile Default Target"/>
+        <copy file="${basedir}/config.properties" toFile="${build}/config.properties"/>
+        <copy todir="${build}/res">
+            <fileset dir="${RES_DIR}"/>
+            <fileset dir="${LOCAL_RES}" />
+        </copy>
+        <copy file="run.bat" toFile="${build}/run.bat"/>
+
+        <replace encoding="utf-8" file="${build}/config.properties">
+            <replacefilter token="@DMC@" value="skylife"/>
+        </replace>
+
+
+        <!-- Example excludes="com/cj/oshop/dmc/kt/**, com/cj/oshop/dmc/sk/**" -->
+        <javac srcdir="${SRC_DIR};${LOCAL_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/cj/tvui/dmc/defaults/**, com/cj/tvui/dmc/cjhv/**, com/cj/tvui/dmc/kt/**">
+            <classpath>
+                <fileset dir="${LIBS_DIR}">
+                    <include name="CJTVUI-skylife*.zip"/>
+                </fileset>
+            </classpath>
+        </javac>
+        <delete dir="${build}/META-INF" />
+        <zip zipfile="${output-standalone}/App-skylife-${DSTAMP}.zip" basedir="${build}" />
+    </target>
+
+    <target name="build-standalone-cjhv" depends="init">
+
+        <echo message="*************************************************" />
+        <echo message="*  (Standalone) Build for CJHV"/>
+        <echo message="*************************************************" />
+        <delete dir="${build}" />
+        <mkdir dir="${build}" />
+        <echo message="Extract library files to destination..."/>
+        <unzip dest="${build}">
+            <fileset dir="${LIBS_DIR}">
+                <include name="CJTVUI-cjhv-*.zip"/>
+            </fileset>
+        </unzip>
+        <echo message="Compile Default Target"/>
+        <copy file="${basedir}/config.properties" toFile="${build}/config.properties"/>
+        <copy todir="${build}/res">
+            <fileset dir="${RES_DIR}"/>
+            <fileset dir="${LOCAL_RES}" />
+        </copy>
+
+        <replace encoding="utf-8" file="${build}/config.properties">
+            <replacefilter token="@DMC@" value="cjhv"/>
+        </replace>
+
+
+        <!-- Example excludes="com/cj/oshop/dmc/kt/**, com/cj/oshop/dmc/sk/**" -->
+        <javac srcdir="${SRC_DIR};${LOCAL_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/cj/tvui/dmc/kt/**, com/cj/tvui/dmc/defaults/**, com/cj/tvui/dmc/skylife/**">
+            <classpath>
+                <fileset dir="${LIBS_DIR}">
+                    <include name="CJTVUI-cjhv-*.zip"/>
+                </fileset>
+            </classpath>
+        </javac>
+        <delete dir="${build}/META-INF" />
+        <zip zipfile="${output-standalone}/App-cjhv-${DSTAMP}.zip" basedir="${build}" />
+    </target>
+
+    <target name="build-dcl-default" depends="init">
+        <echo message="*************************************************" />
+        <echo message="*  (DCL) Build for PC Emulator"/>
+        <echo message="*************************************************" />
+        <delete dir="${build}" />
+        <mkdir dir="${build}" />
+        <echo message="Compile Default Target"/>
+        <copy file="${basedir}/config.properties" toFile="${build}/config.properties"/>
+        <copy todir="${build}/res">
+            <fileset dir="${RES_DIR}"/>
+        </copy>
+
+        <replace encoding="utf-8" file="${build}/config.properties">
+            <replacefilter token="@DMC@" value="defaults"/>
+        </replace>
+
+        <javac srcdir="${SRC_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/cj/tvui/dmc/kt/**, com/cj/tvui/dmc/cjhv/**, com/cj/tvui/dmc/skylife/**">
+            <classpath>
+                <fileset dir="${LIBS_DIR}">
+                    <include name="libCJTVUI-dev-*.zip"/>
+                </fileset>
+            </classpath>
+        </javac>
+        <delete dir="${build}/META-INF" />
+        <copy todir="${build}">
+            <fileset dir="${RES_DIR}"/>
+        </copy>
+
+        <zip zipfile="${output-dcl}/App_class-dev-${DSTAMP}.zip" basedir="${build}" />
+        <echo message="Create Client (Emulator)" />
+        <delete dir="${build}" />
+        <mkdir dir="${build}" />
+        <mkdir dir="${build}" />
+        <!-- 20180808, daegon.kim, 로컬클래스 클라이언트에 저장 -->
+        <javac srcdir="${LOCAL_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/cj/tvui/dmc/kt/**, com/cj/tvui/dmc/cjhv/**, com/cj/tvui/dmc/skylife/**">
+            <classpath>
+                <fileset dir="${LIBS_DIR}">
+                    <include name="libCJTVUI-dev-*.zip"/>
+                </fileset>
+                <fileset dir="${output-dcl}" >
+                    <include name="App_class-dev-${DSTAMP}.zip" />
+                </fileset>
+            </classpath>
+        </javac>
+        <copy todir="${build}">
+            <fileset dir="${LOCAL_RES}"/>
+        </copy>
+
+        <unzip dest="${build}">
+            <fileset dir="${LIBS_DIR}">
+                <include name="libCJTVUI-dev-*.zip"/>
+            </fileset>
+        </unzip>
+        <copy file="run.bat" toFile="${build}/run.bat"/>
+        <copy file="${basedir}/config.properties" toFile="${build}/config.properties"/>
+
+        <replace encoding="utf-8" file="${build}/config.properties">
+            <replacefilter token="@DMC@" value="defaults"/>
+        </replace>
+
+        <zip zipfile="${output-dcl}/emulator-dev-${DSTAMP}.zip" basedir="${build}" />
+        <delete dir="${build}" />
+    </target>
+
+    <target name="build-dcl-kt" depends="init">
+        <echo message="*************************************************" />
+        <echo message="*  (DCL) Build for KT"/>
+        <echo message="*************************************************" />
+        <delete dir="${build}" />
+        <mkdir dir="${build}" />
+        <echo message="Compile Default Target"/>
+        <copy file="${basedir}/config.properties" toFile="${build}/config.properties"/>
+        <copy todir="${build}/res">
+            <fileset dir="${RES_DIR}"/>
+        </copy>
+        <replace encoding="utf-8" file="${build}/config.properties">
+            <replacefilter token="@DMC@" value="kt"/>
+        </replace>
+
+        <javac srcdir="${SRC_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/cj/tvui/dmc/cjhv/**, com/cj/tvui/dmc/defaults/**, com/cj/tvui/dmc/skylife/**">
+            <classpath>
+                <fileset dir="${LIBS_DIR}">
+                    <include name="CJTVUI-kt-*.zip"/>
+                </fileset>
+            </classpath>
+        </javac>
+        <delete dir="${build}/META-INF" />
+        <zip zipfile="${output-dcl}/App_class-kt-${DSTAMP}.zip" basedir="${build}" />
+        <echo message="Create Client" />
+        <delete dir="${build}" />
+        <mkdir dir="${build}" />
+
+        <!-- 20180808, daegon.kim, 로컬클래스 클라이언트에 저장 -->
+        <javac srcdir="${LOCAL_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/cj/tvui/dmc/cjhv/**, com/cj/tvui/dmc/defaults/**, com/cj/tvui/dmc/skylife/**">
+            <classpath>
+                <fileset dir="${LIBS_DIR}">
+                    <include name="CJTVUI-kt-*.zip"/>
+                </fileset>
+                <fileset dir="${output-dcl}" >
+                    <include name="App_class-kt-${DSTAMP}.zip" />
+                </fileset>
+            </classpath>
+        </javac>
+        <copy todir="${build}">
+            <fileset dir="${LOCAL_RES}"/>
+        </copy>
+        <unzip dest="${build}">
+            <fileset dir="${LIBS_DIR}">
+                <include name="CJTVUI-kt-*.zip"/>
+            </fileset>
+        </unzip>
+        <copy file="run.bat" toFile="${build}/run.bat"/>
+        <copy file="${basedir}/config.properties" toFile="${build}/config.properties"/>
+
+        <replace encoding="utf-8" file="${build}/config.properties">
+            <replacefilter token="@DMC@" value="kt"/>
+        </replace>
+
+        <zip zipfile="${output-dcl}/client-kt-${DSTAMP}.zip" basedir="${build}" />
+    </target>
+
+    <target name="build-dcl-skylife" depends="init">
+        <echo message="*************************************************" />
+        <echo message="*  (DCL) Build for Skylife"/>
+        <echo message="*************************************************" />
+        <delete dir="${build}" />
+        <mkdir dir="${build}" />
+        <echo message="Compile Default Target"/>
+        <copy file="${basedir}/config.properties" toFile="${build}/config.properties"/>
+        <copy todir="${build}/res">
+            <fileset dir="${RES_DIR}"/>
+        </copy>
+
+        <replace encoding="utf-8" file="${build}/config.properties">
+            <replacefilter token="@DMC@" value="skylife"/>
+        </replace>
+
+        <javac srcdir="${SRC_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/cj/tvui/dmc/cjhv/**, com/cj/tvui/dmc/defaults/**, com/cj/tvui/dmc/kt/**">
+            <classpath>
+                <fileset dir="${LIBS_DIR}">
+                    <include name="CJTVUI-skylife-*.zip"/>
+                </fileset>
+            </classpath>
+        </javac>
+        <delete dir="${build}/META-INF" />
+        <zip zipfile="${output-dcl}/App_class-skylife-${DSTAMP}.zip" basedir="${build}" />
+        <echo message="Create Client" />
+        <delete dir="${build}" />
+        <mkdir dir="${build}" />
+
+        <!-- 20180808, daegon.kim, 로컬클래스 클라이언트에 저장 -->
+        <javac srcdir="${LOCAL_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/cj/tvui/dmc/cjhv/**, com/cj/tvui/dmc/defaults/**, com/cj/tvui/dmc/kt/**">
+            <classpath>
+                <fileset dir="${LIBS_DIR}">
+                    <include name="CJTVUI-skylife-*.zip"/>
+                </fileset>
+                <fileset dir="${output-dcl}" >
+                    <include name="App_class-skylife-${DSTAMP}.zip" />
+                </fileset>
+            </classpath>
+        </javac>
+        <copy todir="${build}">
+            <fileset dir="${LOCAL_RES}"/>
+        </copy>
+        <unzip dest="${build}">
+            <fileset dir="${LIBS_DIR}">
+                <include name="CJTVUI-skylife-*.zip"/>
+            </fileset>
+        </unzip>
+        <copy file="run.bat" toFile="${build}/run.bat"/>
+        <copy file="${basedir}/config.properties" toFile="${build}/config.properties"/>
+
+        <replace encoding="utf-8" file="${build}/config.properties">
+            <replacefilter token="@DMC@" value="skylife"/>
+        </replace>
+
+        <zip zipfile="${output-dcl}/client-skylife-${DSTAMP}.zip" basedir="${build}" />
+    </target>
+
+
+
+    <target name="build-dcl-cjhv" depends="init">
+        <echo message="*************************************************" />
+        <echo message="*  (DCL) Build for CJHV"/>
+        <echo message="*************************************************" />
+        <delete dir="${build}" />
+        <mkdir dir="${build}" />
+        <mkdir dir="${output-dcl}" />
+        <echo message="Compile Default Target"/>
+        <copy file="${basedir}/config.properties" toFile="${build}/config.properties"/>
+        <copy todir="${build}/res">
+            <fileset dir="${RES_DIR}"/>
+        </copy>
+        <replace encoding="utf-8" file="${build}/config.properties">
+            <replacefilter token="@DMC@" value="cjhv"/>
+        </replace>
+
+        <javac srcdir="${SRC_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/cj/tvui/dmc/kt/**, com/cj/tvui/dmc/defaults/**, com/cj/tvui/dmc/skylife/**">
+            <classpath>
+                <fileset dir="${LIBS_DIR}">
+                    <include name="CJTVUI-cjhv-*.zip"/>
+                </fileset>
+            </classpath>
+        </javac>
+        <delete dir="${build}/META-INF" />
+        <zip zipfile="${output-dcl}/App_class-cjhv-${DSTAMP}.zip" basedir="${build}" />
+        <echo message="Create Client" />
+        <delete dir="${build}" />
+        <mkdir dir="${build}" />
+
+        <!-- 20180808, daegon.kim, 로컬클래스 클라이언트에 저장 -->
+        <javac srcdir="${LOCAL_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/cj/tvui/dmc/kt/**, com/cj/tvui/dmc/defaults/**, com/cj/tvui/dmc/skylife/**">
+            <classpath>
+                <fileset dir="${LIBS_DIR}">
+                    <include name="CJTVUI-cjhv-*.zip"/>
+                </fileset>
+                <fileset dir="${output-dcl}" >
+                    <include name="App_class-cjhv-${DSTAMP}.zip" />
+                </fileset>
+            </classpath>
+        </javac>
+
+        <unzip dest="${build}">
+            <fileset dir="${LIBS_DIR}">
+                <include name="CJTVUI-cjhv-*.zip"/>
+            </fileset>
+        </unzip>
+        <copy file="run.bat" toFile="${build}/run.bat"/>
+        <copy file="${basedir}/config.properties" toFile="${build}/config.properties"/>
+
+        <replace encoding="utf-8" file="${build}/config.properties">
+            <replacefilter token="@DMC@" value="cjhv"/>
+        </replace>
+
+        <zip zipfile="${output-dcl}/client-cjhv-${DSTAMP}.zip" basedir="${build}" />
+    </target>
+
+
+</project>

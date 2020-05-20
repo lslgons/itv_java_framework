@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="CJ TVUI Framework"  basedir="./" default="build">
+
+    <property name="version" value="1.6.1" />
+    <property name="test" value="${basedir}/test"/>
+
+
+    <!-- Framework Source Folder -->
+    <property name="SRC_DIR" value="${basedir}/src"/>
+    <property name="RUN_DIR" value="${basedir}/run" />
+    <!-- Library Path -->
+
+
+    <property name="lib_common" value="${basedir}/libs"/>
+    <property name="lib_default" value="${basedir}/libs/emul" />
+    <property name="lib_kt" value="${basedir}/libs/kt" />
+    <property name="lib_skylife" value="${basedir}/libs/skylife" />
+    <property name="lib_cjhv" value="${basedir}/libs/cjhv" />
+
+    <tstamp>
+        <format property="TODAY" pattern="yyyyMMddhhmm"/>
+    </tstamp>
+    <!-- 빌드되는 경로와 output파일 경로 정의한다. -->
+    <property name="build" location="build"/>
+    <property name="deploy" location="deploy" />
+    <property name="dist" location="${deploy}/tvui-${version}-${TODAY}"/>
+    <!-- Make Boilerplate -->
+    <property name="dist-libs" location="${dist}/libs"/>
+    <property name="dist-src" location="${dist}/src"/>
+    <property name="dist-res" location="${dist}/res" />
+    <property name="dist-local" location="${dist}/local/src" />
+    <property name="dist-local_res" location="${dist}/local/res" />
+    <!-- 파일생성 날짜시간 스템프 -->
+
+
+    <target name="init">
+        <mkdir dir="${deploy}" />
+        <mkdir dir="${dist}" />
+        <mkdir dir="${dist-libs}" />
+        <mkdir dir="${dist-src}" />
+        <mkdir dir="${dist-res}" />
+        <mkdir dir="${dist-local}" />
+        <mkdir dir="${dist-local_res}" />
+        <echo message="**************TVUI Framework*********************" />
+        <echo message="* Version :  ${version}" />
+        <echo message="* Date    :  ${TODAY}" />
+        <echo message="*************************************************" />
+
+    </target>
+
+    <target name="build-default" depends="init">
+
+        <echo message="*************************************************" />
+        <echo message="*  Build for PC Emulator"/>
+        <echo message="*************************************************" />
+        <delete dir="${build}" />
+        <mkdir dir="${build}" />
+        <echo message="Extract library files to destination..."/>
+        <unzip src="${lib_common}/json-simple-1.1.1.jar" dest="${build}" overwrite="false"/>
+        <unzip dest="${build}" overwrite="false">
+            <fileset dir="${lib_default}">
+                <include name="*.zip"/>
+                <include name="*.jar" />
+            </fileset>
+        </unzip>
+        <echo message="Compile Default Target"/>
+        <!--<copy file="${basedir}/config.properties" toFile="${build}/config.properties"/>-->
+        <!--<copy file="${basedir}/run/run.bat" toFile="${build}/run.bat"/>-->
+        <!--<copy file="${basedir}/run/xlet.properties" toFile="${build}/xlet.properties"/>-->
+        <!--
+        <replace encoding="utf-8" file="${build}/config.properties">
+			<replacefilter token="@DMC@" value="defaults"/>
+		</replace>
+        -->
+
+        <!-- Example excludes="com/cj/oshop/dmc/kt/**, com/cj/oshop/dmc/sk/**" -->
+        <javac srcdir="${SRC_DIR}:${RUN_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/cj/tvui/dmc/kt/**, com/cj/tvui/dmc/cjhv/**, com/cj/tvui/dmc/skylife/**">
+            <classpath>
+                <fileset dir="${lib_common}">
+                    <include name="json-simple-1.1.1.jar"/>
+                </fileset>
+                <fileset dir="${lib_default}">
+                    <include name="*.zip"/>
+                    <include name="*.jar" />
+                </fileset>
+            </classpath>
+        </javac>
+        <delete dir="${build}/META-INF" />
+        <zip zipfile="${dist-libs}/libCJTVUI-dev-${version}-${DSTAMP}.zip" basedir="${build}" />
+    </target>
+
+
+    <target name="build-kt" depends="init">
+        <echo message="*************************************************" />
+        <echo message="*  Build for KT"/>
+        <echo message="*************************************************" />
+        <delete dir="${build}" />
+        <mkdir dir="${build}" />
+        <!--	App에 포함될 라이브러리-->
+        <echo message="Extract library files to destination..."/>
+        <unzip src="${lib_common}/json-simple-1.1.1.jar" dest="${build}" overwrite="false"/>
+        <unzip src="${lib_kt}/ktiptv-usage-stub-v0.3.jar" dest="${build}" overwrite="false"/>
+        <unzip src="${lib_kt}/ktiptv-unicast-live-client-stub-v1.0.jar" dest="${build}" overwrite="false"/>
+        <unzip src="${lib_kt}/tvpay_stub_20160902.zip" dest="${build}" overwrite="false"/>
+        <!--
+        <unzip dest="${build}" overwrite="false">
+            <fileset dir="${lib_kt}">
+                <include name="*.zip"/>
+                <include name="*.jar" />
+            </fileset>
+        </unzip>
+         -->
+        <!-- App에서 사용할 config파일을 build폴더에 복사해 넣어둔다.(zip파일로 같이 묶기위함)  -->
+        <echo message="Compile KT Target"/>
+        <!--  <copy file="${basedir}/config.properties" toFile="${build}/config.properties"/> -->
+        <!-- DCL 사용여부를 결정하기 위해 host.conf를 사용할려고 했으나 build_app.xml로 dcl/non-dcl을 모두 build하도록 함 -->
+        <!--<copy file="${basedir}/host.conf" toFile="${build}/host.conf"/>-->
+        <!--
+        <replace encoding="utf-8" file="${build}/config.properties">
+			<replacefilter token="@DMC@" value="KT"/>
+		</replace>
+		 -->
+        <javac srcdir="${SRC_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/cj/tvui/dmc/defaults/**, com/cj/tvui/dmc/cjhv/**, com/cj/tvui/dmc/skylife/**">
+
+            <classpath>
+                <fileset dir="${lib_common}">
+                    <include name="json-simple-1.1.1.jar"/>
+                </fileset>
+                <fileset dir="${lib_kt}">
+                    <include name="*.zip"/>
+                    <include name="*.jar" />
+                </fileset>
+            </classpath>
+        </javac>
+        <delete dir="${build}/META-INF" />
+        <zip zipfile="${dist-libs}/CJTVUI-kt-${version}-${DSTAMP}.zip" basedir="${build}" />
+    </target>
+
+    <target name="build-skylife" depends="init">
+        <echo message="*************************************************" />
+        <echo message="*  Build for Skylife"/>
+        <echo message="*************************************************" />
+        <delete dir="${build}" />
+        <mkdir dir="${build}" />
+        <!--	App에 포함될 라이브러리-->
+        <echo message="Extract library files to destination..."/>
+        <unzip src="${lib_common}/json-simple-1.1.1.jar" dest="${build}" overwrite="false"/>
+        <!-- TODO 불필요 라이브러리 제거해야 함 -->
+
+        <unzip src="${lib_skylife}/com.zip" dest="${build}" overwrite="false"/>
+
+        <unzip src="${lib_skylife}/ktiptv-unicast-live-client-stub-v1.0.jar" dest="${build}" overwrite="false"/>
+
+        <!-- 테스트베드 VOD -->
+        <!--<unzip src="${lib_skylife}/skylife_thinvod_lib_v1.1.zip" dest="${build}" overwrite="false"/>-->
+        <!-- 라이브 VOD -->
+        <unzip src="${lib_skylife}/skylife_thinvod_lib_live_v1.1.zip" dest="${build}" overwrite="false"/>
+        <!--<unzip src="${lib_skylife}/kt_iptv_1.0.3_add.jar" dest="${build}" overwrite="false"/>-->
+        <!--<unzip src="${lib_skylife}/mhp.jar" dest="${build}" overwrite="false"/>-->
+        <!--<unzip src="${lib_skylife}/alticast-lrpp-client-3.0s.jar" dest="${build}" overwrite="false"/>-->
+        <!--<unzip src="${lib_skylife}/classes_stb.zip" dest="${build}" overwrite="false"/>-->
+        <!--<unzip src="${lib_skylife}/skylife_thinvod_lib_v1.0.zip" dest="${build}" overwrite="false"/>-->
+        <!--<unzip src="${lib_skylife}/skylife_thinvod_v0.1.zip" dest="${build}" overwrite="false"/>-->
+        <!--<unzip src="${lib_skylife}/ssoclient_hd_0.0.4_20081104.zip" dest="${build}" overwrite="false"/>-->
+
+
+        <!--
+        <unzip dest="${build}" overwrite="false">
+            <fileset dir="${lib_kt}">
+                <include name="*.zip"/>
+                <include name="*.jar" />
+            </fileset>
+        </unzip>
+         -->
+        <!-- App에서 사용할 config파일을 build폴더에 복사해 넣어둔다.(zip파일로 같이 묶기위함)  -->
+        <echo message="Compile Skylife Target"/>
+        <!--  <copy file="${basedir}/config.properties" toFile="${build}/config.properties"/> -->
+        <!-- DCL 사용여부를 결정하기 위해 host.conf를 사용할려고 했으나 build_app.xml로 dcl/non-dcl을 모두 build하도록 함 -->
+        <!--<copy file="${basedir}/host.conf" toFile="${build}/host.conf"/>-->
+        <!--
+        <replace encoding="utf-8" file="${build}/config.properties">
+			<replacefilter token="@DMC@" value="KT"/>
+		</replace>
+		 -->
+        <javac srcdir="${SRC_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/cj/tvui/dmc/defaults/**, com/cj/tvui/dmc/cjhv/**, com/cj/tvui/dmc/kt/**">
+
+            <classpath>
+                <fileset dir="${lib_common}">
+                    <include name="json-simple-1.1.1.jar"/>
+                </fileset>
+                <fileset dir="${lib_skylife}">
+                    <include name="*.zip"/>
+                    <include name="*.jar" />
+                </fileset>
+            </classpath>
+        </javac>
+        <delete dir="${build}/META-INF" />
+        <zip zipfile="${dist-libs}/CJTVUI-skylife-${version}-${DSTAMP}.zip" basedir="${build}" />
+    </target>
+
+    <target name="build-cjhv" depends="init">
+        <echo message="*************************************************" />
+        <echo message="*  Build for CJHV"/>
+        <echo message="*************************************************" />
+        <delete dir="${build}" />
+        <mkdir dir="${build}" />
+        <!--	App에 포함될 라이브러리-->
+        <echo message="Extract library files to destination..."/>
+        <unzip src="${lib_common}/json-simple-1.1.1.jar" dest="${build}" overwrite="false"/>
+        <unzip src="${lib_cjhv}/alticast-com.zip" dest="${build}" overwrite="false"/>
+        <unzip src="${lib_cjhv}/CJ_normal_stub_20101103.zip" dest="${build}" overwrite="false"/>
+        <unzip src="${lib_cjhv}/LrppClient.jar" dest="${build}" overwrite="false"/>
+        <unzip src="${lib_cjhv}/LrppEncoding.jar" dest="${build}" overwrite="false"/>
+        <!-- <unzip src="${lib_cjhv}/OCAPStub.zip" dest="${build}" overwrite="false"/>  -->
+
+        <!--
+        <unzip dest="${build}" overwrite="false">
+            <fileset dir="${lib_kt}">
+                <include name="*.zip"/>
+                <include name="*.jar" />
+            </fileset>
+        </unzip>
+         -->
+        <!-- App에서 사용할 config파일을 build폴더에 복사해 넣어둔다.(zip파일로 같이 묶기위함)  -->
+        <echo message="Compile CJHV Target"/>
+        <!--<copy file="${basedir}/config.properties" toFile="${build}/config.properties"/>-->
+        <!--<replace encoding="utf-8" file="${build}/config.properties">-->
+        <!--<replacefilter token="@DMC@" value="CJHV"/>-->
+        <!--</replace>-->
+        <javac srcdir="${SRC_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/cj/tvui/dmc/defaults/**, com/cj/tvui/dmc/kt/**, com/cj/tvui/dmc/skylife/**">
+
+            <classpath>
+                <fileset dir="${lib_common}">
+                    <include name="json-simple-1.1.1.jar"/>
+                </fileset>
+                <fileset dir="${lib_cjhv}">
+                    <include name="*.zip"/>
+                    <include name="*.jar" />
+                </fileset>
+            </classpath>
+        </javac>
+        <delete dir="${build}/META-INF" />
+        <zip zipfile="${dist-libs}/CJTVUI-cjhv-${version}-${DSTAMP}.zip" basedir="${build}" />
+    </target>
+
+    <target name="build" depends="build-default,build-kt, build-skylife, build-cjhv" >
+        <copy file="${SRC_DIR}/config.properties" toFile="${dist-src}/config.properties"/>
+        <copy file="${SRC_DIR}/host.properties" toFile="${dist-src}/host.properties"/>
+        <copy file="${basedir}/build_app.xml" toFile="${dist}/build_app.xml"/>
+        <copy file="${basedir}/run/run.bat" toFile="${dist}/run.bat"/>
+        <copy file="${basedir}/app.gitignore" toFile="${dist}/.gitignore"/>
+    </target>
+
+</project>
