@@ -1,10 +1,11 @@
-package com.landman.ssr.dmc.kt;
+package com.tcom.platform.dmc.kt;
+
+import com.tcom.platform.controller.KeyController;
+import com.tcom.util.LOG;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import com.cj.tvui.controller.KeyController;
-import com.cj.tvui.util.LOG;
 
 public class KeyListenerImpl implements KeyListener {
 

@@ -1,6 +1,7 @@
-package com.landman.ssr.dmc.cjhv;
+package com.tcom.platform.dmc.cjhv;
 
-import com.cj.tvui.dmc.interfaces.StbInterface;
+
+import com.tcom.platform.dmc.interfaces.StbInterface;
 
 /**
  * Created by user on 2016-12-07.

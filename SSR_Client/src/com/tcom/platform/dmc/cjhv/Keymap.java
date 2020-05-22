@@ -1,17 +1,17 @@
-package com.landman.ssr.dmc.cjhv;
+package com.tcom.platform.dmc.cjhv;
 
 import com.alticast.navsuite.service.OverlappedDialogHandler;
-import com.cj.tvui.Keys;
-import com.cj.tvui.controller.SceneController;
-import com.cj.tvui.dmc.interfaces.KeymapInterface;
-import com.cj.tvui.util.LOG;
 
+
+import com.tcom.platform.controller.KeyCode;
+import com.tcom.platform.dmc.interfaces.KeymapInterface;
+import com.tcom.util.LOG;
 import org.havi.ui.event.HRcEvent;
 
 /**
  * Created by daegon.kim on 2016-12-06.
  */
-public class Keymap implements KeymapInterface{
+public class Keymap implements KeymapInterface {
 
     public Keymap() {
         LOG.print("Load CJHV Keymap");
@@ -24,9 +24,9 @@ public class Keymap implements KeymapInterface{
         //Example...
         switch(keycode) {
             case HRcEvent.VK_ENTER :
-                mapping_code = Keys.VK_OK;
+                mapping_code = KeyCode.VK_OK;
             case HRcEvent.VK_INFO:
-                mapping_code = Keys.VK_INFO;
+                mapping_code = KeyCode.VK_INFO;
             default:
                 mapping_code = keycode;
         }

@@ -1,10 +1,11 @@
-package com.landman.ssr.dmc.skylife;
+package com.tcom.platform.dmc.skylife;
 
 import java.awt.event.KeyEvent;
 
-import com.cj.tvui.Constants;
-import com.cj.tvui.controller.KeyController;
-import com.cj.tvui.util.LOG;
+
+import com.tcom.platform.controller.KeyController;
+import com.tcom.ssr.SSRConfig;
+import com.tcom.util.LOG;
 import org.davic.resources.ResourceClient;
 import org.davic.resources.ResourceProxy;
 import org.dvb.event.EventManager;
@@ -90,7 +91,7 @@ public class UserKeyManager implements ResourceClient {
 		if (!numEnabled) {
 			LOG.debug(this, "reserveNumericKeys() called");
 			//EventManager.getInstance().addUserEventListener(numAdapter, numRep); //Shard 하게 등록
-			if (Constants.IS_EMUL) {
+			if (SSRConfig.getInstance().IS_EMUL) {
 				addNumericKeys = EventManager.getInstance().addUserEventListener(numAdapter, this, numRep); //Shard 하게 등록
 			} else {
 				EventManager.getInstance().addUserEventListener(numAdapter, this, numRep); //Shard 하게 등록
@@ -107,14 +108,14 @@ public class UserKeyManager implements ResourceClient {
 			LOG.debug(this, "releaseNumericKeys() called");
 			EventManager.getInstance().removeUserEventListener(numAdapter);
 			numEnabled = false;
-			if (Constants.IS_EMUL) {
+			if (SSRConfig.getInstance().IS_EMUL) {
 				addNumericKeys = false;
 			}
 		}
 	}
 
 	public boolean isReservedNumericKeys() {
-		if (Constants.IS_EMUL) {
+		if (SSRConfig.getInstance().IS_EMUL) {
 			return addNumericKeys && numEnabled;
 		} else {
 			return numEnabled;
@@ -128,7 +129,7 @@ public class UserKeyManager implements ResourceClient {
 	public void reservePrevKey() {
 		LOG.print(this, "reservePrevKey ...........");
 		if (!prevEnabled) {
-			if (Constants.IS_EMUL) {
+			if (SSRConfig.getInstance().IS_EMUL) {
 				addPrevKey = EventManager.getInstance().addUserEventListener(prevAdapter, this, prevRep); //exclusive 하게 등록
 			} else {
 				EventManager.getInstance().addUserEventListener(prevAdapter, this, prevRep); //exclusive 하게 등록
@@ -145,14 +146,14 @@ public class UserKeyManager implements ResourceClient {
 		if (prevEnabled) {
 			EventManager.getInstance().removeUserEventListener(prevAdapter);
 			prevEnabled = false;
-			if (Constants.IS_EMUL) {
+			if (SSRConfig.getInstance().IS_EMUL) {
 				addPrevKey = false;
 			}
 		}
 	}
 
 	public boolean isReservedPrevKeys() {
-		if (Constants.IS_EMUL) {
+		if (SSRConfig.getInstance().IS_EMUL) {
 			return addPrevKey && prevEnabled;
 		} else {
 			return prevEnabled;

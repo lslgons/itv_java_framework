@@ -1,14 +1,12 @@
-package com.tcom.platform.dmc.defaults;
+package com.tcom.platform.dmc.pc;
 
 
 import java.awt.event.KeyListener;
 
 import com.tcom.platform.controller.KeyCode;
-import com.tcom.platform.dmc.interfaces.DisplayInterface;
 import com.tcom.platform.dmc.interfaces.KeymapInterface;
+import com.tcom.ssr.SSRConfig;
 import com.tcom.util.LOG;
-import com.tcom.util.RemoteClassLoader;
-import com.tcom.xlet.MainXlet;
 import org.havi.ui.HScene;
 import org.havi.ui.event.HEventGroup;
 import org.havi.ui.event.HRcEvent;
@@ -20,9 +18,7 @@ public class Keymap implements KeymapInterface {
 
 	private KeyListener keyListener;
     private HEventGroup eventGroup;
-    private DisplayInterface displayInterface;
     public Keymap() {
-        displayInterface= RemoteClassLoader.loadDisplayInterface();
         LOG.print("Load default Keymap");
         keyListener = new KeyListenerImpl();
 
@@ -85,7 +81,7 @@ public class Keymap implements KeymapInterface {
         } else {
             eventGroup.removeAllNumericKeys();
         }
-        HScene scene = (HScene)displayInterface.getRootScene();
+        HScene scene = (HScene) SSRConfig.getInstance().ROOT_SCENE;
         scene.setKeyEvents(eventGroup);
 		
 	}
@@ -96,7 +92,7 @@ public class Keymap implements KeymapInterface {
         } else {
             eventGroup.removeAllColourKeys();
         }
-        HScene scene = (HScene)displayInterface.getRootScene();
+        HScene scene = (HScene) SSRConfig.getInstance().ROOT_SCENE;
         scene.setKeyEvents(eventGroup);
 		
 	}
@@ -107,7 +103,7 @@ public class Keymap implements KeymapInterface {
         } else {
             eventGroup.removeKey(HRcEvent.VK_F1);
         }
-        HScene scene = (HScene)displayInterface.getRootScene();
+        HScene scene = (HScene) SSRConfig.getInstance().ROOT_SCENE;
         scene.setKeyEvents(eventGroup);
 		
 	}
@@ -124,7 +120,7 @@ public class Keymap implements KeymapInterface {
             eventGroup.removeKey(HRcEvent.VK_STOP);
             eventGroup.removeKey(HRcEvent.VK_FAST_FWD);
         }
-        HScene scene = (HScene)displayInterface.getRootScene();
+        HScene scene = (HScene) SSRConfig.getInstance().ROOT_SCENE;
         scene.setKeyEvents(eventGroup);
 		
 	}
@@ -135,7 +131,7 @@ public class Keymap implements KeymapInterface {
         } else {
             eventGroup.removeKey(HRcEvent.VK_ENTER);
         }
-        HScene scene = (HScene)displayInterface.getRootScene();
+        HScene scene = (HScene) SSRConfig.getInstance().ROOT_SCENE;
         scene.setKeyEvents(eventGroup);
     }
 
@@ -145,7 +141,7 @@ public class Keymap implements KeymapInterface {
         } else {
             eventGroup.removeAllArrowKeys();
         }
-        HScene scene = (HScene)displayInterface.getRootScene();
+        HScene scene = (HScene) SSRConfig.getInstance().ROOT_SCENE;
         scene.setKeyEvents(eventGroup);
     }
     	

@@ -1,9 +1,10 @@
-package com.landman.ssr.dmc.skylife;
+package com.tcom.platform.dmc.skylife;
 
-import com.cj.tvui.Keys;
-import com.cj.tvui.controller.SceneController;
-import com.cj.tvui.dmc.interfaces.KeymapInterface;
-import com.cj.tvui.util.LOG;
+
+import com.tcom.platform.controller.KeyCode;
+import com.tcom.platform.dmc.interfaces.KeymapInterface;
+import com.tcom.ssr.SSRConfig;
+import com.tcom.util.LOG;
 import org.havi.ui.HScene;
 import org.havi.ui.event.HEventGroup;
 import org.havi.ui.event.HRcEvent;
@@ -35,25 +36,25 @@ public class Keymap2 implements KeymapInterface {
         LOG.print("Keymap : "+keycode);
         switch(keycode) {
             case HRcEvent.VK_ENTER :
-                mapping_code = Keys.VK_OK;
+                mapping_code = KeyCode.VK_OK;
                 break;
             case HRcEvent.VK_INFO:
-                mapping_code = Keys.VK_INFO;
+                mapping_code = KeyCode.VK_INFO;
                 break;
             case 403:
-                mapping_code = Keys.VK_R;
+                mapping_code = KeyCode.VK_R;
                 break;
             case 404:
-                mapping_code = Keys.VK_G;
+                mapping_code = KeyCode.VK_G;
                 break;
             case 405:
-                mapping_code = Keys.VK_Y;
+                mapping_code = KeyCode.VK_Y;
                 break;
             case 406:
-                mapping_code = Keys.VK_B;
+                mapping_code = KeyCode.VK_B;
                 break;
             case HRcEvent.VK_F1:
-                mapping_code = Keys.VK_BACK;
+                mapping_code = KeyCode.VK_BACK;
                 break;
             default:
                 mapping_code = keycode;
@@ -77,7 +78,7 @@ public class Keymap2 implements KeymapInterface {
 		} else {
 			eventGroup.removeAllNumericKeys();
 		}
-		HScene scene = (HScene)SceneController.getInstance().getRootScene(); 
+		HScene scene = (HScene) SSRConfig.getInstance().ROOT_SCENE;
 		scene.setKeyEvents(eventGroup);
 		
 		
@@ -89,7 +90,7 @@ public class Keymap2 implements KeymapInterface {
 		} else {
 			eventGroup.removeAllColourKeys();
 		}
-		HScene scene = (HScene)SceneController.getInstance().getRootScene(); 
+		HScene scene = (HScene) SSRConfig.getInstance().ROOT_SCENE;
 		scene.setKeyEvents(eventGroup);
 		
 	}
@@ -100,7 +101,7 @@ public class Keymap2 implements KeymapInterface {
 		} else {
 			eventGroup.removeKey(HRcEvent.VK_F4);
 		}
-		HScene scene = (HScene)SceneController.getInstance().getRootScene(); 
+		HScene scene = (HScene) SSRConfig.getInstance().ROOT_SCENE;
 		scene.setKeyEvents(eventGroup);
 	}
 
@@ -116,7 +117,7 @@ public class Keymap2 implements KeymapInterface {
 			eventGroup.removeKey(HRcEvent.VK_STOP);
 			eventGroup.removeKey(HRcEvent.VK_FAST_FWD);
 		}
-		HScene scene = (HScene)SceneController.getInstance().getRootScene(); 
+		HScene scene = (HScene) SSRConfig.getInstance().ROOT_SCENE;
 		scene.setKeyEvents(eventGroup);
 		
 	}

@@ -1,8 +1,12 @@
-package com.landman.ssr.dmc.kt;
+package com.tcom.platform.dmc.kt;
 
 import java.awt.Container;
 import java.awt.event.KeyListener;
 
+import com.tcom.platform.controller.KeyController;
+import com.tcom.platform.dmc.interfaces.DisplayInterface;
+import com.tcom.ssr.SSRConfig;
+import com.tcom.util.LOG;
 import org.havi.ui.HGraphicsConfiguration;
 import org.havi.ui.HGraphicsDevice;
 import org.havi.ui.HScene;
@@ -13,33 +17,31 @@ import org.havi.ui.HScreenDimension;
 import org.havi.ui.HScreenPoint;
 import org.havi.ui.event.HEventGroup;
 
-import com.cj.tvui.controller.KeyController;
-import com.cj.tvui.dmc.interfaces.DisplayInterface;
-import com.cj.tvui.util.LOG;
+
 
 
 /**
  * Created by daegon.kim on 2016-12-07.
  */
-public class Display implements DisplayInterface{
+public class Display implements DisplayInterface {
 
     public Container __getScene() {
         HSceneTemplate req = new HSceneTemplate();
         req.setPreference(HSceneTemplate.SCENE_SCREEN_LOCATION, new HScreenPoint(0.0f, 0.0f), HSceneTemplate.PREFERRED);
         req.setPreference(HSceneTemplate.SCENE_SCREEN_DIMENSION, new HScreenDimension(1.0f, 1.0f), HSceneTemplate.PREFERRED);
         Container container = HSceneFactory.getInstance().getBestScene(req);
-        container.addKeyListener((KeyListener)KeyController.getInstance().getKeymap().getKeyListener());
+        container.addKeyListener((KeyListener) KeyController.getInstance().getKeymap().getKeyListener());
         return container;
     }
     
     public Container getScene() {
-
+		SSRConfig ssrConfig = SSRConfig.getInstance();
 		HGraphicsDevice hgds[] = HScreen.getDefaultHScreen().getHGraphicsDevices();
 		HGraphicsConfiguration curConfig = null;
 		for (int i = 0; i < hgds.length; i++) {
 			HGraphicsConfiguration config = hgds[i].getCurrentConfiguration();
 			LOG.print("CHECK " + i + " th Device: " + config.getPixelResolution());
-			if (config.getPixelResolution().width == com.cj.tvui.Constants.SCENE_WIDTH) {
+			if (config.getPixelResolution().width == ssrConfig.SCENE_WIDTH) {
 				LOG.print("OK, GOT IT HD");
 				curConfig = config;
 				break;
@@ -47,8 +49,8 @@ public class Display implements DisplayInterface{
 		}
 		if (curConfig == null) {
 			//HD 지원안하는 STB의 경우 SD scene 사용
-			LOG.print("ERROR: Couldn't find " + com.cj.tvui.Constants.SCENE_WIDTH + "x" + com.cj.tvui.Constants.SCENE_HEIGHT + " scene!");
-			com.cj.tvui.Constants.IS_HD = false;
+			LOG.print("ERROR: Couldn't find " + ssrConfig.SCENE_WIDTH + "x" + ssrConfig.SCENE_HEIGHT + " scene!");
+			ssrConfig.IS_HD = false;
 
 			for (int i = 0; i < hgds.length; i++) {
 				HGraphicsConfiguration config = hgds[i].getCurrentConfiguration();

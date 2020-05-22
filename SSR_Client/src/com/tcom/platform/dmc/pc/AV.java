@@ -1,4 +1,4 @@
-package com.tcom.platform.dmc.defaults;
+package com.tcom.platform.dmc.pc;
 
 import com.tcom.platform.dmc.interfaces.AVInterface;
 import com.tcom.platform.dmc.interfaces.VODInterface;

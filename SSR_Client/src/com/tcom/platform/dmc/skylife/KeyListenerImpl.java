@@ -1,10 +1,10 @@
-package com.landman.ssr.dmc.skylife;
+package com.tcom.platform.dmc.skylife;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import com.cj.tvui.controller.KeyController;
-import com.cj.tvui.util.LOG;
+import com.tcom.platform.controller.KeyController;
+import com.tcom.util.LOG;
 import org.havi.ui.event.HRcEvent;
 
 public class KeyListenerImpl implements KeyListener {

@@ -3,6 +3,8 @@ package com.tcom.ssr;
 
 import com.tcom.util.PropertyReader;
 
+import java.awt.*;
+
 /**
  * 초기 설정 값, config.property파일에 의해 관리됨
  * Created by user on 2016-12-02.
@@ -109,6 +111,12 @@ public class SSRConfig {
      * 대상 플랫폼 사업자
      */
     public String DMC_NAME;
+
+    /**
+     * RootScene
+     */
+
+    public Container ROOT_SCENE;
 
 
 

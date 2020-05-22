@@ -41,7 +41,7 @@ public final class RemoteClassLoader {
         Object obj = null;
         try {
             if(SSRConfig.getInstance().IS_EMUL) {
-                obj = RemoteClassLoader.loadClass("com.tcom.platform.dmc.defaults."+target).newInstance();
+                obj = RemoteClassLoader.loadClass("com.tcom.platform.dmc.pc."+target).newInstance();
             } else {
                 obj = RemoteClassLoader.loadClass("com.tcom.platform.dmc."+SSRConfig.getInstance().DMC_NAME.toLowerCase()+"."+target).newInstance();
             }

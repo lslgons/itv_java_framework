@@ -1,4 +1,4 @@
-package com.landman.ssr.dmc.skylife;
+package com.tcom.platform.dmc.skylife;
 
 import java.awt.Rectangle;
 import java.io.IOException;
@@ -27,19 +27,19 @@ import javax.tv.media.AWTVideoSizeControl;
 import javax.tv.service.selection.ServiceContext;
 import javax.tv.service.selection.ServiceContextFactory;
 
-import com.cj.tvui.Keys;
-import com.cj.tvui.controller.StbController;
-import com.cj.tvui.dmc.interfaces.AVInterface;
-import com.cj.tvui.dmc.interfaces.VODInterface;
-import com.cj.tvui.util.DateUtil;
-import com.cj.tvui.util.LOG;
-import com.cj.tvui.util.StringUtil;
 
+import com.tcom.platform.controller.KeyCode;
+import com.tcom.platform.controller.StbController;
+import com.tcom.platform.dmc.interfaces.AVInterface;
+import com.tcom.platform.dmc.interfaces.VODInterface;
+import com.tcom.util.DateUtil;
+import com.tcom.util.LOG;
+import com.tcom.util.StringUtil;
 import kt.alticast.interactive.service.vod.ParamMap;
 import kt.alticast.interactive.service.vod.UnicastService;
 import kt.alticast.interactive.service.vod.client.UnicastServiceClientStub;
 
-public class AV implements AVInterface, VODInterface{
+public class AV implements AVInterface, VODInterface {
 	
 	ServiceContext sc = ServiceContextFactory.getInstance().getServiceContexts()[0];
 	Player avPlayer = (Player) sc.getServiceContentHandlers()[0];
@@ -412,15 +412,15 @@ public class AV implements AVInterface, VODInterface{
         int _rateIndx = -1;
         long _seek = 0;
         switch (keyCode) {
-            case Keys.VK_VOD_PLAY:
+            case KeyCode.VK_VOD_PLAY:
                 // 시작, 일시 정지
                 playAndPause();
                 break;
-            case Keys.VK_VOD_STOP:
+            case KeyCode.VK_VOD_STOP:
                 //정지
                 stop();
                 break;
-            case Keys.VK_VOD_REW:
+            case KeyCode.VK_VOD_REW:
                 //REW
                 LOG.print(this, "current rate : " + rate );
                 if (rate == 0) {
@@ -437,7 +437,7 @@ public class AV implements AVInterface, VODInterface{
                 vodStatus = VOD_REW;
                 this.setRate( rateArray[_rateIndx] );
                 break;
-            case Keys.VK_VOD_FF:
+            case KeyCode.VK_VOD_FF:
                 //FF
                 LOG.print(this, "current rate : " + rate );
                 if (rate == 0) {
@@ -454,7 +454,7 @@ public class AV implements AVInterface, VODInterface{
                 vodStatus = VOD_FF;
                 this.setRate( rateArray[_rateIndx] );
                 break;
-            case Keys.VK_VOD_TRACK_PREV:
+            case KeyCode.VK_VOD_TRACK_PREV:
                 //이전 트랙
                 _seek = (long)Math.max(5, vodPlayer.getMediaTime().getSeconds() - mediaTimeInterval);
                 vodPlayer.setMediaTime( new Time(_seek * Time.ONE_SECOND ) );
@@ -465,7 +465,7 @@ public class AV implements AVInterface, VODInterface{
                     this.setRate( 1.0F );
                 }
                 break;
-            case Keys.VK_VOD_TRACK_NEXT:
+            case KeyCode.VK_VOD_TRACK_NEXT:
                 //다음 트랙
                 _seek = (long)Math.min(vodPlayer.getDuration().getSeconds() - 5, vodPlayer.getMediaTime().getSeconds() + mediaTimeInterval);
                 vodPlayer.setMediaTime( new Time(_seek * Time.ONE_SECOND ) );

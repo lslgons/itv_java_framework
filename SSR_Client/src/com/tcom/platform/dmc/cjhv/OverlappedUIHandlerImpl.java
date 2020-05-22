@@ -1,9 +1,10 @@
-package com.landman.ssr.dmc.cjhv;
+package com.tcom.platform.dmc.cjhv;
 
+import com.tcom.platform.controller.KeyController;
 import org.dvb.event.UserEvent;
 
 import com.alticast.navsuite.service.OverlappedDialogHandler;
-import com.cj.tvui.controller.KeyController;
+
 
 public class OverlappedUIHandlerImpl implements OverlappedDialogHandler {
 

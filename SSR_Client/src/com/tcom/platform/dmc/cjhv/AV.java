@@ -1,9 +1,9 @@
-package com.landman.ssr.dmc.cjhv;
+package com.tcom.platform.dmc.cjhv;
 
 import java.awt.Rectangle;
 
-import com.cj.tvui.dmc.interfaces.AVInterface;
-import com.cj.tvui.dmc.interfaces.VODInterface;
+import com.tcom.platform.dmc.interfaces.AVInterface;
+import com.tcom.platform.dmc.interfaces.VODInterface;
 
 public class AV implements AVInterface, VODInterface{
 

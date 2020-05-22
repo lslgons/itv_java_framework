@@ -1,4 +1,4 @@
-package com.tcom.platform.dmc.defaults;
+package com.tcom.platform.dmc.pc;
 
 import java.awt.Container;
 import java.awt.event.KeyListener;
@@ -14,7 +14,7 @@ import org.havi.ui.HScreenPoint;
 /**
  * Created by daegon.kim on 2016-12-07.
  */
-public class Display extends DisplayInterface {
+public class Display implements DisplayInterface {
 
     public Container getScene() {
         HSceneTemplate req = new HSceneTemplate();
@@ -22,7 +22,6 @@ public class Display extends DisplayInterface {
         req.setPreference(HSceneTemplate.SCENE_SCREEN_DIMENSION, new HScreenDimension(1.0f, 1.0f), HSceneTemplate.PREFERRED);
         Container container = HSceneFactory.getInstance().getBestScene(req);
         container.addKeyListener((KeyListener) KeyController.getInstance().getKeymap().getKeyListener());
-        setRootScene(container);
         return container;
     }
 }

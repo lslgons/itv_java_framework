@@ -1,9 +1,9 @@
-package com.landman.ssr.dmc.kt;
+package com.tcom.platform.dmc.kt;
 
-import com.cj.tvui.dmc.interfaces.StbInterface;
-import com.cj.tvui.util.LOG;
-import com.cj.tvui.util.StringUtil;
 
+import com.tcom.platform.dmc.interfaces.StbInterface;
+import com.tcom.util.LOG;
+import com.tcom.util.StringUtil;
 import kt.alticast.interactive.service.common.ServiceUsage;
 import kt.alticast.interactive.service.common.client.ServiceUsageClientStub;
 

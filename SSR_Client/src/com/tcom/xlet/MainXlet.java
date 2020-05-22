@@ -54,12 +54,13 @@ public class MainXlet implements Xlet{
 
     public void startXlet() throws XletStateChangeException {
 
-        Container rootScene = dispInterface.getScene();
+
         SSRConfig config = SSRConfig.getInstance();
-        rootScene.setBounds(0,0, config.SCENE_WIDTH, config.SCENE_HEIGHT);
+        config.ROOT_SCENE=dispInterface.getScene();
+        config.ROOT_SCENE.setBounds(0,0, config.SCENE_WIDTH, config.SCENE_HEIGHT);
         if(config.ENABLE_DIAGNOSTIC) {
             diagScene = new DiagnosticScene();
-            rootScene.add(diagScene, -1);
+            config.ROOT_SCENE.add(diagScene, -1);
 
         }
 
@@ -78,8 +79,8 @@ public class MainXlet implements Xlet{
 
         LOG.print("Start Application");
         LOG.print(this, "rootScene created");
-        rootScene.setVisible(true);
-        rootScene.requestFocus();
+        config.ROOT_SCENE.setVisible(true);
+        config.ROOT_SCENE.requestFocus();
 
     }
 
