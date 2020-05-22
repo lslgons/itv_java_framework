@@ -13,22 +13,14 @@ import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
-import java.util.Properties;
 import javax.tv.xlet.Xlet;
 import javax.tv.xlet.XletContext;
 
 import org.havi.ui.ScreenProxy;
-
-import com.cj.tvui.Constants;
-import com.cj.tvui.util.PropertyReader;
 
 import de.twonkyvision.havi.CUContext;
 import de.twonkyvision.havi.CUSecurityManager;
@@ -177,7 +169,7 @@ label0:
 
             //args[0] = properties.getProperty("initialclass");
 			//args[0] = "cjtosplus.app.App";
-            args[0] = "com.cj.tvui.MainXlet";
+            args[0] = "com.tcom.xlet.MainXlet";
             //args[0] = "com.cjtmall.MainXlet";
             //properties = null;
 

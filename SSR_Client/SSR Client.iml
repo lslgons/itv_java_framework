@@ -27,9 +27,10 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/run" isTestSource="false" />
-      <excludeFolder url="file://$MODULE_DIR$/src/com/landman/ssr/dmc/cjhv" />
-      <excludeFolder url="file://$MODULE_DIR$/src/com/landman/ssr/dmc/kt" />
-      <excludeFolder url="file://$MODULE_DIR$/src/com/landman/ssr/dmc/skylife" />
+      <excludeFolder url="file://$MODULE_DIR$/src/com/cj" />
+      <excludeFolder url="file://$MODULE_DIR$/src/com/tcom/platform/dmc/cjhv" />
+      <excludeFolder url="file://$MODULE_DIR$/src/com/tcom/platform/dmc/kt" />
+      <excludeFolder url="file://$MODULE_DIR$/src/com/tcom/platform/dmc/skylife" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="inheritedJdk" />
