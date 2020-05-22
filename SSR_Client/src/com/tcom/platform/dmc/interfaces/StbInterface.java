@@ -11,6 +11,7 @@ public interface StbInterface {
     public void sendLog(int logType, String serviceID);
     public String getSubscribeID();
     public String getSOCode();
+    public String getDMCCode();
     //IPTV에서의 SO코드 설정을 고려
     public void setSOCode(String socd);
     public String getModelNo();

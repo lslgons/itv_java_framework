@@ -37,12 +37,14 @@ public class SSRConfig {
          * QA/운영 주소 분리하여 하드코딩
          */
         SSR_HOST=config.read("SSR_HOST");
+        SSR_PORT=Integer.parseInt(config.read("SSR_PORT"));
         APP_NAME=config.read("APP_NAME");
         APP_VER=config.read("APP_VER");
         ENABLE_LOG=config.read("ENABLE_LOG").equalsIgnoreCase("true");
         ENABLE_DIAGNOSTIC=config.read("ENABLE_DIAGNOSTIC").equalsIgnoreCase("true");
         SCENE_WIDTH=Integer.parseInt(config.read("SCENE_WIDTH"));
         SCENE_HEIGHT=Integer.parseInt(config.read("SCENE_HEIGHT"));
+        SSR_URI="H"+SCENE_HEIGHT;
         DMC_NAME=config.read("DMC_NAME");
 
 
@@ -76,6 +78,15 @@ public class SSRConfig {
      * SSR Host
      */
     public String SSR_HOST;
+    /**
+     * SSR PORT
+     */
+    public int SSR_PORT;
+
+    /**
+     * SSR RESOLUTION URI
+     */
+    public String SSR_URI;
 
     /**
      * Target : PC or STB

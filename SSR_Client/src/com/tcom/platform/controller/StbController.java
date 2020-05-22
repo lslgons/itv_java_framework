@@ -59,6 +59,15 @@ public final class StbController {
     }
 
     /**
+     * DMC코드 반환
+     * @return DMC 코드
+     */
+    public String getDMCCode() {
+        return stbIntf.getDMCCode();
+    }
+
+
+    /**
      * 현재 사용되는 셋탑모델 반환
      * @return 셋탑모델번호
      */

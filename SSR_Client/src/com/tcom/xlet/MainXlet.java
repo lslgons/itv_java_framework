@@ -5,6 +5,7 @@ import com.tcom.platform.controller.KeyController;
 import com.tcom.platform.controller.StbController;
 import com.tcom.platform.dmc.interfaces.DisplayInterface;
 import com.tcom.scene.DiagnosticScene;
+import com.tcom.ssr.DataManager;
 import com.tcom.ssr.SSRConfig;
 import com.tcom.util.LOG;
 import com.tcom.util.RemoteClassLoader;
@@ -65,6 +66,7 @@ public class MainXlet implements Xlet{
         }
 
         //SSRContext
+        DataManager.getInstance().requestData(0,0);
 
         //SSRContainer 등록
 

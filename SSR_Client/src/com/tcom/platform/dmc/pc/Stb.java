@@ -23,6 +23,10 @@ public class Stb implements StbInterface {
 		return soCode;
 	}
 
+	public String getDMCCode() {
+		return "3026";
+	}
+
 	public String getModelNo() {
 		return "Emulator";
 	}
