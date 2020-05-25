@@ -3,54 +3,159 @@ package com.tcom.ssr;
 
 import com.tcom.network.SSRConnector;
 import com.tcom.network.SSRResponse;
+import com.tcom.platform.controller.KeyController;
+import com.tcom.platform.controller.MediaController;
 import com.tcom.platform.controller.StbController;
 import com.tcom.util.LOG;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
+import java.awt.*;
+import java.util.ArrayList;
 
 public class DataManager {
 
     JSONObject jsonData;
 
-    private static DataManager instance;
-    public static DataManager getInstance() {
-        if(instance==null) instance = new DataManager();
-        return instance;
+    private String uid;
+    //Context : 데이터를 서버로 전달하기 위해 유지해야 함 (Immutable)
+    private JSONObject context;
+    private JSONObject component;
+    private StateManager stateManager;
+    private DataReceivedListener _listener;
+
+    public DataManager(DataReceivedListener listener) {
+        this(listener, "");
+    }
+    public DataManager(DataReceivedListener listener, final String defaultUid) {
+
+        uid=defaultUid;
+        stateManager=new StateManager();
+        context=new JSONObject();
+        component=new JSONObject();
+        component.put("render", new JSONArray());
+        component.put("element", new JSONArray());
+        this._listener=listener;
     }
 
-    private DataManager() {
-        setDefaultData();
+    private void allocateData() {
+        this.uid=(String) this.jsonData.get("uid");
+        this.context= (JSONObject) this.jsonData.get("context");
+        this.component= (JSONObject) this.jsonData.get("component");
+        stateManager.setJSONObject((JSONObject) this.jsonData.get("state"));
     }
 
-    /**
-     * 컨텍스트 정보 완전 초기화
-     */
-    public void setDefaultData() {
-        SSRConfig config=SSRConfig.getInstance();
-        StbController stb=StbController.getInstance();
-        String defaultData = "{\"state\":{\"key\":[0,0,0],\"av_size\":[0,0,"+config.SCENE_WIDTH+","+config.SCENE_HEIGHT+"],\"vod_info\":\"\",\"dmc_code\":\""+stb.getDMCCode()+"\",\"so_code\":\""+stb.getSOCode()+"\",\"stb_id\":\""+stb.getSmartcardID()+"\"},\"uid\":\"\",\"context\":{},\"trigger_action\":99,\"trigger_target\":\"\",\"component\":{\"render\":[],\"element\":[]}}";
-        JSONParser parser = new JSONParser();
-        try {
-            jsonData= (JSONObject) parser.parse(defaultData);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+    public String getUid() {
+        return this.uid;
     }
+
+    public String getActivatedElementName() {
+        return (String)((JSONObject)this.context.get(this.uid)).get("_activated_element");
+
+    }
+
+    public void setActivatedElementName(final String el_name) {
+        JSONObject comp_context = (JSONObject)this.context.get(this.uid);
+        comp_context.put("_activated_element", el_name);
+
+    }
+
+
 
     /**
      * 데이터 정보를 서버로부터 갱신
      */
-    public void requestData(int action_type, int action_trigger) {
-        SSRConnector.ssrRequest(this.jsonData, new SSRResponse() {
+    public void requestData(int trigger_action, String trigger_target) {
+        JSONObject reqData = new JSONObject();
+        reqData.put("uid", this.uid);
+        reqData.put("context", this.context);
+        //reqData.put("component", this.component); //컴포넌트 정보는 전달할 필요없음
+        reqData.put("state", this.stateManager.getJSONObject());
+        reqData.put("trigger_action", new Integer(trigger_action));
+        reqData.put("trigger_target", trigger_target);
+        SSRConnector.ssrRequest(reqData, new SSRResponse() {
             public void onReceived(JSONObject response) {
                 DataManager.this.jsonData=response;
+                allocateData();
+                DataManager.this._listener.onDataReceived();
             }
 
             public void onFailed(int status, String msg) {
                 LOG.print(status+" error");
             }
         });
+    }
+
+    public JSONArray getRenderData() {
+        return (JSONArray) this.component.get("render");
+
+    }
+
+    public JSONArray getElementData() {
+        return (JSONArray) this.component.get("element");
+    }
+
+    public JSONArray getIntervalData() {
+        return (JSONArray) this.component.get("interval");
+    }
+
+    class StateManager {
+        JSONObject stateObj;
+
+        public StateManager() {
+            StbController stb=StbController.getInstance();
+            KeyController key=KeyController.getInstance();
+            MediaController media = MediaController.getInstance();
+            this.stateObj=new JSONObject();
+            this.stateObj.put("vod_info", "");
+            JSONArray av_size = new JSONArray();
+            Rectangle real_av_size = media.getCurrentVideoSize();
+            av_size.add(new Integer((int)real_av_size.getX()));
+            av_size.add(new Integer((int)real_av_size.getY()));
+            av_size.add(new Integer((int)real_av_size.getWidth()));
+            av_size.add(new Integer((int)real_av_size.getHeight()));
+            this.stateObj.put("av_size", av_size);
+            this.stateObj.put("dmc_code", stb.getDMCCode());
+            this.stateObj.put("so_code", stb.getSOCode());
+            this.stateObj.put("stb_id", stb.getSmartcardID());
+            JSONArray enabled_key=new JSONArray();
+            enabled_key.add(new Integer(key.isEnableBackKey()?1:0));
+            enabled_key.add(new Integer(key.isEnableNumKey()?1:0));
+            enabled_key.add(new Integer(key.isEnableHotKey()?1:0));
+            this.stateObj.put("key", enabled_key);
+            //TODO AppID : 어플리케이션 종류에 따른 ID부여 필요성
+
+        }
+
+        public void setJSONObject(JSONObject obj) {
+            this.stateObj=obj;
+            //TODO 설정된 정보에 따라 STB상태 갱신
+        }
+
+        public int[] getAVSize() {
+            JSONArray _avSize= (JSONArray) stateObj.get("av_size");
+            int[] avSize={((Integer) _avSize.get(0)).intValue(),
+                    ((Integer) _avSize.get(1)).intValue(),
+                    ((Integer) _avSize.get(2)).intValue(),
+                    ((Integer) _avSize.get(3)).intValue()};
+            return avSize;
+        }
+        public String getVODAssetID() {
+            return (String) stateObj.get("vod_info");
+        }
+        public void flushVODAssetID() {
+            stateObj.put("vod_info", "");
+        }
+
+        public JSONObject getJSONObject() {
+            return this.stateObj;
+        }
+    }
+
+    interface DataReceivedListener {
+        void onDataReceived();
     }
 
 }

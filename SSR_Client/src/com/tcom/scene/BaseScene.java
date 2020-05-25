@@ -108,7 +108,7 @@ public abstract class BaseScene extends Container implements Serializable {
      * @param data 이미지 byte array
      * @return Image객체
      */
-    final protected Image loadImage(final byte[] data) {
+    final public Image loadImage(final byte[] data) {
     	if(imgPool.getLoadedImageCount() >= maxLoadableImgCount) {
     		LOG.print(this, "Exceed max loadable image count");
     		Set key = imgPool.getImagePath();
@@ -120,7 +120,7 @@ public abstract class BaseScene extends Container implements Serializable {
     }
 
 
-    final protected Image loadLocalImage(final String name) {
+    final public Image loadLocalImage(final String name) {
         Image img;
         LOG.print(this, "Local Image Load!!!!");
         File resFolder = new File("res");
@@ -140,7 +140,7 @@ public abstract class BaseScene extends Container implements Serializable {
      * @param name 파일명 or URL
      * @return
      */
-    final protected Image loadImage(final String name) {
+    final public Image loadImage(final String name) {
     	if(imgPool.getLoadedImageCount() >= maxLoadableImgCount) {
     		LOG.print(this, "Exceed max loadable image count");
     		Set key = imgPool.getImagePath();

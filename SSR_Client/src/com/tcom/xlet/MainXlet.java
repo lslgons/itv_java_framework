@@ -7,6 +7,7 @@ import com.tcom.platform.dmc.interfaces.DisplayInterface;
 import com.tcom.scene.DiagnosticScene;
 import com.tcom.ssr.DataManager;
 import com.tcom.ssr.SSRConfig;
+import com.tcom.ssr.SSRContainer;
 import com.tcom.util.LOG;
 import com.tcom.util.RemoteClassLoader;
 
@@ -36,6 +37,7 @@ public class MainXlet implements Xlet{
 
     DisplayInterface dispInterface = null;
     private DiagnosticScene diagScene;
+    private SSRContainer ssrContainer;
 
     public void initXlet(XletContext xletContext) throws XletStateChangeException {
         SSRConfig config = SSRConfig.getInstance();
@@ -65,11 +67,15 @@ public class MainXlet implements Xlet{
 
         }
 
-        //SSRContext
-        DataManager.getInstance().requestData(0,0);
 
         //SSRContainer 등록
-
+        ssrContainer=new SSRContainer();
+        config.ROOT_SCENE.add(ssrContainer);
+        KeyController.getInstance().setKeyProcessListener(new KeyController.KeyProcessListener() {
+            public void onKeyDown(int keyCode) {
+                ssrContainer.onKeyDown(keyCode);
+            }
+        });
         //1. MainLayer
 
 
