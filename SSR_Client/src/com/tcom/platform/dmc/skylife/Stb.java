@@ -1,8 +1,8 @@
 package com.landman.ssr.dmc.skylife;
 
-import com.cj.tvui.dmc.interfaces.StbInterface;
-import com.cj.tvui.util.LOG;
-import com.cj.tvui.util.StringUtil;
+import com.tcom.platform.dmc.interfaces.StbInterface;
+import com.tcom.util.LOG;
+import com.tcom.util.StringUtil;
 
 import com.skylife.stb.STBInformation;
 
@@ -92,6 +92,10 @@ public class Stb implements StbInterface {
 	public void setSOCode(String socd) {
 		this.soCode = socd;
 		
+	}
+
+	public String getDMCCode() {
+		return "3026";
 	}
 
 	public String getModelNo() {

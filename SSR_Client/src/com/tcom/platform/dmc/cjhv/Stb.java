@@ -27,6 +27,10 @@ public class Stb implements StbInterface {
 		
 	}
 
+	public String getDMCCode() {
+		return "3026";
+	}
+
 	public String getModelNo() {
 		// TODO Auto-generated method stub
 		return null;

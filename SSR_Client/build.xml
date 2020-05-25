@@ -23,7 +23,7 @@
     <!-- 빌드되는 경로와 output파일 경로 정의한다. -->
     <property name="build" location="build"/>
     <property name="deploy" location="deploy" />
-    <property name="dist" location="${deploy}/tvui-${version}-${TODAY}"/>
+    <property name="dist" location="${deploy}/itv-ssr-client-${version}-${TODAY}"/>
     <!-- Make Boilerplate -->
     <property name="dist-libs" location="${dist}/libs"/>
     <property name="dist-src" location="${dist}/src"/>
@@ -41,7 +41,7 @@
         <mkdir dir="${dist-res}" />
         <mkdir dir="${dist-local}" />
         <mkdir dir="${dist-local_res}" />
-        <echo message="**************TVUI Framework*********************" />
+        <echo message="**************ITV SSR Client*********************" />
         <echo message="* Version :  ${version}" />
         <echo message="* Date    :  ${TODAY}" />
         <echo message="*************************************************" />
@@ -74,7 +74,7 @@
         -->
 
         <!-- Example excludes="com/cj/oshop/dmc/kt/**, com/cj/oshop/dmc/sk/**" -->
-        <javac srcdir="${SRC_DIR}:${RUN_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/cj/tvui/dmc/kt/**, com/cj/tvui/dmc/cjhv/**, com/cj/tvui/dmc/skylife/**">
+        <javac srcdir="${SRC_DIR}:${RUN_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/tcom/platform/dmc/kt/**, com/tcom/platform/dmc/cjhv/**, com/tcom/platform/dmc/skylife/**">
             <classpath>
                 <fileset dir="${lib_common}">
                     <include name="json-simple-1.1.1.jar"/>
@@ -86,7 +86,7 @@
             </classpath>
         </javac>
         <delete dir="${build}/META-INF" />
-        <zip zipfile="${dist-libs}/libCJTVUI-dev-${version}-${DSTAMP}.zip" basedir="${build}" />
+        <zip zipfile="${dist-libs}/ITVSSR-dev-${version}-${DSTAMP}.zip" basedir="${build}" />
     </target>
 
 
@@ -120,7 +120,7 @@
 			<replacefilter token="@DMC@" value="KT"/>
 		</replace>
 		 -->
-        <javac srcdir="${SRC_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/cj/tvui/dmc/defaults/**, com/cj/tvui/dmc/cjhv/**, com/cj/tvui/dmc/skylife/**">
+        <javac srcdir="${SRC_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/tcom/platform/dmc/defaults/**, com/tcom/platform/dmc/cjhv/**, com/tcom/platform/dmc/skylife/**">
 
             <classpath>
                 <fileset dir="${lib_common}">
@@ -133,7 +133,7 @@
             </classpath>
         </javac>
         <delete dir="${build}/META-INF" />
-        <zip zipfile="${dist-libs}/CJTVUI-kt-${version}-${DSTAMP}.zip" basedir="${build}" />
+        <zip zipfile="${dist-libs}/ITVSSR-kt-${version}-${DSTAMP}.zip" basedir="${build}" />
     </target>
 
     <target name="build-skylife" depends="init">
@@ -182,7 +182,7 @@
 			<replacefilter token="@DMC@" value="KT"/>
 		</replace>
 		 -->
-        <javac srcdir="${SRC_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/cj/tvui/dmc/defaults/**, com/cj/tvui/dmc/cjhv/**, com/cj/tvui/dmc/kt/**">
+        <javac srcdir="${SRC_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/tcom/platform/dmc/defaults/**, com/tcom/platform/dmc/cjhv/**, com/tcom/platform/dmc/kt/**">
 
             <classpath>
                 <fileset dir="${lib_common}">
@@ -195,7 +195,7 @@
             </classpath>
         </javac>
         <delete dir="${build}/META-INF" />
-        <zip zipfile="${dist-libs}/CJTVUI-skylife-${version}-${DSTAMP}.zip" basedir="${build}" />
+        <zip zipfile="${dist-libs}/ITVSSR-skylife-${version}-${DSTAMP}.zip" basedir="${build}" />
     </target>
 
     <target name="build-cjhv" depends="init">
@@ -227,7 +227,7 @@
         <!--<replace encoding="utf-8" file="${build}/config.properties">-->
         <!--<replacefilter token="@DMC@" value="CJHV"/>-->
         <!--</replace>-->
-        <javac srcdir="${SRC_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/cj/tvui/dmc/defaults/**, com/cj/tvui/dmc/kt/**, com/cj/tvui/dmc/skylife/**">
+        <javac srcdir="${SRC_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/tcom/platform/dmc/defaults/**, com/tcom/platform/dmc/kt/**, com/tcom/platform/dmc/skylife/**">
 
             <classpath>
                 <fileset dir="${lib_common}">
@@ -240,12 +240,11 @@
             </classpath>
         </javac>
         <delete dir="${build}/META-INF" />
-        <zip zipfile="${dist-libs}/CJTVUI-cjhv-${version}-${DSTAMP}.zip" basedir="${build}" />
+        <zip zipfile="${dist-libs}/ITVSSR-cjhv-${version}-${DSTAMP}.zip" basedir="${build}" />
     </target>
 
     <target name="build" depends="build-default,build-kt, build-skylife, build-cjhv" >
         <copy file="${SRC_DIR}/config.properties" toFile="${dist-src}/config.properties"/>
-        <copy file="${SRC_DIR}/host.properties" toFile="${dist-src}/host.properties"/>
         <copy file="${basedir}/build_app.xml" toFile="${dist}/build_app.xml"/>
         <copy file="${basedir}/run/run.bat" toFile="${dist}/run.bat"/>
         <copy file="${basedir}/app.gitignore" toFile="${dist}/.gitignore"/>

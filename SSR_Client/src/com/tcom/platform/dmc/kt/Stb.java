@@ -85,6 +85,10 @@ public class Stb implements StbInterface {
 		
 	}
 
+	public String getDMCCode() {
+		return "3026";
+	}
+
 	public String getModelNo() {
 		if(modelNo == null) modelNo = com.kt.util.sysinfo.STBInformation.getInstance().getModelNumber();
 		return modelNo;
