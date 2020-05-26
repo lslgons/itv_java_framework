@@ -3,6 +3,7 @@ package com.tcom.ssr;
 
 import com.tcom.util.PropertyReader;
 
+import javax.tv.xlet.XletContext;
 import java.awt.*;
 
 /**
@@ -58,6 +59,10 @@ public class SSRConfig {
             IS_KT_OTS=false;
         }
 
+    }
+
+    public PropertyReader getPropertyReader() {
+        return config;
     }
 
     /**
@@ -129,6 +134,19 @@ public class SSRConfig {
 
     public Container ROOT_SCENE;
 
+    /**
+     * XletContext
+     */
+
+    public XletContext XLET_CONTEXT;
+
+    /**
+     * 알래스카 SMS TAG 정보
+     * Use only LGHV, HCN
+     */
+    public String ALASKA_BIZ_TAG;
+    public String ALASKA_CPN_TAG;
+    public int IS_ALASKA_UI=-1; //-1: Not Define, 0:False, 1:True
 
 
 

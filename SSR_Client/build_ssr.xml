@@ -6,11 +6,7 @@
     <property name="SRC_DIR" value="${basedir}/src"/>
     <!-- Library Path -->
     <property name="LIBS_DIR" value="${basedir}/libs"/>
-    <!-- Resource Path -->
-    <property name="RES_DIR" value="${basedir}/res"/>
-    <!-- 20180808, daegon.kim, local source -->
-    <property name="LOCAL_DIR" value="${basedir}/local/src" />
-    <property name="LOCAL_RES" value="${basedir}/local/res" />
+
     <tstamp>
         <format property="TODAY" pattern="yyyyMMddhhmm"/>
     </tstamp>
@@ -19,33 +15,24 @@
     <property name="build_space" location="build_space" />
     <property name="output" location="output-${TODAY}" />
     <property name="build" location="build"/>
-    <property name="output-dcl" location="${output}/dcl" />
-
-    <property name="output-standalone" location="${output}/standalone" />
 
     <!-- 파일생성 날짜시간 스템프 -->
     <target name="init">
         <mkdir dir="${output}" />
-        <mkdir dir="${output-dcl}" />
-        <mkdir dir="${output-standalone}" />
     </target>
 
-    <target name="build" depends="build-standalone, build-dcl"/>
-
-    <target name="build-standalone" depends="init, build-standalone-default, build-standalone-kt, build-standalone-cjhv, build-standalone-skylife">
+    <target name="build" depends="init, build-standalone-pc, build-standalone-kt, build-standalone-cjhv, build-standalone-skylife">
     </target>
 
-    <target name="build-dcl" depends="build-dcl-default, build-dcl-kt, build-dcl-cjhv, build-dcl-skylife">
-    </target>
-
-    <target name="build-standalone-default" depends="init">
+    <target name="build-standalone-pc" depends="init">
 
         <echo message="*************************************************" />
-        <echo message="*  (Standalone) Build for PC Emulator"/>
+        <echo message="* Build for PC Emulator                         *"/>
         <echo message="*************************************************" />
         <delete dir="${build}" />
         <mkdir dir="${build}" />
         <echo message="Extract library files to destination..."/>
+        <unzip src="${lib_common}/json-simple-1.1.1.jar" dest="${build}" overwrite="false"/>
         <unzip dest="${build}">
             <fileset dir="${LIBS_DIR}">
                 <include name="libCJTVUI-*.zip"/>

@@ -28,7 +28,6 @@ public class MainXlet implements Xlet{
     /*
     Implemented method
      */
-    XletContext context;
     static MainXlet _app=null;
 
     /**
@@ -48,7 +47,7 @@ public class MainXlet implements Xlet{
         System.out.println("* Release    : "+config.APP_RELEASE);
         System.out.println("* SSR Host : "+config.SSR_HOST);
         System.out.println("***************************************************");
-        this.context=xletContext;
+        config.XLET_CONTEXT=xletContext;
         _app=this;
         System.out.println("==> Init Application, Request Home Page");
         dispInterface = RemoteClassLoader.loadDisplayInterface();
@@ -108,6 +107,7 @@ public class MainXlet implements Xlet{
         System.out.println("****************** CJ Tmall Destroy all resource Complete!!!!!!!");
 
         LOG.print("========================= End of destroy xlet ================");
+        XletContext context = SSRConfig.getInstance().XLET_CONTEXT;
         if(context != null) {
             context.notifyDestroyed();
             context=null;
@@ -118,7 +118,8 @@ public class MainXlet implements Xlet{
     public static void closeApp() {
         try {
             _app.destroyXlet(true);
-            if(_app.context != null) _app.context.notifyDestroyed();
+            XletContext context = SSRConfig.getInstance().XLET_CONTEXT;
+            if(context != null) context.notifyDestroyed();
         } catch (XletStateChangeException e) {
             e.printStackTrace();
         }

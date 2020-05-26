@@ -13,5 +13,6 @@ public interface KeymapInterface {
     public void setEnableTrickKey(boolean enable); //REW/Play&Pause/Stop/FF
     public void setEnableOkKey(boolean enable);
     public void setEnableArrowKey(boolean enable);
+    public void destroy();
     
 }

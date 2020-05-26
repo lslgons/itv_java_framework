@@ -149,5 +149,9 @@ public class Keymap implements KeymapInterface {
         HScene scene = (HScene) SSRConfig.getInstance().ROOT_SCENE;
         scene.setKeyEvents(eventGroup);
     }
+
+    public void destroy() {
+
+    }
     	
 }

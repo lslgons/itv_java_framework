@@ -5,11 +5,12 @@ import org.havi.ui.event.HRcEvent;
 import java.awt.event.KeyEvent;
 
 /**
- * 프레임워크 내 사용되는 키코드
+ * 프레임워크 내 사용되는 키코드 (PC용)
  * @author daegon.kim (daegon.kim1@cj.net)
  * @since 2016-12-06
  */
 public class KeyCode {
+
     public final static int VK_OK = HRcEvent.VK_ENTER;
     public final static int VK_INFO = HRcEvent.VK_INFO;
     public final static int VK_LEFT = HRcEvent.VK_LEFT;
@@ -42,9 +43,26 @@ public class KeyCode {
     public final static int VK_9 = KeyEvent.VK_9;
 
     public final static int VK_VOD_PLAY = HRcEvent.VK_PLAY;
+    public final static int VK_VOD_PAUSE = HRcEvent.VK_PAUSE;
+
     public final static int VK_VOD_STOP = HRcEvent.VK_STOP;
     public final static int VK_VOD_FF= HRcEvent.VK_FAST_FWD;
     public final static int VK_VOD_REW= HRcEvent.VK_REWIND;
     public final static int VK_VOD_TRACK_PREV= HRcEvent.VK_TRACK_PREV;
     public final static int VK_VOD_TRACK_NEXT= HRcEvent.VK_TRACK_NEXT;
+
+    public static final int VK_VOLUME_UP = HRcEvent.VK_VOLUME_UP;
+    public static final int VK_VOLUME_DOWN = HRcEvent.VK_VOLUME_DOWN;
+    public static final int VK_MUTE = HRcEvent.VK_MUTE;
+    public static final int VK_CHANNEL_UP = HRcEvent.VK_CHANNEL_UP;
+    public static final int VK_CHANNEL_DOWN = HRcEvent.VK_CHANNEL_DOWN;
+
+    public static final int VK_F1 = KeyEvent.VK_F1;
+
+
+    public static final int VK_UP_ACCEL = HRcEvent.VK_BASS_BOOST_UP;
+    public static final int VK_DOWN_ACCEL = HRcEvent.VK_BASS_BOOST_DOWN;
+    public static final int VK_UPDATE = HRcEvent.VK_WINK;
+
+    public static final int VK_POWER = HRcEvent.VK_POWER;
 }

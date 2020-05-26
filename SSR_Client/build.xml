@@ -7,6 +7,7 @@
 
     <!-- Framework Source Folder -->
     <property name="SRC_DIR" value="${basedir}/src"/>
+    <property name="SRC_CJH_DIR" value="${basedir}/src_cjhv"/>
     <property name="RUN_DIR" value="${basedir}/run" />
     <!-- Library Path -->
 
@@ -24,23 +25,14 @@
     <property name="build" location="build"/>
     <property name="deploy" location="deploy" />
     <property name="dist" location="${deploy}/itv-ssr-client-${version}-${TODAY}"/>
-    <!-- Make Boilerplate -->
-    <property name="dist-libs" location="${dist}/libs"/>
-    <property name="dist-src" location="${dist}/src"/>
-    <property name="dist-res" location="${dist}/res" />
-    <property name="dist-local" location="${dist}/local/src" />
-    <property name="dist-local_res" location="${dist}/local/res" />
+
     <!-- 파일생성 날짜시간 스템프 -->
 
 
     <target name="init">
         <mkdir dir="${deploy}" />
         <mkdir dir="${dist}" />
-        <mkdir dir="${dist-libs}" />
-        <mkdir dir="${dist-src}" />
-        <mkdir dir="${dist-res}" />
-        <mkdir dir="${dist-local}" />
-        <mkdir dir="${dist-local_res}" />
+
         <echo message="**************ITV SSR Client*********************" />
         <echo message="* Version :  ${version}" />
         <echo message="* Date    :  ${TODAY}" />
@@ -48,7 +40,7 @@
 
     </target>
 
-    <target name="build-default" depends="init">
+    <target name="build-pc" depends="init">
 
         <echo message="*************************************************" />
         <echo message="*  Build for PC Emulator"/>
@@ -64,17 +56,17 @@
             </fileset>
         </unzip>
         <echo message="Compile Default Target"/>
-        <!--<copy file="${basedir}/config.properties" toFile="${build}/config.properties"/>-->
-        <!--<copy file="${basedir}/run/run.bat" toFile="${build}/run.bat"/>-->
-        <!--<copy file="${basedir}/run/xlet.properties" toFile="${build}/xlet.properties"/>-->
-        <!--
+        <copy file="${basedir}/src/config.properties" toFile="${build}/config.properties"/>
+        <copy file="${basedir}/run/run.bat" toFile="${build}/run.bat"/>
+        <copy file="${basedir}/run/xlet.properties" toFile="${build}/xlet.properties"/>
+
         <replace encoding="utf-8" file="${build}/config.properties">
-			<replacefilter token="@DMC@" value="defaults"/>
+			<replacefilter token="@DMC@" value="pc"/>
 		</replace>
-        -->
+
 
         <!-- Example excludes="com/cj/oshop/dmc/kt/**, com/cj/oshop/dmc/sk/**" -->
-        <javac srcdir="${SRC_DIR}:${RUN_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/tcom/platform/dmc/kt/**, com/tcom/platform/dmc/cjhv/**, com/tcom/platform/dmc/skylife/**">
+        <javac srcdir="${SRC_DIR}:${RUN_DIR}" destdir="${build}" target="1.3" source="1.3" debug="false" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/tcom/platform/dmc/kt/**, com/tcom/platform/dmc/cjhv/**, com/tcom/platform/dmc/skylife/**">
             <classpath>
                 <fileset dir="${lib_common}">
                     <include name="json-simple-1.1.1.jar"/>
@@ -86,7 +78,7 @@
             </classpath>
         </javac>
         <delete dir="${build}/META-INF" />
-        <zip zipfile="${dist-libs}/ITVSSR-dev-${version}-${DSTAMP}.zip" basedir="${build}" />
+        <zip zipfile="${dist}/ITVSSR-dev-${version}-${DSTAMP}.zip" basedir="${build}" />
     </target>
 
 
@@ -120,7 +112,11 @@
 			<replacefilter token="@DMC@" value="KT"/>
 		</replace>
 		 -->
-        <javac srcdir="${SRC_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/tcom/platform/dmc/defaults/**, com/tcom/platform/dmc/cjhv/**, com/tcom/platform/dmc/skylife/**">
+        <copy file="${basedir}/src/config.properties" toFile="${build}/config.properties"/>
+        <replace encoding="utf-8" file="${build}/config.properties">
+            <replacefilter token="@DMC@" value="KT"/>
+        </replace>
+        <javac srcdir="${SRC_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/tcom/platform/dmc/pc/**, com/tcom/platform/dmc/cjhv/**, com/tcom/platform/dmc/skylife/**">
 
             <classpath>
                 <fileset dir="${lib_common}">
@@ -133,7 +129,7 @@
             </classpath>
         </javac>
         <delete dir="${build}/META-INF" />
-        <zip zipfile="${dist-libs}/ITVSSR-kt-${version}-${DSTAMP}.zip" basedir="${build}" />
+        <zip zipfile="${dist}/ITVSSR-kt-${version}-${DSTAMP}.zip" basedir="${build}" />
     </target>
 
     <target name="build-skylife" depends="init">
@@ -182,7 +178,11 @@
 			<replacefilter token="@DMC@" value="KT"/>
 		</replace>
 		 -->
-        <javac srcdir="${SRC_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/tcom/platform/dmc/defaults/**, com/tcom/platform/dmc/cjhv/**, com/tcom/platform/dmc/kt/**">
+        <copy file="${basedir}/src/config.properties" toFile="${build}/config.properties"/>
+        <replace encoding="utf-8" file="${build}/config.properties">
+            <replacefilter token="@DMC@" value="SKYLIFE"/>
+        </replace>
+        <javac srcdir="${SRC_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/tcom/platform/dmc/pc/**, com/tcom/platform/dmc/cjhv/**, com/tcom/platform/dmc/kt/**">
 
             <classpath>
                 <fileset dir="${lib_common}">
@@ -195,7 +195,7 @@
             </classpath>
         </javac>
         <delete dir="${build}/META-INF" />
-        <zip zipfile="${dist-libs}/ITVSSR-skylife-${version}-${DSTAMP}.zip" basedir="${build}" />
+        <zip zipfile="${dist}/ITVSSR-skylife-${version}-${DSTAMP}.zip" basedir="${build}" />
     </target>
 
     <target name="build-cjhv" depends="init">
@@ -223,11 +223,11 @@
          -->
         <!-- App에서 사용할 config파일을 build폴더에 복사해 넣어둔다.(zip파일로 같이 묶기위함)  -->
         <echo message="Compile CJHV Target"/>
-        <!--<copy file="${basedir}/config.properties" toFile="${build}/config.properties"/>-->
-        <!--<replace encoding="utf-8" file="${build}/config.properties">-->
-        <!--<replacefilter token="@DMC@" value="CJHV"/>-->
-        <!--</replace>-->
-        <javac srcdir="${SRC_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/tcom/platform/dmc/defaults/**, com/tcom/platform/dmc/kt/**, com/tcom/platform/dmc/skylife/**">
+        <copy file="${basedir}/src/config.properties" toFile="${build}/config.properties"/>
+        <replace encoding="utf-8" file="${build}/config.properties">
+            <replacefilter token="@DMC@" value="CJHV"/>
+        </replace>
+        <javac srcdir="${SRC_DIR}:${SRC_CJH_DIR}" destdir="${build}" target="1.3" source="1.3" debug="true" optimize="true" encoding="UTF-8"  includeantruntime="false" excludes="com/tcom/platform/dmc/pc/**, com/tcom/platform/dmc/kt/**, com/tcom/platform/dmc/skylife/**">
 
             <classpath>
                 <fileset dir="${lib_common}">
@@ -240,14 +240,14 @@
             </classpath>
         </javac>
         <delete dir="${build}/META-INF" />
-        <zip zipfile="${dist-libs}/ITVSSR-cjhv-${version}-${DSTAMP}.zip" basedir="${build}" />
+        <zip zipfile="${dist}/ITVSSR-cjhv-${version}-${DSTAMP}.zip" basedir="${build}" />
     </target>
 
-    <target name="build" depends="build-default,build-kt, build-skylife, build-cjhv" >
-        <copy file="${SRC_DIR}/config.properties" toFile="${dist-src}/config.properties"/>
-        <copy file="${basedir}/build_app.xml" toFile="${dist}/build_app.xml"/>
-        <copy file="${basedir}/run/run.bat" toFile="${dist}/run.bat"/>
-        <copy file="${basedir}/app.gitignore" toFile="${dist}/.gitignore"/>
+    <target name="build" depends="build-pc,build-kt, build-skylife, build-cjhv" >
+<!--        <copy file="${SRC_DIR}/config.properties" toFile="${dist-src}/config.properties"/>-->
+<!--        <copy file="${basedir}/build_app.xml" toFile="${dist}/build_app.xml"/>-->
+<!--        <copy file="${basedir}/run/run.bat" toFile="${dist}/run.bat"/>-->
+<!--        <copy file="${basedir}/app.gitignore" toFile="${dist}/.gitignore"/>-->
     </target>
 
 </project>

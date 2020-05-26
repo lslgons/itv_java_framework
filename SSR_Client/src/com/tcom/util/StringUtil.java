@@ -902,5 +902,25 @@ public class StringUtil {
         return retStr;
     }
 
+    /**
+     * byte[] 를 Hex 값으로 변경
+     * @param bytes
+     * @return String
+     */
+    public static String bytesToHex(byte[] bytes) {
+        //char[] hexArray = "0123456789ABCDEF".toCharArray();
+        char[] hexArray = "0123456789abcdef".toCharArray(); // 2018.09.12 - hyeokjun, password 값 소문자로 변경
+        String result = "";
+        for ( int j = 0; j < bytes.length; j++ ) {
+            int v = bytes[j] & 0xFF;
+            char[] hChar = new char[2];
+            hChar[0] = hexArray[v >>> 4];
+            hChar[1] = hexArray[v & 0x0F];
+            result += new String(hChar);
+            if (j != bytes.length - 1) result += ":";
+        }
+        return result;
+    }
+
 
 }

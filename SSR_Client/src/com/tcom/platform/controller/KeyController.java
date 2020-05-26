@@ -28,9 +28,16 @@ public final class KeyController{
     private KeyController(){
         LOG.print("Init KeyController");
         keymapIntf = RemoteClassLoader.loadKeymapInterface();
+        keymapIntf.setEnableBackKey(isEnableBackKey);
+        keymapIntf.setEnableNumKey(isEnableNumKey);
+        keymapIntf.setEnableHotKey(isEnableHotKey);
+        keymapIntf.setEnableTrickKey(isEnableTrickKey);
+        keymapIntf.setEnableOkKey(isEnableOkKey);
+        keymapIntf.setEnableArrowKey(isEnableArrowKey);
     }
 
     public void shutdown() {
+        keymapIntf.destroy();
         keymapIntf=null;
         instance=null;
         keyProcessListener=null;
