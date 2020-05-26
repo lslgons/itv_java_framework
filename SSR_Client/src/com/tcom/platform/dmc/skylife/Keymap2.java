@@ -130,4 +130,8 @@ public class Keymap2 implements KeymapInterface {
 
     }
 
+	public void destroy() {
+
+	}
+
 }

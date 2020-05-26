@@ -33,6 +33,13 @@ public final class MediaController {
 		avInterface = RemoteClassLoader.loadAVInterface();
 	}
 
+	/**
+	 * 조정된 영상 사이즈를 원복
+	 */
+	public void resetVideoSize() {
+		avInterface.resetVideoSize();
+	}
+
     /**
      * 현재 방송 중인 영상 사이즈 변경
      * @param x
