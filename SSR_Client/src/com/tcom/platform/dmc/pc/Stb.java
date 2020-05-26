@@ -3,6 +3,8 @@ package com.tcom.platform.dmc.pc;
 
 import com.tcom.platform.dmc.interfaces.StbInterface;
 
+import java.rmi.RemoteException;
+
 /**
  * Created by user on 2016-12-07.
  */
@@ -48,6 +50,10 @@ public class Stb implements StbInterface {
 	public String getDeviceSN() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void destroy() {
+
 	}
 
 

@@ -143,6 +143,7 @@ public final class StbController {
         if(instance!=null) {
             instance._classLoadErrorListener=null;
             instance._destroyAppListener=null;
+            instance.stbIntf.destroy();
             instance.stbIntf=null;
         }
         instance=null;

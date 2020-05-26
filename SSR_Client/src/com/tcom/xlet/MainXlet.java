@@ -87,7 +87,7 @@ public class MainXlet implements Xlet{
         LOG.print("Start Application");
         LOG.print(this, "rootScene created");
         config.ROOT_SCENE.setVisible(true);
-        config.ROOT_SCENE.requestFocus();
+        //config.ROOT_SCENE.requestFocus();
 
     }
 

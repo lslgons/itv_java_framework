@@ -7,6 +7,8 @@ import com.tcom.util.StringUtil;
 import kt.alticast.interactive.service.common.ServiceUsage;
 import kt.alticast.interactive.service.common.client.ServiceUsageClientStub;
 
+import java.rmi.RemoteException;
+
 /**
  * Created by user on 2016-12-07.
  */
@@ -107,6 +109,10 @@ public class Stb implements StbInterface {
 	public String getDeviceSN() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void destroy() {
+
 	}
 
 

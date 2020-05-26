@@ -20,6 +20,7 @@ public class OverlappedUIHandlerImpl implements OverlappedDialogHandler {
 		Container rootScene = SSRConfig.getInstance().ROOT_SCENE;
 		if(rootScene!=null) {
 			rootScene.setVisible(false);
+			//매뉴얼상 RequestFocus는 호출하면 안된다.
 		}
 
 	}

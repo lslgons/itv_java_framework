@@ -6,6 +6,8 @@ import com.tcom.util.StringUtil;
 
 import com.skylife.stb.STBInformation;
 
+import java.rmi.RemoteException;
+
 /**
  * Created by user on 2016-12-07.
  */
@@ -120,6 +122,10 @@ public class Stb implements StbInterface {
 	public String getDeviceSN() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void destroy() {
+
 	}
 
 

@@ -8,7 +8,10 @@ import com.tcom.platform.dmc.interfaces.StbInterface;
 import com.tcom.ssr.SSRConfig;
 import com.tcom.util.LOG;
 import com.tcom.util.StringUtil;
+import com.tcom.xlet.MainXlet;
+import monitor.ixc.ApplicationModeListener;
 import monitor.ixc.ApplicationModeManager;
+import monitor.ixc.ApplicationModeRequestHandler;
 import org.dvb.io.ixc.IxcRegistry;
 
 import java.rmi.NotBoundException;
@@ -17,7 +20,7 @@ import java.rmi.RemoteException;
 /**
  * Created by user on 2016-12-07.
  */
-public class Stb implements StbInterface {
+public class Stb implements StbInterface, ApplicationModeListener, ApplicationModeRequestHandler {
 
 	final static String ALTI_EPG_AID_OID="/10000000/3030/"+EpgService.RMI_APP_NAME;
 	final static String NDS_EPG_AID_OID="/10000000/3000/NDSEPGXLET";
@@ -70,6 +73,22 @@ public class Stb implements StbInterface {
 				} catch (RemoteException e) {
 					e.printStackTrace();
 				}
+			}
+
+			//ApplicationModeManager
+			try {
+				appModeManager = (ApplicationModeManager) IxcRegistry.lookup(SSRConfig.getInstance().XLET_CONTEXT,
+						"10000000/3FFF/"+ApplicationModeManager.IXC_OBJECT_NAME);
+				appModeManager.addListener(this);
+				appModeManager.addRequestHandler(this);
+
+				//Set ApplicationMode to Full mode
+				appModeManager.changeMode(ApplicationModeManager.APP_MODE_FULL);
+
+			} catch (NotBoundException e) {
+				e.printStackTrace();
+			} catch (RemoteException e) {
+				e.printStackTrace();
 			}
 
 		}
@@ -176,5 +195,28 @@ public class Stb implements StbInterface {
 	public String getDeviceSN() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void destroy() {
+		if(appModeManager!=null) {
+			try {
+				appModeManager.removeListener(this);
+				appModeManager.removeRequestHandler(this);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public boolean modeChanged(int newMode) throws RemoteException {
+		LOG.print(this, "ApplicationMode Changed : "+newMode);
+		return false;
+	}
+
+	public boolean modeChangeRequested(int newMode, boolean forced) throws RemoteException {
+		LOG.print(this, "Applicatio modeChangeRequested, newMode : "+newMode+", forced : "+forced);
+		//TODO EPG로부터 ICON모드로 호출받게 되므로 어플리케이션 종료한다.
+		MainXlet.closeApp();
+		return true;
 	}
 }

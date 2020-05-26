@@ -18,4 +18,6 @@ public interface StbInterface {
     public String getSmartcardID();
     public String getMacAddr();
     public String getDeviceSN();
+
+    public void destroy();
 }
