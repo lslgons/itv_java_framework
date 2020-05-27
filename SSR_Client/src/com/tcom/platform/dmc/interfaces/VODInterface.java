@@ -82,7 +82,7 @@ public interface VODInterface {
 	 * VOD 재생요청
 	 * @param assetId
 	 */
-	public void startVOD(String assetId);
+	public void startVOD(String assetId, boolean loop);
 
 	/**
 	 * 재생중인 VOD를 종료하고 리소스를 정리.
@@ -124,7 +124,7 @@ public interface VODInterface {
 	 * VOD 현재 재생상태 반환
 	 * @return
 	 */
-	public int getPalyStatus();
+	public int getPlayStatus();
 
 	/**
 	 * VOD 현재 재생속도 반환

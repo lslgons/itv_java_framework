@@ -9,6 +9,10 @@ import java.awt.Rectangle;
 
 public class AV implements AVInterface, VODInterface {
 
+	public void resetVideoSize() {
+
+	}
+
 	public void changeVideoSize(Rectangle rect) {
 		// TODO Auto-generated method stub
 		LOG.print(this, "Change video size to "+rect.toString());
@@ -32,7 +36,7 @@ public class AV implements AVInterface, VODInterface {
 	//VOD Interface
 	
 
-	public void startVOD(String assetId) {
+	public void startVOD(String assetId, boolean loop) {
 		LOG.print(this, "VOD Start : "+ assetId);
 		
 	}
@@ -67,7 +71,7 @@ public class AV implements AVInterface, VODInterface {
 		return 0;
 	}
 
-	public int getPalyStatus() {
+	public int getPlayStatus() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

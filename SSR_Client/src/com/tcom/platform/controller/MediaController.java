@@ -91,7 +91,7 @@ public final class MediaController {
      * @param assetID
      */
 	public void startVOD(String assetID) {
-		((VODInterface)avInterface).startVOD(assetID);
+		((VODInterface)avInterface).startVOD(assetID, false);
 		this.isVODPlaying = true;
 		KeyController.getInstance().setEnableTrickKey(true);
 	}

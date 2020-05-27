@@ -44,6 +44,9 @@ public class AV implements AVInterface, VODInterface {
 	Player player = (Player) sc.getServiceContentHandlers()[0];
 	AWTVideoSizeControl sizeCntr = ( AWTVideoSizeControl ) player.getControl( "javax.tv.media.AWTVideoSizeControl" );
 
+	public void resetVideoSize() {
+		changeVideoSize(new Rectangle(0,0,960,540));
+	}
 	public void changeVideoSize(Rectangle rect) {
 		// TODO Auto-generated method stub
 		try {
@@ -347,7 +350,7 @@ public class AV implements AVInterface, VODInterface {
 	/**
 	 * VOD 플레이어 준비, Play는 아님
 	 */
-	public void startVOD(String assetId) {
+	public void startVOD(String assetId, boolean loop) {
 		// TODO Auto-generated method stub
 		this.assetId = assetId;
 		this.offsetTime = 0;
@@ -722,7 +725,7 @@ public class AV implements AVInterface, VODInterface {
 		return 0;
 	}
 
-	public int getPalyStatus() {
+	public int getPlayStatus() {
 		return vodStatus;
 	}
 
