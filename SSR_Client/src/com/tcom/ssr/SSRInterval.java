@@ -37,7 +37,7 @@ public class SSRInterval {
     public void timerWentOff() {
         intervalStep+=1;
         LOG.print("Interval : "+this.intervalID+ ":: "+intervalStep);
-        if(intervalStep>intervalPeriod) {
+        if(intervalStep>=intervalPeriod) {
             intervalStep=0;
             if(isEnabled) {
                 LOG.print("Interval Invoke : "+this.intervalID);

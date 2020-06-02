@@ -27,14 +27,25 @@ public class SSRRender {
         }
 
         if (type.equalsIgnoreCase("rect")) {
-            //draw rect
+            //draw rect - 라인두께로 인해 fillRect 4번 수행
+            int x=((Long)arguments.get(0)).intValue();
+            int y=((Long)arguments.get(1)).intValue();
+            int w=((Long)arguments.get(2)).intValue();
+            int h=((Long)arguments.get(3)).intValue();
+            int weight=((Long)arguments.get(5)).intValue();
 
-            g.drawRect(
-                    ((Long)arguments.get(0)).intValue(),
-                    ((Long)arguments.get(1)).intValue(),
-                    ((Long)arguments.get(2)).intValue(),
-                    ((Long)arguments.get(3)).intValue()
-            );
+            g.fillRect(x,y,w, weight);
+            g.fillRect(x+w-weight, y, weight, h);
+            g.fillRect(x, y+h-weight, w, weight);
+            g.fillRect(x,y, weight, h);
+
+
+//            g.drawRect(
+//                    ((Long)arguments.get(0)).intValue(),
+//                    ((Long)arguments.get(1)).intValue(),
+//                    ((Long)arguments.get(2)).intValue(),
+//                    ((Long)arguments.get(3)).intValue()
+//            );
 
         } else if (type.equalsIgnoreCase(("fill"))) {
 
