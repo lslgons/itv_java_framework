@@ -58,7 +58,7 @@ public class MainXlet implements Xlet{
 
 
         SSRConfig config = SSRConfig.getInstance();
-        config.ROOT_SCENE=dispInterface.getScene();
+        dispInterface.getScene();
         config.ROOT_SCENE.setBounds(0,0, config.SCENE_WIDTH, config.SCENE_HEIGHT);
         if(config.ENABLE_DIAGNOSTIC) {
             diagScene = new DiagnosticScene();

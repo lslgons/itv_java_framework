@@ -5,6 +5,7 @@ import java.awt.event.KeyListener;
 
 import com.tcom.platform.controller.KeyController;
 import com.tcom.platform.dmc.interfaces.DisplayInterface;
+import com.tcom.ssr.SSRConfig;
 import org.havi.ui.HSceneFactory;
 import org.havi.ui.HSceneTemplate;
 import org.havi.ui.HScreenDimension;
@@ -21,6 +22,7 @@ public class Display implements DisplayInterface {
         req.setPreference(HSceneTemplate.SCENE_SCREEN_LOCATION, new HScreenPoint(0.0f, 0.0f), HSceneTemplate.PREFERRED);
         req.setPreference(HSceneTemplate.SCENE_SCREEN_DIMENSION, new HScreenDimension(1.0f, 1.0f), HSceneTemplate.PREFERRED);
         Container container = HSceneFactory.getInstance().getBestScene(req);
+        SSRConfig.getInstance().ROOT_SCENE=container;
         container.addKeyListener((KeyListener) KeyController.getInstance().getKeymap().getKeyListener());
         return container;
     }

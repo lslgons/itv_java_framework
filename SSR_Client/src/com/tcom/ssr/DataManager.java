@@ -16,6 +16,33 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class DataManager {
+    final public static int ACTION_TRIGGER_NUM_0=0;
+    final public static int ACTION_TRIGGER_NUM_1=1;
+    final public static int ACTION_TRIGGER_NUM_2=2;
+    final public static int ACTION_TRIGGER_NUM_3=3;
+    final public static int ACTION_TRIGGER_NUM_4=4;
+    final public static int ACTION_TRIGGER_NUM_5=5;
+    final public static int ACTION_TRIGGER_NUM_6=6;
+    final public static int ACTION_TRIGGER_NUM_7=7;
+    final public static int ACTION_TRIGGER_NUM_8=8;
+    final public static int ACTION_TRIGGER_NUM_9=9;
+
+    final public static int ACTION_TRIGGER_COLOR_RED=20;
+    final public static int ACTION_TRIGGER_COLOR_GREEN=21;
+    final public static int ACTION_TRIGGER_COLOR_YELLOW=22;
+    final public static int ACTION_TRIGGER_COLOR_BLUE=23;
+    final public static int ACTION_TRIGGER_UP=10;
+    final public static int ACTION_TRIGGER_RIGHT=11;
+    final public static int ACTION_TRIGGER_DOWN=12;
+    final public static int ACTION_TRIGGER_LEFT=13;
+    final public static int ACTION_TRIGGER_OK=14;
+    final public static int ACTION_TRIGGER_BACK=15;
+    final public static int ACTION_TRIGGER_EXIT=16;
+
+    final public static int ACTION_TRIGGER_INTERVAL=90;
+    final public static int ACTION_TRIGGER_INIT=91;
+
+    final public static int ACTION_TRIGGER_NONE=99;
 
     JSONObject jsonData;
 
@@ -52,12 +79,12 @@ public class DataManager {
     }
 
     public String getActivatedElementName() {
-        return (String)((JSONObject)this.context.get(this.uid)).get("_activated_element");
+        return (String)((JSONObject)this.context.get("_"+this.uid)).get("_activated_element");
 
     }
 
     public void setActivatedElementName(final String el_name) {
-        JSONObject comp_context = (JSONObject)this.context.get(this.uid);
+        JSONObject comp_context = (JSONObject)this.context.get("_"+this.uid);
         comp_context.put("_activated_element", el_name);
 
     }
@@ -98,7 +125,9 @@ public class DataManager {
     }
 
     public JSONArray getIntervalData() {
-        return (JSONArray) this.component.get("interval");
+        //return (JSONArray) this.component.get("interval");
+        JSONObject cContext= (JSONObject) this.context.get("_"+this.uid);
+        return (JSONArray) cContext.get("_intervals");
     }
 
     class StateManager {

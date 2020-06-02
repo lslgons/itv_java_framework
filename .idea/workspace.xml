@@ -20,67 +20,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6ba1488c-b5c4-48e3-b039-ce99e2e7bedd" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/scene/BaseScene.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/CJOS_TV_Framework.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CJOS_TV_Framework.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/run/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/run/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/controller/KeyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/controller/KeyController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/controller/Keys.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/controller/KeyCode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/controller/MediaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/controller/MediaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/controller/ResourceController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/controller/SceneController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/controller/StbController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/controller/StbController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/dmc/cjhv/AV.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/cjhv/AV.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/dmc/cjhv/Display.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/cjhv/Display.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/dmc/cjhv/Keymap.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/cjhv/Keymap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/dmc/cjhv/OverlappedUIHandlerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/cjhv/OverlappedUIHandlerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/dmc/cjhv/Stb.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/cjhv/Stb.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/dmc/defaults/AV.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/defaults/AV.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/dmc/defaults/Display.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/defaults/Display.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/dmc/defaults/KeyListenerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/defaults/KeyListenerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/dmc/defaults/Keymap.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/defaults/Keymap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/dmc/defaults/Stb.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/defaults/Stb.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/dmc/interfaces/AVInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/interfaces/AVInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/dmc/interfaces/DisplayInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/interfaces/DisplayInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/dmc/interfaces/KeymapInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/interfaces/KeymapInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/dmc/interfaces/StbInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/interfaces/StbInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/dmc/interfaces/VODInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/interfaces/VODInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/dmc/kt/AV.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/kt/AV.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/dmc/kt/Display.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/kt/Display.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/dmc/kt/KeyListenerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/kt/KeyListenerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/dmc/kt/Keymap.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/kt/Keymap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/dmc/kt/Stb.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/kt/Stb.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/dmc/skylife/AV.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/skylife/AV.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/dmc/skylife/Display.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/skylife/Display.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/dmc/skylife/KeyListenerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/skylife/KeyListenerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/dmc/skylife/Keymap.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/skylife/Keymap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/dmc/skylife/Keymap2.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/skylife/Keymap2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/dmc/skylife/Stb.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/skylife/Stb.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/platform/dmc/skylife/UserKeyManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/skylife/UserKeyManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/scene/DiagnosticScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/scene/DiagnosticScene.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/scene/EmergencyScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/scene/EmergencyScene.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/ssr/SSRConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/ssr/SSRConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/ssr/client/component/Container.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/ssr/client/component/Container.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/ssr/client/component/Element.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/ssr/client/component/Element.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/ssr/client/component/MainLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/ssr/client/component/MainLayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/ssr/client/component/OverLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/ssr/client/component/OverLayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/ssr/client/tools/RequestMaker.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/ssr/client/tools/ResponseParser.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/ssr/config.properties" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/ssr/config.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/util/DateUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/util/DateUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/util/Drawer.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/util/Drawer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/util/GlobalImageManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/util/ImagePool.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/util/ImagePool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/util/ImageUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/util/ImageUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/util/LOG.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/util/LOG.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/util/PropertyReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/util/PropertyReader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/util/RemoteClassLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/util/RemoteClassLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/util/StringUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/util/StringUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/util/URLEncoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/util/URLEncoder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/util/ZipParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/util/ZipParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/landman/xlet/MainXlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/xlet/MainXlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/ssr/SSRInterval.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SSR_Client/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SSR_Client/SSR Client.iml" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/SSR Client.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/pc/Display.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/pc/Display.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/tcom/ssr/DataManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/ssr/DataManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/tcom/ssr/SSRComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/ssr/SSRComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/tcom/ssr/SSRConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/ssr/SSRConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/tcom/xlet/MainXlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/xlet/MainXlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SSR_Client/src/config.properties" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/config.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,6 +85,8 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/SSR_Client" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -292,6 +242,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="bug fix" />

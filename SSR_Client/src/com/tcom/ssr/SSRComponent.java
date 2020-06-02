@@ -7,15 +7,22 @@ import com.tcom.util.LOG;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import javax.tv.util.TVTimer;
+import javax.tv.util.TVTimerScheduleFailedException;
+import javax.tv.util.TVTimerSpec;
+import javax.tv.util.TVTimerWentOffListener;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class SSRComponent extends BaseScene implements DataManager.DataReceivedListener {
+public class SSRComponent extends BaseScene implements DataManager.DataReceivedListener, SSRInterval.IntervalTriggerListener {
     SSRContainer ssrContainer;
     DataManager dataManager;
     ArrayList renderList;
     ArrayList elementList;
+    ArrayList intervalList;
     SSRElement activatedElement;
+
+//    TVTimerSpec timerSpec;
 
     public SSRComponent(SSRContainer container) {
         super();
@@ -23,13 +30,25 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
         //this.dataManager=new DataManager(this);
         this.renderList=new ArrayList();
         this.elementList = new ArrayList();
+        this.intervalList = new ArrayList();
+
+//        timerSpec = new TVTimerSpec();
+//        timerSpec.setAbsolute(true);
+//        timerSpec.setDelayTime(TIMER_DELAY);
+//        timerSpec.setRepeat(true);
+//        try {
+//            TVTimerSpec actual = TVTimer.getTimer().scheduleTimerSpec(this.timerSpec);
+//            this.timerSpec.setTime(actual.getTime());
+//        } catch (TVTimerScheduleFailedException e) {
+//            e.printStackTrace();
+//        }
 
     }
 
     public void requestData(String uid) {
         this.dataManager=new DataManager(this, uid);
         //화면 구성
-        this.dataManager.requestData(90, "");
+        this.dataManager.requestData(DataManager.ACTION_TRIGGER_NONE, "");
     }
 
     /**
@@ -54,7 +73,10 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
     }
 
     public void onDestroy() {
-
+//        for(int i=0;i<intervalList.size();++i) {
+//            timerSpec.removeTVTimerWentOffListener((TVTimerWentOffListener) intervalList.get(i));
+//        }
+//        TVTimer.getTimer().deschedule(this.timerSpec);
     }
 
     public void onKeyDown(int keycode) {
@@ -65,26 +87,27 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
 
             case KeyCode.VK_UP:
                 action_index=0;
-                key_mapping=10;
+                key_mapping=DataManager.ACTION_TRIGGER_UP;
                 break;
             case KeyCode.VK_RIGHT:
                 action_index=1;
-                key_mapping=11;
+                key_mapping=DataManager.ACTION_TRIGGER_RIGHT;
                 break;
             case KeyCode.VK_DOWN:
                 action_index=2;
-                key_mapping=12;
+                key_mapping=DataManager.ACTION_TRIGGER_DOWN;
                 break;
             case KeyCode.VK_LEFT:
                 action_index=3;
-                key_mapping=13;
+                key_mapping=DataManager.ACTION_TRIGGER_LEFT;
                 break;
             case KeyCode.VK_OK:
                 action_index=4;
-                key_mapping=14;
+                key_mapping=DataManager.ACTION_TRIGGER_OK;
                 break;
             case KeyCode.VK_BACK:
                 action_index=5;
+                key_mapping=DataManager.ACTION_TRIGGER_BACK;
                 break;
             default:
                 break;
@@ -137,7 +160,9 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
     }
 
     public void timerWentOff() {
-
+        for(int i=0;i<intervalList.size();++i) {
+            ((SSRInterval)intervalList.get(i)).timerWentOff();
+        }
     }
 
     //Interface
@@ -155,6 +180,33 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
             this.elementList.add(element);
             if(this.dataManager.getActivatedElementName().equalsIgnoreCase(element.name)) this.activatedElement=element;
         }
+
+        JSONArray intervals = this.dataManager.getIntervalData();
+        for(int k=0;k<intervals.size(); ++k) {
+            JSONObject interval = (JSONObject) intervals.get(k);
+            String interval_id=(String)interval.get("interval_id");
+            boolean isAllocated=false;
+            for(int l=0; l<intervalList.size(); ++l) {
+                SSRInterval ssrInterval= (SSRInterval) intervalList.get(l);
+                if(interval_id.equals(ssrInterval.getIntervalID())) {
+                    isAllocated=true;
+                    ssrInterval.setEnable(((Boolean)interval.get("interval_activated")).booleanValue());
+                }
+            }
+            if(!isAllocated) {
+                int period = ((Long) interval.get("interval_period")).intValue();
+                boolean enabled=((Boolean)interval.get("interval_activated")).booleanValue();
+                SSRInterval ssrInterval = new SSRInterval(interval_id, period, enabled, this);
+                intervalList.add(ssrInterval);
+            }
+
+        }
+
+
         repaint();
+    }
+
+    public void onIntervalTriggered(String intervalID) {
+        this.dataManager.requestData(DataManager.ACTION_TRIGGER_INTERVAL, intervalID);
     }
 }
