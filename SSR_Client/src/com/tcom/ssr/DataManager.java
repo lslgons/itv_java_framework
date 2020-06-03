@@ -9,11 +9,7 @@ import com.tcom.platform.controller.StbController;
 import com.tcom.util.LOG;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
 import java.awt.*;
-import java.util.ArrayList;
 
 public class DataManager {
     final public static int ACTION_TRIGGER_NUM_0=0;
