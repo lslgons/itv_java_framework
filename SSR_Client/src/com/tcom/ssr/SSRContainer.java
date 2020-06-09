@@ -9,14 +9,40 @@ public class SSRContainer extends BaseScene {
     SSRComponent mainComponent;
     SSRComponent overComponent;
     boolean isOverlayEnabled;
+
+    public void enableOverlay(String componentName) {
+        if(!isOverlayEnabled) {
+            LOG.print("enable overlay");
+            this.overComponent.requestData(componentName);
+            this.overComponent.setVisible(true);
+            isOverlayEnabled=true;
+            repaint();
+        } else {
+            LOG.print("already enabled overlay: "+overComponent.getName());
+        }
+
+    }
+
+    public void disableOverlay() {
+        if(isOverlayEnabled) {
+            this.overComponent.invalidate();
+            this.overComponent.setVisible(false);
+            isOverlayEnabled=false;
+        } else {
+            LOG.print("no overlay");
+        }
+
+    }
+
+
     public void onInit() {
-        this.mainComponent=new SSRComponent(this);
-        this.add(mainComponent);
-        this.overComponent=new SSRComponent(this);
+        this.mainComponent=new SSRComponent(this, false);
+        this.overComponent=new SSRComponent(this, true);
         this.add(overComponent);
+        this.add(mainComponent);
         isOverlayEnabled=false;
-        this.overComponent.setVisible(false);
-        this.mainComponent.requestData("");
+        //this.overComponent.setVisible(false);
+        this.mainComponent.requestData(null);
     }
 
     public void onShow() {

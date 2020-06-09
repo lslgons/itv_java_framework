@@ -23,13 +23,7 @@ import java.awt.*;
  * @since 2016-12-02
  */
 public class MainXlet implements Xlet{
-
-
-    /*
-    Implemented method
-     */
     static MainXlet _app=null;
-
     /**
      * DMC별 UI레이아웃 설정을 위한 인터페이스 객체
      */
@@ -75,8 +69,6 @@ public class MainXlet implements Xlet{
                 ssrContainer.onKeyDown(keyCode);
             }
         });
-        //1. MainLayer
-
 
         //2. OverLayer
 

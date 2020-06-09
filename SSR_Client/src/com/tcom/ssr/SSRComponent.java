@@ -4,6 +4,7 @@ package com.tcom.ssr;
 import com.tcom.platform.controller.KeyCode;
 import com.tcom.scene.BaseScene;
 import com.tcom.util.LOG;
+import com.tcom.xlet.MainXlet;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -15,40 +16,32 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class SSRComponent extends BaseScene implements DataManager.DataReceivedListener, SSRInterval.IntervalTriggerListener {
-    SSRContainer ssrContainer;
-    DataManager dataManager;
-    ArrayList renderList;
-    ArrayList elementList;
-    ArrayList intervalList;
-    SSRElement activatedElement;
+    private SSRContainer ssrContainer;
+    private DataManager dataManager;
+    private ArrayList renderList;
+    private ArrayList elementList;
+    private ArrayList intervalList;
+    private SSRElement activatedElement;
+    final private boolean isOverlay;
 
 //    TVTimerSpec timerSpec;
 
-    public SSRComponent(SSRContainer container) {
+    public SSRComponent(SSRContainer container, boolean isOverlay) {
         super();
         this.ssrContainer=container;
-        //this.dataManager=new DataManager(this);
         this.renderList=new ArrayList();
         this.elementList = new ArrayList();
         this.intervalList = new ArrayList();
-
-//        timerSpec = new TVTimerSpec();
-//        timerSpec.setAbsolute(true);
-//        timerSpec.setDelayTime(TIMER_DELAY);
-//        timerSpec.setRepeat(true);
-//        try {
-//            TVTimerSpec actual = TVTimer.getTimer().scheduleTimerSpec(this.timerSpec);
-//            this.timerSpec.setTime(actual.getTime());
-//        } catch (TVTimerScheduleFailedException e) {
-//            e.printStackTrace();
-//        }
+        this.isOverlay=isOverlay;
+        setBounds(0,0,960,540);
 
     }
 
     public void requestData(String uid) {
         this.dataManager=new DataManager(this, uid);
         //화면 구성
-        this.dataManager.requestData(DataManager.ACTION_TRIGGER_NONE, "");
+        if(uid==null) this.dataManager.requestData(DataManager.ACTION_TRIGGER_NONE, "");
+        else this.dataManager.requestData(DataManager.ACTION_TRIGGER_NONE, uid);
     }
 
     /**
@@ -58,6 +51,8 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
         //TODO
         this.renderList.clear();
         this.elementList.clear();
+        this.intervalList.clear();
+        repaint();
     }
 
     public void onInit() {
@@ -123,17 +118,43 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
              * FORMAT_ACTION_TYPE_OVERLAY=3 #오버레이 활성화
              * FORMAT_ACTION_TYPE_CLOSE=4 #메인 컴포넌트의 경우 앱 종료, 오버레이의 경우 오버레이 사라짐
              */
-            if(action.type==0) {
-                String target= (String) action.arguments.get(0);
-                this.dataManager.setActivatedElementName(target);
-                this.activatedElement=findElementByName(target);
-                repaint();
 
-            } else if(action.type==1) {
-                //Refresh
+            switch(action.type) {
+                case DataManager.FORMAT_ACTION_TYPE_ACTIVATE:
+                    String target= (String) action.arguments.get(0);
+                    this.dataManager.setActivatedElementName(target);
+                    this.activatedElement=findElementByName(target);
+                    repaint();
+                    break;
+                case DataManager.FORMAT_ACTION_TYPE_REFRESH:
+                    //Refresh
+                    this.dataManager.requestData(key_mapping, activatedElement.name);
+                    break;
+                case DataManager.FORMAT_ACTION_TYPE_COMPONENT:
+                    //Clear Interval
+                    LOG.print("Component change to "+action.arguments.get(0));
+                    this.intervalList.clear();
+                    this.dataManager.changeContainer((String) action.arguments.get(0));
+                    break;
+                case DataManager.FORMAT_ACTION_TYPE_OVERLAY:
+                    this.ssrContainer.enableOverlay((String) action.arguments.get(0));
+                    break;
+                case DataManager.FORMAT_ACTION_TYPE_CLOSE:
+                    if(this.isOverlay) {
+                        //TODO 오버레이 종료
+                        this.ssrContainer.disableOverlay();
+                    } else {
+                        //TODO 어플리케이션 종료
+                        MainXlet.closeApp();
+                    }
+                    break;
 
-                this.dataManager.requestData(key_mapping, activatedElement.name);
+                default:
+                    LOG.print("Unknown Action");
             }
+
+
+
         }
     }
 
@@ -146,6 +167,11 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
     }
 
     public void onPaint(Graphics g) {
+        if(this.isOverlay) {
+            g.setColor(Color.green);
+            g.fillRect(0,0,100,100);
+        }
+
         //1. DrawRender
         for(int i=0;i<this.renderList.size(); ++i) {
             SSRRender render = (SSRRender) this.renderList.get(i);
@@ -154,6 +180,7 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
         //2. Draw Element
         for(int j=0;j<this.elementList.size(); ++j) {
             SSRElement element = (SSRElement) this.elementList.get(j);
+            LOG.print("draw element : "+element.name);
             element.draw(g, this.dataManager.getActivatedElementName().equalsIgnoreCase(element.name));
         }
 
@@ -167,6 +194,7 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
 
     //Interface
     public void onDataReceived() {
+        LOG.print("onDataReceived, Refresh Frame");
         this.renderList.clear();
         this.elementList.clear();
         JSONArray renderData = this.dataManager.getRenderData();

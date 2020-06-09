@@ -259,8 +259,8 @@ public class SSRConnector {
 
 
                 String body = bodyBuf.toString();
-                LOG.print("Body Data : ");
-                LOG.print(body);
+                //LOG.print("Body Data : ");
+                //LOG.print(body);
                 if(body.length()>0) {
                     response.onReceived(200, responseHeader, body);
                 } else {
@@ -349,7 +349,7 @@ public class SSRConnector {
 	
 
     static JSONParser parser=new JSONParser();
-	public static int ssrRequest(JSONObject req, final SSRResponse ssrResponse) {
+	public static int containerRequest(JSONObject req, final SSRResponse ssrResponse) {
         String strReqParam = req.toString();
         SSRConfig config = SSRConfig.getInstance();
         int index=-1;
@@ -358,7 +358,7 @@ public class SSRConnector {
                 if(st[i].isCompleted()) {
                     st[i].interrupt();
                     st[i]=null;
-                    st[i]=new SocketThread(RP_METHOD.RP_POST, config.SSR_HOST, config.SSR_PORT, config.SSR_URI, strReqParam, 5*1000, new RPResponse() {
+                    st[i]=new SocketThread(RP_METHOD.RP_POST, config.SSR_HOST, config.SSR_PORT, "container/"+config.SSR_URI, strReqParam, 5*1000, new RPResponse() {
                         public void onReceived(int code, Map respHeader, Object response) {
                             String res= (String) response;
                             LOG.print(res);
@@ -380,7 +380,7 @@ public class SSRConnector {
                     break;
                 }
             } else {
-                st[i]=new SocketThread(RP_METHOD.RP_POST, config.SSR_HOST, config.SSR_PORT, config.SSR_URI, strReqParam, 5*1000, new RPResponse() {
+                st[i]=new SocketThread(RP_METHOD.RP_POST, config.SSR_HOST, config.SSR_PORT, "container/"+config.SSR_URI, strReqParam, 5*1000, new RPResponse() {
                     public void onReceived(int code, Map respHeader, Object response) {
                         String res= (String) response;
                         LOG.print(res);

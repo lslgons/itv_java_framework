@@ -45,7 +45,7 @@ public class SSRConfig {
         ENABLE_DIAGNOSTIC=config.read("ENABLE_DIAGNOSTIC").equalsIgnoreCase("true");
         SCENE_WIDTH=Integer.parseInt(config.read("SCENE_WIDTH"));
         SCENE_HEIGHT=Integer.parseInt(config.read("SCENE_HEIGHT"));
-        SSR_URI="ssr/H"+SCENE_HEIGHT;
+        SSR_URI="H"+SCENE_HEIGHT;
         DMC_NAME=config.read("DMC_NAME");
 
 
