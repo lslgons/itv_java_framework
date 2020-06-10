@@ -1,5 +1,11 @@
 package com.tcom.ssr;
 
+import com.sun.corba.se.impl.orbutil.graph.Graph;
+import com.tcom.drawer.DefinedColor;
+import com.tcom.drawer.Drawer;
+import com.tcom.drawer.StringDrawer;
+import com.tcom.util.LOG;
+import com.tcom.util.StringUtil;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -10,66 +16,83 @@ public class SSRRender {
     final String type;
     final JSONArray arguments;
 
+    public String getType() {
+        return this.type;
+    }
+
     public SSRRender(SSRComponent comp, JSONObject meta) {
         this.comp = comp;
         this.type = (String) meta.get("type");
         this.arguments= (JSONArray) meta.get("arguments");
     }
 
-    public void draw(Graphics g) {
-        JSONArray colorData = (JSONArray) arguments.get(4);
-        if(colorData !=null) {
-            Color c=new Color(((Long)colorData.get(0)).intValue(),
-                    ((Long)colorData.get(1)).intValue(),
-                    ((Long)colorData.get(2)).intValue(),
-                    ((Long)colorData.get(3)).intValue());
-            g.setColor(c);
-        }
+    public void drawText(Graphics g) {
+        this.drawText(g, (String) arguments.get(5));
+    }
 
-        if (type.equalsIgnoreCase("rect")) {
-            //draw rect - 라인두께로 인해 fillRect 4번 수행
-            int x=((Long)arguments.get(0)).intValue();
-            int y=((Long)arguments.get(1)).intValue();
-            int w=((Long)arguments.get(2)).intValue();
-            int h=((Long)arguments.get(3)).intValue();
-            int weight=((Long)arguments.get(5)).intValue();
+    public void drawText(Graphics g, String text) {
+        Color c= DefinedColor.decodeColor((JSONArray) arguments.get(4));
+        //Text
+        int x = ((Long)arguments.get(0)).intValue();
+        int y = ((Long)arguments.get(1)).intValue();
+        String font_align=(String)arguments.get(6);
+        int font_size = ((Long)arguments.get(7)).intValue();
+        String[] contents=StringUtil.tokenize(text, "\\n");
+        if(contents==null) return;
 
-            g.fillRect(x,y,w, weight);
-            g.fillRect(x+w-weight, y, weight, h);
-            g.fillRect(x, y+h-weight, w, weight);
-            g.fillRect(x,y, weight, h);
-
-
-//            g.drawRect(
-//                    ((Long)arguments.get(0)).intValue(),
-//                    ((Long)arguments.get(1)).intValue(),
-//                    ((Long)arguments.get(2)).intValue(),
-//                    ((Long)arguments.get(3)).intValue()
-//            );
-
-        } else if (type.equalsIgnoreCase(("fill"))) {
-
-            g.fillRect(
+        if(font_align.equals("left")) {
+            StringDrawer.drawStringLeft(g, contents,
                     ((Long)arguments.get(0)).intValue(),
                     ((Long)arguments.get(1)).intValue(),
-                    ((Long)arguments.get(2)).intValue(),
-                    ((Long)arguments.get(3)).intValue()
-            );
-        } else if (type.equalsIgnoreCase("image")) {
-            //Image
-            Image img=comp.loadImage((String)arguments.get(5));
-            g.drawImage(img,
-                    ((Long)arguments.get(0)).intValue(),
-                    ((Long)arguments.get(1)).intValue(),
-                    ((Long)arguments.get(2)).intValue(),
+                    //((Long)arguments.get(2)).intValue(),
                     ((Long)arguments.get(3)).intValue(),
-                    null
-            );
+                    Drawer.getFont(font_size, Font.PLAIN), c);
+        } else if(font_align.equals("right")) {
+
+        } else {
+            for(int i=0;i<contents.length;++i) {
+                String content=contents[i];
+                if(i!=0) content=contents[i].substring(2);
+                StringDrawer.drawStringCenter(g, content,
+                        ((Long)arguments.get(0)).intValue(),
+                        ((Long)arguments.get(1)).intValue(),
+                        ((Long)arguments.get(2)).intValue(),
+                        ((Long)arguments.get(3)).intValue()*(i+1) + 5*(i),
+                        Drawer.getFont(font_size, Font.PLAIN), c);
+            }
+        }
+    }
+
+    public void drawRect(Graphics g) {
+        Drawer.drawFocus(g,((Long)arguments.get(0)).intValue(),((Long)arguments.get(1)).intValue(),
+                ((Long)arguments.get(2)).intValue(),((Long)arguments.get(3)).intValue(),((Long)arguments.get(5)).intValue(),
+                DefinedColor.decodeColor((JSONArray) arguments.get(4)));
+    }
+
+    public void fillRect(Graphics g) {
+        Drawer.drawFillRect(g,((Long)arguments.get(0)).intValue(),((Long)arguments.get(1)).intValue(),
+                ((Long)arguments.get(2)).intValue(),((Long)arguments.get(3)).intValue(),
+                DefinedColor.decodeColor((JSONArray) arguments.get(4)));
+    }
+
+    public void drawImage(Graphics g) {
+        Drawer.drawImage(g, comp.loadImage((String)arguments.get(5)),
+                ((Long)arguments.get(0)).intValue(),
+                ((Long)arguments.get(1)).intValue(),
+                ((Long)arguments.get(2)).intValue(),
+                ((Long)arguments.get(3)).intValue(),
+                null);
+    }
+
+    public void draw(Graphics g) {
+        if (type.equalsIgnoreCase("rect")) {
+            drawRect(g);
+        } else if (type.equalsIgnoreCase("fill")) {
+            fillRect(g);
+        } else if (type.equalsIgnoreCase("image")) {
+            drawImage(g);
         } else if (type.equalsIgnoreCase("text")) {
-            //Text
-            int x = ((Long)arguments.get(0)).intValue();
-            int y = ((Long)arguments.get(1)).intValue();
-            g.drawString((String)arguments.get(5),x,y);
+            drawText(g);
         }
     }
 }

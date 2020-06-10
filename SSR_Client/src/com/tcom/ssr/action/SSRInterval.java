@@ -1,4 +1,4 @@
-package com.tcom.ssr;
+package com.tcom.ssr.action;
 
 import com.tcom.network.SSRConnector;
 import com.tcom.util.LOG;
@@ -36,7 +36,7 @@ public class SSRInterval {
     }
     public void timerWentOff() {
         intervalStep+=1;
-        LOG.print("Interval : "+this.intervalID+ ":: "+intervalStep);
+        //LOG.print("Interval : "+this.intervalID+ ":: "+intervalStep);
         if(intervalStep>=intervalPeriod) {
             intervalStep=0;
             if(isEnabled) {

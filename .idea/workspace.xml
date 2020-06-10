@@ -20,15 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6ba1488c-b5c4-48e3-b039-ce99e2e7bedd" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/ssr/SSRInterval.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/SSR Client.iml" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/SSR Client.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/pc/Display.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/platform/dmc/pc/Display.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/tcom/ssr/DataManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/ssr/DataManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/tcom/ssr/SSRComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/ssr/SSRComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/tcom/ssr/SSRConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/ssr/SSRConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/com/tcom/xlet/MainXlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/com/tcom/xlet/MainXlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSR_Client/src/config.properties" beforeDir="false" afterPath="$PROJECT_DIR$/SSR_Client/src/config.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -266,13 +258,17 @@
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state x="754" y="345" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.2048.1112@0.0.2048.1112" timestamp="1590116702174" />
-    <state x="720" y="297" key="FileChooserDialogImpl" timestamp="1590116844825">
+    <state x="720" y="297" key="FileChooserDialogImpl" timestamp="1591751272108">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state x="720" y="297" key="FileChooserDialogImpl/0.0.2048.1112@0.0.2048.1112" timestamp="1590116844825" />
+    <state x="720" y="297" key="FileChooserDialogImpl/0.0.2048.1112@0.0.2048.1112" timestamp="1591751272108" />
     <state x="505" y="131" key="SettingsEditor" timestamp="1590116774018">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state x="505" y="131" key="SettingsEditor/0.0.2048.1112@0.0.2048.1112" timestamp="1590116774018" />
+    <state x="827" y="469" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1591751156012">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="827" y="469" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2048.1112@0.0.2048.1112" timestamp="1591751156012" />
   </component>
 </project>

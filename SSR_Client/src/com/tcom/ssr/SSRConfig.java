@@ -149,6 +149,9 @@ public class SSRConfig {
     public int IS_ALASKA_UI=-1; //-1: Not Define, 0:False, 1:True
 
 
+    public String ITV_FONT="Korean iTV SanSerifD";
+
+
 
 
 }

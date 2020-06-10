@@ -95,10 +95,21 @@ public class DataManager {
     }
 
     public void setActivatedElementName(final String el_name) {
-        JSONObject comp_context = (JSONObject)DataManager.getContext().get("_"+this.uid);
-        comp_context.put("_activated_element", el_name);
+//        JSONObject comp_context = (JSONObject)DataManager.getContext().get("_"+this.uid);
+//        comp_context.put("_activated_element", el_name);
+        this.setContextData("_activated_element", el_name);
 
     }
+
+    public Object getContextData(String key) {
+        return ((JSONObject)DataManager.getContext().get("_"+this.uid)).get(key);
+    }
+
+    public void setContextData(String key, Object value) {
+        JSONObject comp_context = (JSONObject)DataManager.getContext().get("_"+this.uid);
+        comp_context.put(key, value);
+    }
+
 
     public void changeContainer(String containerName) {
         JSONObject reqData = new JSONObject();
