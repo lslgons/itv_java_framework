@@ -7,6 +7,7 @@ import com.tcom.platform.controller.KeyController;
 import com.tcom.platform.controller.MediaController;
 import com.tcom.platform.controller.StbController;
 import com.tcom.util.LOG;
+import com.tcom.util.StringUtil;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -136,7 +137,7 @@ public class DataManager {
      * 데이터 정보를 서버로부터 갱신
      */
     public void requestData(int trigger_action, String trigger_target) {
-        JSONObject reqData = new JSONObject();
+        final JSONObject reqData = new JSONObject();
         reqData.put("uid", this.uid);
         reqData.put("context", DataManager.getContext());
         //reqData.put("component", this.component); //컴포넌트 정보는 전달할 필요없음
@@ -145,11 +146,43 @@ public class DataManager {
         reqData.put("trigger_target", trigger_target);
         SSRConnector.containerRequest(reqData, new SSRResponse() {
             public void onReceived(JSONObject response) {
-                DataManager.this.jsonData=response;
-                allocateData();
-                DataManager.this._listener.onDataReceived();
+                if(((Long)response.get("status")).intValue()==2000) {
+                    //OK
+                    DataManager.this.jsonData=response;
+                    allocateData();
+                    DataManager.this._listener.onDataReceived();
+                } else if(((Long)response.get("status")).intValue()==3000) {
+                    //Redirect
+                    String newHost= (String) response.get("host");
+                    LOG.print("Dev Mode, Redirect to "+newHost);
+                    String[] hostAndPort=StringUtil.tokenize(newHost, ":");
+                    SSRConfig.getInstance().SSR_HOST=hostAndPort[0];
+                    if(hostAndPort.length==1) {
+                        SSRConfig.getInstance().SSR_PORT=80;
+                    } else {
+                        SSRConfig.getInstance().SSR_PORT=Integer.parseInt(hostAndPort[1]);
+                    }
+                    SSRConnector.containerRequest(reqData, new SSRResponse() {
+                        public void onReceived(JSONObject response) {
+                            if(((Long)response.get("status")).intValue()==2000) {
+                                //OK
+                                DataManager.this.jsonData=response;
+                                allocateData();
+                                DataManager.this._listener.onDataReceived();
+                            } else if(((Long)response.get("status")).intValue()==3000) {
+                                LOG.print("Error : Duplicate Redirection...");
+                            } else {
+                                //TODO Error Except
+                            }
+                        }
+                        public void onFailed(int status, String msg) {
+                            LOG.print(status+" error");
+                        }
+                    });
+                } else {
+                    //TODO Error Except
+                }
             }
-
             public void onFailed(int status, String msg) {
                 LOG.print(status+" error");
             }
