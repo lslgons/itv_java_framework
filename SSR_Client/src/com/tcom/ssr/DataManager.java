@@ -51,11 +51,7 @@ public class DataManager {
     final public static int FORMAT_ACTION_TYPE_CLOSE=4; //메인 컴포넌트의 경우 앱 종료, 오버레이의 경우 오버레이 사라짐
     //final public static int FORMAT_ACTION_TYPE_CALLBACK=5; //TODO 오버레이 종료 후 메인 컴포넌트 콜백 요청
     final public static int FORMAT_ACTION_TYPE_PROPAGATE=6; // 다른 엘리먼트의 이벤트로 전이시킴
-
-
-
     JSONObject jsonData;
-
     private String uid;
     //Context : 데이터를 서버로 전달하기 위해 유지해야 함 (Immutable)
     private static JSONObject context;
