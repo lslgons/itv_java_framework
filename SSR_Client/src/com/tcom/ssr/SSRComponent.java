@@ -328,14 +328,11 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
                 SSRInterval ssrInterval= (SSRInterval) intervalList.get(l);
                 if(interval_id.equals(ssrInterval.getIntervalID())) {
                     isAllocated=true;
-                    ssrInterval.setEnable(((Boolean)interval.get("interval_activated")).booleanValue());
+                    ssrInterval.setObject(interval);
                 }
             }
             if(!isAllocated) {
-                int period = ((Long) interval.get("interval_period")).intValue();
-                boolean enabled=((Boolean)interval.get("interval_activated")).booleanValue();
-                SSRInterval ssrInterval = new SSRInterval(interval_id, period, enabled, this);
-                intervalList.add(ssrInterval);
+                intervalList.add(new SSRInterval(interval, this));
             }
 
         }

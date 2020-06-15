@@ -57,6 +57,7 @@ public class DataManager {
     private static JSONObject context;
     private JSONObject component;
     private StateManager stateManager;
+    private JSONArray intervalArr;
     private DataReceivedListener _listener;
     private static JSONObject getContext() {
         if(context==null) context=new JSONObject();
@@ -72,6 +73,7 @@ public class DataManager {
         component=new JSONObject();
         component.put("render", new JSONArray());
         component.put("element", new JSONArray());
+        intervalArr=null;
         this._listener=listener;
     }
 
@@ -79,6 +81,7 @@ public class DataManager {
         this.uid=(String) this.jsonData.get("uid");
         context= (JSONObject) this.jsonData.get("context");
         this.component= (JSONObject) this.jsonData.get("component");
+        this.intervalArr=(JSONArray) this.jsonData.get("interval");
         stateManager.setJSONObject((JSONObject) this.jsonData.get("state"));
     }
 
@@ -140,6 +143,7 @@ public class DataManager {
         reqData.put("state", this.stateManager.getJSONObject());
         reqData.put("trigger_action", new Integer(trigger_action));
         reqData.put("trigger_target", trigger_target);
+        reqData.put("interval", this.intervalArr);
         SSRConnector.containerRequest(reqData, new SSRResponse() {
             public void onReceived(JSONObject response) {
                 if(((Long)response.get("status")).intValue()==2000) {
@@ -195,9 +199,10 @@ public class DataManager {
     }
 
     public JSONArray getIntervalData() {
-        //return (JSONArray) this.component.get("interval");
-        JSONObject cContext= (JSONObject) DataManager.getContext().get("_"+this.uid);
-        return (JSONArray) cContext.get("_intervals");
+        return this.intervalArr;
+//        //return (JSONArray) this.component.get("interval");
+//        JSONObject cContext= (JSONObject) DataManager.getContext().get("_"+this.uid);
+//        return (JSONArray) cContext.get("_intervals");
     }
 
     class StateManager {
