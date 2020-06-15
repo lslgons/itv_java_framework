@@ -348,8 +348,15 @@ public class SSRConnector {
     }
 	
 
-    static JSONParser parser=new JSONParser();
-	public static int containerRequest(JSONObject req, final SSRResponse ssrResponse) {
+    public static int containerRequest(JSONObject req, final SSRResponse ssrResponse) {
+	    return ssrRequest("container/", req, ssrResponse);
+    }
+
+    public static int loadingRequest(JSONObject req, final SSRResponse ssrResponse) {
+	    return ssrRequest("loading/", req, ssrResponse);
+    }
+
+	public static int ssrRequest(String uri, JSONObject req, final SSRResponse ssrResponse) {
         String strReqParam = req.toString();
         SSRConfig config = SSRConfig.getInstance();
         int index=-1;
@@ -358,12 +365,13 @@ public class SSRConnector {
                 if(st[i].isCompleted()) {
                     st[i].interrupt();
                     st[i]=null;
-                    st[i]=new SocketThread(RP_METHOD.RP_POST, config.SSR_HOST, config.SSR_PORT, "container/"+config.SSR_URI, strReqParam, 5*1000, new RPResponse() {
+                    st[i]=new SocketThread(RP_METHOD.RP_POST, config.SSR_HOST, config.SSR_PORT, uri+config.SSR_URI, strReqParam, 5*1000, new RPResponse() {
                         public void onReceived(int code, Map respHeader, Object response) {
                             String res= (String) response;
                             LOG.print(res);
                             try {
-                                JSONObject jsonObject = (JSONObject) parser.parse(res);
+
+                                JSONObject jsonObject = (JSONObject) new JSONParser().parse(res);
                                 ssrResponse.onReceived(jsonObject);
                             } catch (ParseException e) {
                                 e.printStackTrace();
@@ -380,12 +388,12 @@ public class SSRConnector {
                     break;
                 }
             } else {
-                st[i]=new SocketThread(RP_METHOD.RP_POST, config.SSR_HOST, config.SSR_PORT, "container/"+config.SSR_URI, strReqParam, 5*1000, new RPResponse() {
+                st[i]=new SocketThread(RP_METHOD.RP_POST, config.SSR_HOST, config.SSR_PORT, uri+config.SSR_URI, strReqParam, 5*1000, new RPResponse() {
                     public void onReceived(int code, Map respHeader, Object response) {
                         String res= (String) response;
                         LOG.print(res);
                         try {
-                            JSONObject jsonObject = (JSONObject) parser.parse(res);
+                            JSONObject jsonObject = (JSONObject) new JSONParser().parse(res);
                             ssrResponse.onReceived(jsonObject);
                         } catch (ParseException e) {
                             e.printStackTrace();

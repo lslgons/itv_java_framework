@@ -12,13 +12,16 @@ public class SSRInterval {
     JSONObject intervalObj;
     int intervalStep=0;
     IntervalTriggerListener listener;
+    SSRAction action;
     public interface IntervalTriggerListener {
-        void onIntervalTriggered(String intervalID);
+        void onIntervalTriggered(SSRInterval interval);
     }
 
     public SSRInterval(JSONObject obj, IntervalTriggerListener _listener) {
         this.intervalObj=obj;
         this.listener=_listener;
+        JSONObject actionJson= (JSONObject) intervalObj.get("action");
+        action=new SSRAction(((Long)actionJson.get("type")).intValue(), (JSONArray)intervalObj.get("arguments"));
     }
 
     public String getIntervalID() {
@@ -52,6 +55,14 @@ public class SSRInterval {
         intervalObj.put("interval_activated", new Boolean(b));
     }
 
+    public SSRAction getAction() {
+        return action;
+    }
+
+    public void resetStep() {
+        this.intervalStep=0;
+    }
+
     public void setObject(JSONObject intervalObj) {
         this.intervalObj=intervalObj;
     }
@@ -72,7 +83,7 @@ public class SSRInterval {
                 } else {
                     setIntervalSeq(intervalSeq);
                 }
-                this.listener.onIntervalTriggered(getIntervalID());
+                this.listener.onIntervalTriggered(this);
             } else {
                 LOG.print("Interval disabled");
             }

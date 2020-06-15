@@ -49,10 +49,10 @@ public class SSRSelectElement extends SSRElement{
     }
 
     public SSRAction getOnSelectFirst() {
-        return (SSRAction) actions.get(21);
+        return (SSRAction) actions.get(22);
     }
 
     public SSRAction getOnSelectEnd() {
-        return (SSRAction) actions.get(22);
+        return (SSRAction) actions.get(23);
     }
 }

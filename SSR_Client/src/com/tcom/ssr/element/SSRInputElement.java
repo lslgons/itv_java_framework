@@ -50,10 +50,10 @@ public class SSRInputElement extends SSRElement{
     }
 
     public SSRAction getOnMaxInputAction() {
-        return (SSRAction) actions.get(21);
+        return (SSRAction) actions.get(22);
     }
 
     public SSRAction getOnInitInputAction() {
-        return (SSRAction) actions.get(22);
+        return (SSRAction) actions.get(23);
     }
 }

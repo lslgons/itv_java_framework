@@ -100,9 +100,16 @@ public class Drawer {
 
         g.setColor(color);
         g.fillRect(x, y, w, h);
-
         g.setColor(prevColor);
 
+    }
+
+    public static void drawFillCircle(Graphics g, int x, int y, int w, int h, Color color) {
+        Color prevColor = g.getColor();
+
+        g.setColor(color);
+        g.fillOval(x,y,w,h);
+        g.setColor(prevColor);
     }
 
     /**

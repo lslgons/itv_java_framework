@@ -84,6 +84,12 @@ public class SSRRender {
                 null);
     }
 
+    public void fillCircle(Graphics g) {
+        Drawer.drawFillCircle(g,((Long)arguments.get(0)).intValue(),((Long)arguments.get(1)).intValue(),
+                ((Long)arguments.get(2)).intValue(),((Long)arguments.get(3)).intValue(),
+                DefinedColor.decodeColor((JSONArray) arguments.get(4)));
+    }
+
     public void draw(Graphics g) {
         if (type.equalsIgnoreCase("rect")) {
             drawRect(g);
@@ -93,6 +99,8 @@ public class SSRRender {
             drawImage(g);
         } else if (type.equalsIgnoreCase("text")) {
             drawText(g);
+        } else if(type.equalsIgnoreCase("circle")) {
+            fillCircle(g);
         }
     }
 }

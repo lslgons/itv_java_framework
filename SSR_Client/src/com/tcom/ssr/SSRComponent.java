@@ -8,6 +8,7 @@ import com.tcom.ssr.action.SSRInterval;
 import com.tcom.ssr.element.SSRElement;
 import com.tcom.ssr.element.SSRInputElement;
 import com.tcom.ssr.element.SSRSelectElement;
+import com.tcom.ssr.manager.DataManager;
 import com.tcom.util.LOG;
 import com.tcom.xlet.MainXlet;
 import org.json.simple.JSONArray;
@@ -23,26 +24,30 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
     private ArrayList elementList;
     private ArrayList intervalList;
     private SSRElement activatedElement;
-    final private boolean isOverlay;
+    final private int componentMode;
+    private boolean isIntervalProcessing;
 
-//    TVTimerSpec timerSpec;
 
-    public SSRComponent(SSRContainer container, boolean isOverlay) {
+    public SSRComponent(SSRContainer container, int componentMode) {
         super();
         this.ssrContainer=container;
         this.renderList=new ArrayList();
         this.elementList = new ArrayList();
         this.intervalList = new ArrayList();
-        this.isOverlay=isOverlay;
+        this.componentMode=componentMode;
+        isIntervalProcessing=true;
         setBounds(0,0,960,540);
+        if(componentMode==SSRConstant.COMPONENT_MODE_LOADING) {
+            this.requestData("");
+        }
 
     }
 
     public void requestData(String uid) {
-        this.dataManager=new DataManager(this, uid);
+        this.dataManager=new DataManager(this, uid, this.componentMode==SSRConstant.COMPONENT_MODE_LOADING);
         //화면 구성
-        if(uid==null) this.dataManager.requestData(DataManager.ACTION_TRIGGER_NONE, "");
-        else this.dataManager.requestData(DataManager.ACTION_TRIGGER_NONE, uid);
+        if(uid==null) this.dataManager.requestData(SSRConstant.ACTION_TRIGGER_NONE, "");
+        else this.dataManager.requestData(SSRConstant.ACTION_TRIGGER_NONE, uid);
     }
 
     /**
@@ -72,7 +77,11 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
 
     }
 
-    public void processAction(int action_key, SSRAction action) {
+    public void processAction(int action_key, int action_index, SSRAction action) {
+        processAction(action_key, action_index, action, activatedElement.getName());
+    }
+
+    public void processAction(int action_key, int action_index, SSRAction action, String elementName) {
         /**
          * FORMAT_ACTION_TYPE_ACTIVATE=0 #엘리먼트 액션 활성화
          * FORMAT_ACTION_TYPE_REFRESH=1  #서버 액션 렌더 요청 -> 렌더링 재수행
@@ -85,35 +94,46 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
             return;
         }
         switch(action.getType()) {
-            case DataManager.FORMAT_ACTION_TYPE_ACTIVATE:
+            case SSRConstant.FORMAT_ACTION_TYPE_ACTIVATE:
                 String target= (String) action.getArguments().get(0);
                 this.dataManager.setActivatedElementName(target);
                 this.activatedElement=findElementByName(target);
                 repaint();
                 break;
-            case DataManager.FORMAT_ACTION_TYPE_REFRESH:
+            case SSRConstant.FORMAT_ACTION_TYPE_REFRESH:
                 //Refresh
-                this.dataManager.requestData(action_key, activatedElement.getName());
+                this.dataManager.requestData(action_key, elementName);
                 break;
-            case DataManager.FORMAT_ACTION_TYPE_COMPONENT:
+            case SSRConstant.FORMAT_ACTION_TYPE_COMPONENT:
                 //Clear Interval
                 LOG.print("Component change to "+action.getArguments().get(0));
                 this.intervalList.clear();
                 this.dataManager.changeContainer((String) action.getArguments().get(0));
                 break;
-            case DataManager.FORMAT_ACTION_TYPE_OVERLAY:
+            case SSRConstant.FORMAT_ACTION_TYPE_OVERLAY:
                 this.ssrContainer.enableOverlay((String) action.getArguments().get(0));
                 break;
-            case DataManager.FORMAT_ACTION_TYPE_CLOSE:
-                if(this.isOverlay) {
+            case SSRConstant.FORMAT_ACTION_TYPE_CLOSE:
+                if(this.componentMode==SSRConstant.COMPONENT_MODE_OVERLAY) {
                     //TODO 오버레이 종료
                     this.ssrContainer.disableOverlay();
-                } else {
+                } else if(this.componentMode==SSRConstant.COMPONENT_MODE_NORMAL) {
                     //TODO 어플리케이션 종료
                     MainXlet.closeApp();
+                } else {
+                    //TODO default
                 }
                 break;
-
+            case SSRConstant.FORMAT_ACTION_TYPE_PROPAGATE:
+                SSRElement targetEl = findElementByName((String) action.getArguments().get(0));
+                SSRAction action1=targetEl.getAction(action_index);
+                this.processAction(action_key, action_index, action1);
+                //repaint();
+                break;
+            case SSRConstant.FORMAT_ACTION_TYPE_PROPAGATE_ACTIVATED:
+                SSRAction action2=activatedElement.getAction(action_index);
+                this.processAction(action_key, action_index, action2);
+                break;
             default:
                 LOG.print("Unknown Action");
         }
@@ -126,27 +146,27 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
         switch(keycode) {
             case KeyCode.VK_UP:
                 action_index=0;
-                key_mapping=DataManager.ACTION_TRIGGER_UP;
+                key_mapping=SSRConstant.ACTION_TRIGGER_UP;
                 break;
             case KeyCode.VK_RIGHT:
                 action_index=1;
-                key_mapping=DataManager.ACTION_TRIGGER_RIGHT;
+                key_mapping=SSRConstant.ACTION_TRIGGER_RIGHT;
                 break;
             case KeyCode.VK_DOWN:
                 action_index=2;
-                key_mapping=DataManager.ACTION_TRIGGER_DOWN;
+                key_mapping=SSRConstant.ACTION_TRIGGER_DOWN;
                 break;
             case KeyCode.VK_LEFT:
                 action_index=3;
-                key_mapping=DataManager.ACTION_TRIGGER_LEFT;
+                key_mapping=SSRConstant.ACTION_TRIGGER_LEFT;
                 break;
             case KeyCode.VK_OK:
                 action_index=4;
-                key_mapping=DataManager.ACTION_TRIGGER_OK;
+                key_mapping=SSRConstant.ACTION_TRIGGER_OK;
                 break;
             case KeyCode.VK_BACK:
                 action_index=5;
-                key_mapping=DataManager.ACTION_TRIGGER_BACK;
+                key_mapping=SSRConstant.ACTION_TRIGGER_BACK;
                 break;
             default:
                 break;
@@ -155,7 +175,7 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
         switch(activatedElement.getType()) {
             case SSRElement.ELEMENT_TYPE_NORMAL:
                 if(action_index>-1) {
-                    processAction(key_mapping, (SSRAction) activatedElement.getAction(action_index));
+                    processAction(key_mapping, action_index, (SSRAction) activatedElement.getAction(action_index));
                 }
 
                 break;
@@ -165,13 +185,13 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
                 if(keycode>=KeyCode.VK_0 && keycode<=KeyCode.VK_9) {
                     if(input.getInputData().length()==input.getMaxInputSize()) {
                         SSRAction onMaxInputAction=input.getOnMaxInputAction();
-                        processAction(key_mapping, onMaxInputAction);
+                        processAction(key_mapping, action_index, onMaxInputAction);
                     } else {
                         input.setInputData(input.getInputData()+(keycode-48));
                         //입력수가 최대치에 도달하면 Action 수행
                         if(input.getInputData().length()==input.getMaxInputSize()) {
                             SSRAction onMaxInputAction=input.getOnMaxInputAction();
-                            processAction(key_mapping, onMaxInputAction);
+                            processAction(key_mapping, action_index, onMaxInputAction);
                         }
                     }
 
@@ -180,11 +200,11 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
                     if (inputData.length()>0) {
                         input.setInputData(inputData.substring(0, inputData.length()-1));
                     } else if(inputData.length()==0) {
-                        processAction(key_mapping, input.getOnInitInputAction());
+                        processAction(key_mapping, action_index, input.getOnInitInputAction());
                     }
                 } else {
                     if(action_index>-1) {
-                        processAction(key_mapping, (SSRAction) activatedElement.getAction(action_index));
+                        processAction(key_mapping, action_index, (SSRAction) activatedElement.getAction(action_index));
                     }
                 }
                 repaint();
@@ -196,42 +216,42 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
                     if(keycode==KeyCode.VK_LEFT) {
                         int selected_index=select.getSelectedIndex();
                         if(selected_index==0) {
-                            processAction(key_mapping, select.getOnSelectFirst());
+                            processAction(key_mapping, action_index, select.getOnSelectFirst());
                         } else {
                             select.setSelectedIndex(selected_index-1);
                         }
                     } else if(keycode==KeyCode.VK_RIGHT) {
                         int selected_index=select.getSelectedIndex();
                         if(selected_index==select.getSelectableValues().length-1) {
-                            processAction(key_mapping, select.getOnSelectEnd());
+                            processAction(key_mapping, action_index, select.getOnSelectEnd());
                         } else {
                             select.setSelectedIndex(selected_index+1);
                         }
 
                     } else {
                         if(action_index>-1) {
-                            processAction(key_mapping, (SSRAction) activatedElement.getAction(action_index));
+                            processAction(key_mapping, action_index, (SSRAction) activatedElement.getAction(action_index));
                         }
                     }
                 } else {
                     if(keycode==KeyCode.VK_UP) {
                         int selected_index=select.getSelectedIndex();
                         if(selected_index==0) {
-                            processAction(key_mapping, select.getOnSelectFirst());
+                            processAction(key_mapping, action_index, select.getOnSelectFirst());
                         } else {
                             select.setSelectedIndex(selected_index-1);
                         }
                     } else if(keycode==KeyCode.VK_DOWN) {
                         int selected_index=select.getSelectedIndex();
                         if(selected_index==select.getSelectableValues().length-1) {
-                            processAction(key_mapping, select.getOnSelectEnd());
+                            processAction(key_mapping, action_index, select.getOnSelectEnd());
                         } else {
                             select.setSelectedIndex(selected_index+1);
                         }
 
                     } else {
                         if(action_index>-1) {
-                            processAction(key_mapping, (SSRAction) activatedElement.getAction(action_index));
+                            processAction(key_mapping, action_index, (SSRAction) activatedElement.getAction(action_index));
                         }
                     }
                 }
@@ -276,10 +296,41 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
 
     }
 
-    public void timerWentOff() {
+    public void stopInterval() {
+        this.isIntervalProcessing=false;
+    }
+
+    public void startInterval() {
         for(int i=0;i<intervalList.size();++i) {
-            ((SSRInterval)intervalList.get(i)).timerWentOff();
+            ((SSRInterval)intervalList.get(i)).resetStep();
         }
+        this.isIntervalProcessing=true;
+    }
+
+    public boolean isIntervalProcessing() {
+        return this.isIntervalProcessing;
+    }
+
+    public void timerWentOff() {
+        if(isIntervalProcessing) {
+            for(int i=0;i<intervalList.size();++i) {
+                ((SSRInterval)intervalList.get(i)).timerWentOff();
+            }
+        }
+
+    }
+
+    public void onDataRequestStart() {
+        LOG.print(this, "onDataRequestStart");
+        if(componentMode!=SSRConstant.COMPONENT_MODE_LOADING) this.ssrContainer.showLoading(true);
+    }
+
+    public void onDataRequestComplete() {
+
+    }
+
+    public void onDataRequestFailed() {
+        if(componentMode!=SSRConstant.COMPONENT_MODE_LOADING) this.ssrContainer.showLoading(false);
     }
 
     //Interface
@@ -337,11 +388,13 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
 
         }
 
-
+        if(componentMode!=SSRConstant.COMPONENT_MODE_LOADING) this.ssrContainer.showLoading(false);
         repaint();
     }
 
-    public void onIntervalTriggered(String intervalID) {
-        this.dataManager.requestData(DataManager.ACTION_TRIGGER_INTERVAL, intervalID);
+    public void onIntervalTriggered(SSRInterval interval) {
+        processAction(SSRConstant.ACTION_TRIGGER_INTERVAL, 21, interval.getAction(), interval.getIntervalID());
+        //this.dataManager.requestData(SSRConstant.ACTION_TRIGGER_INTERVAL, interval.getIntervalID());
     }
+
 }

@@ -5,7 +5,6 @@ import com.tcom.platform.controller.KeyController;
 import com.tcom.platform.controller.StbController;
 import com.tcom.platform.dmc.interfaces.DisplayInterface;
 import com.tcom.scene.DiagnosticScene;
-import com.tcom.ssr.DataManager;
 import com.tcom.ssr.SSRConfig;
 import com.tcom.ssr.SSRContainer;
 import com.tcom.util.LOG;
@@ -14,7 +13,6 @@ import com.tcom.util.RemoteClassLoader;
 import javax.tv.xlet.Xlet;
 import javax.tv.xlet.XletContext;
 import javax.tv.xlet.XletStateChangeException;
-import java.awt.*;
 
 
 /**
