@@ -365,7 +365,7 @@ public class SSRConnector {
                 if(st[i].isCompleted()) {
                     st[i].interrupt();
                     st[i]=null;
-                    st[i]=new SocketThread(RP_METHOD.RP_POST, config.SSR_HOST, config.SSR_PORT, uri+config.SSR_URI, strReqParam, 5*1000, new RPResponse() {
+                    st[i]=new SocketThread(RP_METHOD.RP_POST, config.SSR_HOST, config.SSR_PORT, config.SSR_URI+"/"+uri+config.SSR_RESOLUTION, strReqParam, 5*1000, new RPResponse() {
                         public void onReceived(int code, Map respHeader, Object response) {
                             String res= (String) response;
                             LOG.print(res);
@@ -388,7 +388,7 @@ public class SSRConnector {
                     break;
                 }
             } else {
-                st[i]=new SocketThread(RP_METHOD.RP_POST, config.SSR_HOST, config.SSR_PORT, uri+config.SSR_URI, strReqParam, 5*1000, new RPResponse() {
+                st[i]=new SocketThread(RP_METHOD.RP_POST, config.SSR_HOST, config.SSR_PORT, config.SSR_URI+"/"+uri+config.SSR_RESOLUTION, strReqParam, 5*1000, new RPResponse() {
                     public void onReceived(int code, Map respHeader, Object response) {
                         String res= (String) response;
                         LOG.print(res);
