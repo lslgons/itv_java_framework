@@ -326,70 +326,83 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
     }
 
     public void onDataRequestComplete() {
-
+        if(componentMode!=SSRConstant.COMPONENT_MODE_LOADING) this.ssrContainer.showLoading(false);
     }
 
     public void onDataRequestFailed() {
         if(componentMode!=SSRConstant.COMPONENT_MODE_LOADING) this.ssrContainer.showLoading(false);
     }
 
+    public void refreshComponent() {
+        this.dataManager.requestData(SSRConstant.ACTION_TRIGGER_NONE, this.dataManager.getUid());
+    }
+
     //Interface
-    public void onDataReceived() {
+    public void onDataReceived(int status) {
         LOG.print("onDataReceived, Refresh Frame");
-        this.renderList.clear();
-        this.elementList.clear();
-        JSONArray renderData = this.dataManager.getRenderData();
-        for(int i=0;i<renderData.size();++i) {
-            SSRRender render = new SSRRender(this, (JSONObject) renderData.get(i));
-            this.renderList.add(render);
-        }
-        JSONArray elementData = this.dataManager.getElementData();
-        for(int j=0;j<elementData.size();++j) {
-            int elementType = ((Long) ((JSONObject)elementData.get(j)).get("type")).intValue();
-            switch(elementType) {
-                case SSRElement.ELEMENT_TYPE_NORMAL:
-                    SSRElement element = new SSRElement(this, (JSONObject) elementData.get(j));
-                    this.elementList.add(element);
-                    if(this.dataManager.getActivatedElementName().equalsIgnoreCase(element.getName())) this.activatedElement=element;
-                    break;
-                case SSRElement.ELEMENT_TYPE_INPUT:
-                case SSRElement.ELEMENT_TYPE_PASSWORD_INPUT:
-                    SSRInputElement inputElement = new SSRInputElement(this, (JSONObject) elementData.get(j));
-                    this.elementList.add(inputElement);
-                    if(elementType==SSRElement.ELEMENT_TYPE_PASSWORD_INPUT) inputElement.setPasswordField(true);
-                    if(this.dataManager.getActivatedElementName().equalsIgnoreCase(inputElement.getName())) this.activatedElement=inputElement;
-                    break;
-                case SSRElement.ELEMENT_TYPE_SELECT:
-                    SSRSelectElement selectElement = new SSRSelectElement(this, (JSONObject) elementData.get(j));
-                    this.elementList.add(selectElement);
-                    if(this.dataManager.getActivatedElementName().equalsIgnoreCase(selectElement.getName())) this.activatedElement=selectElement;
-                    break;
-
-
+        if(status==2100) {
+            //Dismiss overlay
+            this.ssrContainer.disableOverlay();
+            //Refresh Main component
+            //Refresh
+            this.ssrContainer.mainComponent.refreshComponent();
+        } else if(status==2000) {
+            this.renderList.clear();
+            this.elementList.clear();
+            JSONArray renderData = this.dataManager.getRenderData();
+            for(int i=0;i<renderData.size();++i) {
+                SSRRender render = new SSRRender(this, (JSONObject) renderData.get(i));
+                this.renderList.add(render);
             }
+            JSONArray elementData = this.dataManager.getElementData();
+            for(int j=0;j<elementData.size();++j) {
+                int elementType = ((Long) ((JSONObject)elementData.get(j)).get("type")).intValue();
+                switch(elementType) {
+                    case SSRElement.ELEMENT_TYPE_NORMAL:
+                        SSRElement element = new SSRElement(this, (JSONObject) elementData.get(j));
+                        this.elementList.add(element);
+                        if(this.dataManager.getActivatedElementName().equalsIgnoreCase(element.getName())) this.activatedElement=element;
+                        break;
+                    case SSRElement.ELEMENT_TYPE_INPUT:
+                    case SSRElement.ELEMENT_TYPE_PASSWORD_INPUT:
+                        SSRInputElement inputElement = new SSRInputElement(this, (JSONObject) elementData.get(j));
+                        this.elementList.add(inputElement);
+                        if(elementType==SSRElement.ELEMENT_TYPE_PASSWORD_INPUT) inputElement.setPasswordField(true);
+                        if(this.dataManager.getActivatedElementName().equalsIgnoreCase(inputElement.getName())) this.activatedElement=inputElement;
+                        break;
+                    case SSRElement.ELEMENT_TYPE_SELECT:
+                        SSRSelectElement selectElement = new SSRSelectElement(this, (JSONObject) elementData.get(j));
+                        this.elementList.add(selectElement);
+                        if(this.dataManager.getActivatedElementName().equalsIgnoreCase(selectElement.getName())) this.activatedElement=selectElement;
+                        break;
 
-        }
 
-        JSONArray intervals = this.dataManager.getIntervalData();
-        for(int k=0;k<intervals.size(); ++k) {
-            JSONObject interval = (JSONObject) intervals.get(k);
-            String interval_id=(String)interval.get("interval_id");
-            boolean isAllocated=false;
-            for(int l=0; l<intervalList.size(); ++l) {
-                SSRInterval ssrInterval= (SSRInterval) intervalList.get(l);
-                if(interval_id.equals(ssrInterval.getIntervalID())) {
-                    isAllocated=true;
-                    ssrInterval.setObject(interval);
                 }
-            }
-            if(!isAllocated) {
-                intervalList.add(new SSRInterval(interval, this));
+
             }
 
+            JSONArray intervals = this.dataManager.getIntervalData();
+            for(int k=0;k<intervals.size(); ++k) {
+                JSONObject interval = (JSONObject) intervals.get(k);
+                String interval_id=(String)interval.get("interval_id");
+                boolean isAllocated=false;
+                for(int l=0; l<intervalList.size(); ++l) {
+                    SSRInterval ssrInterval= (SSRInterval) intervalList.get(l);
+                    if(interval_id.equals(ssrInterval.getIntervalID())) {
+                        isAllocated=true;
+                        ssrInterval.setObject(interval);
+                    }
+                }
+                if(!isAllocated) {
+                    intervalList.add(new SSRInterval(interval, this));
+                }
+
+            }
+
+            if(componentMode!=SSRConstant.COMPONENT_MODE_LOADING) this.ssrContainer.showLoading(false);
+            repaint();
         }
 
-        if(componentMode!=SSRConstant.COMPONENT_MODE_LOADING) this.ssrContainer.showLoading(false);
-        repaint();
     }
 
     public void onIntervalTriggered(SSRInterval interval) {

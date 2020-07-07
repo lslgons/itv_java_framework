@@ -82,7 +82,7 @@ public class SSRContainer extends BaseScene {
 
     }
 
-    Object loadingMutex=new Object();
+    static Object loadingMutex=new Object();
     public void showLoading(boolean enable) {
         if(loadingComponent!=null) {
             LOG.print("Show Loading : "+enable);

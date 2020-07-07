@@ -110,7 +110,7 @@ public class DataManager {
             public void onReceived(JSONObject response) {
                 DataManager.this.jsonData=response;
                 allocateData();
-                DataManager.this._listener.onDataReceived();
+                DataManager.this._listener.onDataReceived(((Long)response.get("status")).intValue());
             }
 
             public void onFailed(int status, String msg) {
@@ -144,7 +144,13 @@ public class DataManager {
                     //OK
                     DataManager.this.jsonData=response;
                     allocateData();
-                    DataManager.this._listener.onDataReceived();
+                    DataManager.this._listener.onDataReceived(2000);
+                } else if(((Long)response.get("status")).intValue()==2100) {
+                    //Dismiss overlay and refresh
+                    DataManager.this.jsonData=response;
+                    allocateData();
+                    DataManager.this._listener.onDataReceived(2100);
+
                 } else if(((Long)response.get("status")).intValue()==3000) {
                     //Redirect
                     String newHost= (String) response.get("host");
@@ -162,7 +168,7 @@ public class DataManager {
                                 //OK
                                 DataManager.this.jsonData=response;
                                 allocateData();
-                                DataManager.this._listener.onDataReceived();
+                                DataManager.this._listener.onDataReceived(2000);
                             } else if(((Long)response.get("status")).intValue()==3000) {
                                 LOG.print("Error : Duplicate Redirection...");
                             } else {
@@ -207,7 +213,7 @@ public class DataManager {
         void onDataRequestStart();
         void onDataRequestComplete();
         void onDataRequestFailed();
-        void onDataReceived();
+        void onDataReceived(int status);
     }
 
 }
