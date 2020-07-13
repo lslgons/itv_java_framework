@@ -96,6 +96,9 @@ public class DataManager {
         comp_context.put(key, value);
     }
 
+    public void removeComponentData() {
+        ((JSONObject)getContext()).remove("_"+this.uid);
+    }
 
     public void changeContainer(String containerName) {
         JSONObject reqData = new JSONObject();

@@ -108,12 +108,34 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
                 //Clear Interval
                 LOG.print("Component change to "+action.getArguments().get(0));
                 this.intervalList.clear();
+
+                try {
+                    int removeContextData = ((Long) action.getArguments().get(1)).intValue();
+                    if(removeContextData==1) {
+                        //Clear data
+                        this.dataManager.removeComponentData();
+                    }
+                } catch(IndexOutOfBoundsException e) {
+                    LOG.print("No option data");
+                }
+
                 this.dataManager.changeContainer((String) action.getArguments().get(0));
                 break;
             case SSRConstant.FORMAT_ACTION_TYPE_OVERLAY:
+                
                 this.ssrContainer.enableOverlay((String) action.getArguments().get(0));
                 break;
             case SSRConstant.FORMAT_ACTION_TYPE_CLOSE:
+                //Context data 삭제
+                try {
+                    int removeContextData = ((Long) action.getArguments().get(0)).intValue();
+                    if(removeContextData==1) {
+                        //Clear data
+                        this.dataManager.removeComponentData();
+                    }
+                } catch(IndexOutOfBoundsException e) {
+                    LOG.print("No option data");
+                }
                 if(this.componentMode==SSRConstant.COMPONENT_MODE_OVERLAY) {
                     //TODO 오버레이 종료
                     this.ssrContainer.disableOverlay();

@@ -38,6 +38,10 @@ public class SSRContainer extends BaseScene {
 
     }
 
+    public void start() {
+        this.mainComponent.requestData(null);
+    }
+
 
     public void onInit() {
         this.mainComponent=new SSRComponent(this, SSRConstant.COMPONENT_MODE_NORMAL);
@@ -52,7 +56,7 @@ public class SSRContainer extends BaseScene {
         isShowLoading=false;
         loadingComponent.setVisible(false);
         //this.overComponent.setVisible(false);
-        this.mainComponent.requestData(null);
+
     }
 
     public void onShow() {
