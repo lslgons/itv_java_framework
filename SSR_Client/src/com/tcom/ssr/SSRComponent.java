@@ -46,8 +46,8 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
     public void requestData(String uid) {
         this.dataManager=new DataManager(this, uid, this.componentMode==SSRConstant.COMPONENT_MODE_LOADING);
         //화면 구성
-        if(uid==null) this.dataManager.requestData(SSRConstant.ACTION_TRIGGER_NONE, "");
-        else this.dataManager.requestData(SSRConstant.ACTION_TRIGGER_NONE, uid);
+        if(uid==null) this.dataManager.requestData(SSRConstant.ACTION_TRIGGER_INIT, "");
+        else this.dataManager.requestData(SSRConstant.ACTION_TRIGGER_INIT, uid);
     }
 
     /**

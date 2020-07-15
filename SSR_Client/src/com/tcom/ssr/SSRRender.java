@@ -48,7 +48,13 @@ public class SSRRender {
                     ((Long)arguments.get(3)).intValue(),
                     Drawer.getFont(font_size, Font.PLAIN), c);
         } else if(font_align.equals("right")) {
-
+            for(int i=0;i<contents.length;++i) {
+                String content=contents[i];
+                if(i!=0) content=contents[i].substring(2);
+                StringDrawer.drawStringRight(g, content,
+                        ((Long)arguments.get(0)).intValue()+((Long)arguments.get(2)).intValue(),
+                        ((Long)arguments.get(1)).intValue(), Drawer.getFont(font_size, Font.PLAIN), c);
+            }
         } else {
             for(int i=0;i<contents.length;++i) {
                 String content=contents[i];

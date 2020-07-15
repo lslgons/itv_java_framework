@@ -226,12 +226,15 @@ public class StringDrawer {
      * 텍스트 우측정렬
      * @param g
      * @param str
-     * @param x
+     * @param right_edge
      * @param y
      */
-    public static void drawStringRight(Graphics g, String str, int x, int y) {
+    public static void drawStringRight(Graphics g, String str, int right_edge, int y, Font f, Color c) {
         if (str == null) return;
-
+        Font prevFont=g.getFont();
+        Color prevColor=g.getColor();
+        g.setColor(c);
+        g.setFont(f);
         FontMetrics fm = g.getFontMetrics();
 //        if (isDebugLine) {
 //            Color c = g.getColor();
@@ -239,6 +242,8 @@ public class StringDrawer {
 //            g.drawRect(x, y, fm.stringWidth(str) - 1, fm.getAscent() - 1);
 //            g.setColor(c);
 //        }
-        g.drawString(str, x - fm.stringWidth(str), y + fm.getAscent() - (fm.getDescent() / 2));
+        g.drawString(str, right_edge - fm.stringWidth(str), y + fm.getAscent() - (fm.getDescent() / 2));
+        g.setColor(prevColor);
+        g.setFont(prevFont);
     }
 }
