@@ -119,24 +119,30 @@ public final class RemoteClassLoader {
 
     public static Class loadClass(final String packagePath) {
         Class k = null;
-        LOG.print("load package : "+packagePath);
-        LOG.print(klasses);
-        if(klasses == null) klasses = new HashMap();
-
-        k = (Class) klasses.get(packagePath);
-        if (k == null) {
-            try {
-                Class cls = Class.forName(packagePath);
-                klasses.put(packagePath, cls);
-                LOG.print("######### Loaded Class ########## : "+ klasses.size());
-                return cls;
-            } catch (ClassNotFoundException e) {
-                //e.printStackTrace();
-                System.out.println("Class not found in local...");
-
-            }
-            return null;
-        } else return k;
+        LOG.print("load Class : "+packagePath);
+        //LOG.print(klasses);
+        try {
+            k = Class.forName(packagePath);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+//        if(klasses == null) klasses = new HashMap();
+//
+//        k = (Class) klasses.get(packagePath);
+//        if (k == null) {
+//            try {
+//                Class cls = Class.forName(packagePath);
+//                klasses.put(packagePath, cls);
+//                LOG.print("######### Loaded Class ########## : "+ klasses.size());
+//                return cls;
+//            } catch (ClassNotFoundException e) {
+//                //e.printStackTrace();
+//                System.out.println("Class not found in local...");
+//
+//            }
+//            return null;
+//        } else return k;
+        return k;
 
 
 

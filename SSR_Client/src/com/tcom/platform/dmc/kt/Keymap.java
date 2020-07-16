@@ -34,7 +34,6 @@ public class Keymap implements KeymapInterface {
 
     public int keyMap(int keycode) {
         int mapping_code = 0;
-        //Example...
         LOG.print("Keymap : "+keycode);
         switch(keycode) {
             case HRcEvent.VK_ENTER :

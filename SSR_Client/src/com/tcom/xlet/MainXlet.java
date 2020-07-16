@@ -32,6 +32,8 @@ public class MainXlet implements Xlet{
 
     public void initXlet(XletContext xletContext) throws XletStateChangeException {
         SSRConfig config = SSRConfig.getInstance();
+        config.XLET_CONTEXT=xletContext;
+        _app=this;
         System.out.println("***************************************************");
         System.out.println("* iTV Server Side Rendering JAVA Client            ");
         System.out.println("* created by superiorgon (superiorgon@gmail.com)   ");
@@ -39,25 +41,18 @@ public class MainXlet implements Xlet{
         System.out.println("* Release    : "+config.APP_RELEASE);
         System.out.println("* SSR Host : "+config.SSR_HOST);
         System.out.println("***************************************************");
-        config.XLET_CONTEXT=xletContext;
-        _app=this;
         System.out.println("==> Init Application, Request Home Page");
         dispInterface = RemoteClassLoader.loadDisplayInterface();
-
     }
 
     public void startXlet() throws XletStateChangeException {
-
-
         SSRConfig config = SSRConfig.getInstance();
         dispInterface.getScene();
         config.ROOT_SCENE.setBounds(0,0, config.SCENE_WIDTH, config.SCENE_HEIGHT);
         if(config.ENABLE_DIAGNOSTIC) {
             diagScene = new DiagnosticScene();
             config.ROOT_SCENE.add(diagScene, -1);
-
         }
-
 
         //SSRContainer 등록
         ssrContainer=new SSRContainer();
@@ -68,14 +63,7 @@ public class MainXlet implements Xlet{
             }
         });
 
-        //2. OverLayer
-
-
-
-
-
         LOG.print("Start Application");
-        LOG.print(this, "rootScene created");
         config.ROOT_SCENE.setVisible(true);
         ssrContainer.start();
         //config.ROOT_SCENE.requestFocus();
