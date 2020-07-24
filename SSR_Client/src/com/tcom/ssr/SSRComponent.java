@@ -46,8 +46,8 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
     public void requestData(String uid) {
         this.dataManager=new DataManager(this, uid, this.componentMode==SSRConstant.COMPONENT_MODE_LOADING);
         //화면 구성
-        if(uid==null) this.dataManager.requestData(SSRConstant.ACTION_TRIGGER_NONE, "");
-        else this.dataManager.requestData(SSRConstant.ACTION_TRIGGER_NONE, uid);
+        if(uid==null) this.dataManager.requestData(SSRConstant.ACTION_TRIGGER_INIT, "");
+        else this.dataManager.requestData(SSRConstant.ACTION_TRIGGER_INIT, uid);
     }
 
     /**
@@ -89,6 +89,7 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
          * FORMAT_ACTION_TYPE_OVERLAY=3 #오버레이 활성화
          * FORMAT_ACTION_TYPE_CLOSE=4 #메인 컴포넌트의 경우 앱 종료, 오버레이의 경우 오버레이 사라짐
          */
+        LOG.print("process Action... : "+action.getType());
         if(action==null) {
             LOG.print("No action defined");
             return;
@@ -96,9 +97,15 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
         switch(action.getType()) {
             case SSRConstant.FORMAT_ACTION_TYPE_ACTIVATE:
                 String target= (String) action.getArguments().get(0);
-                this.dataManager.setActivatedElementName(target);
-                this.activatedElement=findElementByName(target);
-                repaint();
+                SSRElement targetEl=findElementByName(target);
+                if(targetEl==null) {
+                    LOG.print("There is no target...");
+                    return;
+                } else {
+                    this.dataManager.setActivatedElementName(target);
+                    this.activatedElement=targetEl;
+                    repaint();
+                }
                 break;
             case SSRConstant.FORMAT_ACTION_TYPE_REFRESH:
                 //Refresh
@@ -147,8 +154,8 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
                 }
                 break;
             case SSRConstant.FORMAT_ACTION_TYPE_PROPAGATE:
-                SSRElement targetEl = findElementByName((String) action.getArguments().get(0));
-                SSRAction action1=targetEl.getAction(action_index);
+                SSRElement targetElement = findElementByName((String) action.getArguments().get(0));
+                SSRAction action1=targetElement.getAction(action_index);
                 this.processAction(action_key, action_index, action1);
                 //repaint();
                 break;

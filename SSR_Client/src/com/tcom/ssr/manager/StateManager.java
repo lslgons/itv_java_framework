@@ -3,6 +3,7 @@ package com.tcom.ssr.manager;
 import com.tcom.platform.controller.KeyController;
 import com.tcom.platform.controller.MediaController;
 import com.tcom.platform.controller.StbController;
+import com.tcom.util.LOG;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -45,9 +46,28 @@ public class StateManager {
         JSONArray old_av= (JSONArray) stateObj.get("av_size");
         JSONArray new_av= (JSONArray) obj.get("av_size");
         if(old_av.get(0)!=new_av.get(0) ||old_av.get(1)!=new_av.get(1)||old_av.get(2)!=new_av.get(2)||old_av.get(3)!=new_av.get(3)) {
+            LOG.print("Change Video requested, "+new_av.get(0)+","+new_av.get(1)+","+new_av.get(2)+","+new_av.get(3));
             stateObj.put("av_size", new_av);
             MediaController.getInstance().changeVideoSize(((Long)new_av.get(0)).intValue(),((Long)new_av.get(1)).intValue(),((Long)new_av.get(2)).intValue(),((Long)new_av.get(3)).intValue());
         }
+
+        //TODO VOD Play
+        String newVodAssetId=(String) obj.get("vod_info");
+        String oldVodAssetId=(String) stateObj.get("vod_info");
+        if(newVodAssetId!=null && newVodAssetId.length()>0) {
+            //Play VOD
+            if(!oldVodAssetId.equalsIgnoreCase(newVodAssetId)) {
+                //서로다른 VOD AssetID일 경우 재생
+                MediaController.getInstance().startVOD(newVodAssetId);
+            }
+        } else {
+            if(oldVodAssetId.length()>0) {
+                //현재 재생중이므로 AV로 복귀
+                MediaController.getInstance().stopVOD();
+            }
+        }
+
+
         JSONArray old_key=(JSONArray) stateObj.get("key");
         JSONArray new_key=(JSONArray) obj.get("key");
         if(old_key.get(0)!=new_key.get(0)) {

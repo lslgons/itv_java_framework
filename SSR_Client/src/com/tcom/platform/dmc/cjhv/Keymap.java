@@ -6,6 +6,7 @@ import com.alticast.navsuite.service.OverlappedDialogHandler;
 import com.tcom.platform.controller.KeyCode;
 import com.tcom.platform.dmc.interfaces.KeymapInterface;
 import com.tcom.util.LOG;
+import org.havi.ui.event.HRcEvent;
 import org.ocap.ui.event.OCRcEvent;
 
 import java.awt.event.KeyEvent;
@@ -26,30 +27,33 @@ public class Keymap implements KeymapInterface {
 
     public int keyMap(int keycode) {
         int mapping_code = 0;
-        //Example...
+        LOG.print("Keymap : "+keycode);
         switch(keycode) {
-            case OCRcEvent.VK_LAST :
+            case HRcEvent.VK_ENTER :
+                mapping_code = KeyCode.VK_OK;
+                break;
+            case HRcEvent.VK_INFO:
+                mapping_code = KeyCode.VK_INFO;
+                break;
+            case 403:
+                mapping_code = KeyCode.VK_R;
+                break;
+            case 404:
+                mapping_code = KeyCode.VK_G;
+                break;
+            case 405:
+                mapping_code = KeyCode.VK_Y;
+                break;
+            case 406:
+                mapping_code = KeyCode.VK_B;
+                break;
+            case 428:
                 mapping_code = KeyCode.VK_BACK;
-                break;
-            case OCRcEvent.VK_EXIT:
-                mapping_code = KeyCode.VK_EXIT;
-                break;
-            case KeyEvent.VK_F7:
-                mapping_code = KeyCode.KEY_MODE_CHANGE;
-                break;
-            case KeyEvent.VK_F8:
-                mapping_code = KeyCode.VK_DELETE;
-                break;
-            case KeyEvent.VK_F9:
-                mapping_code = KeyCode.KEY_STAR;
-                break;
-            case KeyEvent.VK_F10:
-                mapping_code = KeyCode.KEY_SHARP;
                 break;
             default:
                 mapping_code = keycode;
         }
-
+        LOG.print("Return to mapping code :: "+mapping_code);
         return mapping_code;
     }
 

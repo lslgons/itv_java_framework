@@ -106,7 +106,7 @@ public class DataManager {
         reqData.put("context", getContext());
         //reqData.put("component", this.component); //컴포넌트 정보는 전달할 필요없음
         reqData.put("state", this.stateManager.getJSONObject());
-        reqData.put("trigger_action", new Integer(SSRConstant.ACTION_TRIGGER_NONE));
+        reqData.put("trigger_action", new Integer(SSRConstant.ACTION_TRIGGER_INIT));
         reqData.put("trigger_target", "");
         _listener.onDataRequestStart();
         SSRConnector.containerRequest(reqData, new SSRResponse() {

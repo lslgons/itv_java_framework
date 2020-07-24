@@ -45,7 +45,7 @@ public final class KeyController{
 
     private KeymapInterface keymapIntf;
     private boolean isEnableBackKey = false;
-    private boolean isEnableNumKey = true;
+    private boolean isEnableNumKey = false;
     private boolean isEnableHotKey = true;
     private boolean isEnableTrickKey = false;
     private boolean isEnableOkKey = true;
