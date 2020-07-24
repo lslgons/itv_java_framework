@@ -29,8 +29,8 @@
       <sourceFolder url="file://$MODULE_DIR$/run" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src_cjhv" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/src/com/cj" />
-      <excludeFolder url="file://$MODULE_DIR$/src/com/tcom/platform/dmc/cjhv" />
       <excludeFolder url="file://$MODULE_DIR$/src/com/tcom/platform/dmc/kt" />
+      <excludeFolder url="file://$MODULE_DIR$/src/com/tcom/platform/dmc/pc" />
       <excludeFolder url="file://$MODULE_DIR$/src/com/tcom/platform/dmc/skylife" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
@@ -75,6 +75,60 @@
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/libs/emul/mhpstubs.zip!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libs/cjhv/alticast-com.zip!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libs/cjhv/btworks4stb-obf-2.0.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libs/cjhv/CJ_normal_stub_20101103.zip!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libs/cjhv/LrppClient.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libs/cjhv/LrppEncoding.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libs/cjhv/OCAPStub.zip!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

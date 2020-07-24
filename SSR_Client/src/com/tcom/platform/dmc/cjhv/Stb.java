@@ -41,14 +41,18 @@ public class Stb implements StbInterface, ApplicationModeListener, ApplicationMo
 				epgController=(EpgService) IxcRegistry.lookup(SSRConfig.getInstance().XLET_CONTEXT, ALTI_EPG_AID_OID);
 				LOG.print("XCAS EpgService lookup, epgController="+epgController);
 				try {
-					String version = epgController.getVersion();
-					LOG.print("EPG version : "+version);
+					//TODO 2020.07.24 - getVersion() AbstractMethodError, 임시로 주석처리
+//					String version = epgController.getVersion();
+//					LOG.print("EPG version : "+version);
+					String version = "1.0";
 					if(version != null && version.length()!=0) {
-
 						SSRConfig.getInstance().IS_ALASKA_UI=1;
 					} else {
 						SSRConfig.getInstance().IS_ALASKA_UI=0;
 					}
+				} catch(AbstractMethodError err) {
+					LOG.print("epg getversion abstract method error");
+					SSRConfig.getInstance().IS_ALASKA_UI=0;
 				} catch (Exception e) {
 					e.printStackTrace();
 					SSRConfig.getInstance().IS_ALASKA_UI=0;
