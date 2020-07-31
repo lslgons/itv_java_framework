@@ -1,7 +1,7 @@
 package com.tcom.ssr.manager;
 
 
-import com.tcom.network.SSRConnector;
+import com.tcom.network.SSRConnector2;
 import com.tcom.network.SSRResponse;
 import com.tcom.platform.controller.KeyController;
 import com.tcom.platform.controller.MediaController;
@@ -109,7 +109,7 @@ public class DataManager {
         reqData.put("trigger_action", new Integer(SSRConstant.ACTION_TRIGGER_INIT));
         reqData.put("trigger_target", "");
         _listener.onDataRequestStart();
-        SSRConnector.containerRequest(reqData, new SSRResponse() {
+        SSRConnector2.containerRequest(reqData, new SSRResponse() {
             public void onReceived(JSONObject response) {
                 DataManager.this.jsonData=response;
                 allocateData();
@@ -141,7 +141,7 @@ public class DataManager {
 
         String uri="container/";
         if(this.loadingComponent) uri="loading/";
-        SSRConnector.ssrRequest(uri, reqData, new SSRResponse() {
+        SSRConnector2.ssrRequest(uri, reqData, new SSRResponse() {
             public void onReceived(JSONObject response) {
                 if(((Long)response.get("status")).intValue()==2000) {
                     //OK
@@ -165,7 +165,7 @@ public class DataManager {
                     } else {
                         SSRConfig.getInstance().SSR_PORT=Integer.parseInt(hostAndPort[1]);
                     }
-                    SSRConnector.containerRequest(reqData, new SSRResponse() {
+                    SSRConnector2.containerRequest(reqData, new SSRResponse() {
                         public void onReceived(JSONObject response) {
                             if(((Long)response.get("status")).intValue()==2000) {
                                 //OK

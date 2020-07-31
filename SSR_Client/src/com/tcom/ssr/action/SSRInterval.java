@@ -1,6 +1,6 @@
 package com.tcom.ssr.action;
 
-import com.tcom.network.SSRConnector;
+import com.tcom.network.SSRConnector2;
 import com.tcom.util.LOG;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

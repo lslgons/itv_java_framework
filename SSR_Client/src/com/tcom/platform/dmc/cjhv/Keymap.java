@@ -38,16 +38,16 @@ public class Keymap implements KeymapInterface {
             case 403:
                 mapping_code = KeyCode.VK_R;
                 break;
-            case 404:
+            case 405:
                 mapping_code = KeyCode.VK_G;
                 break;
-            case 405:
+            case 404:
                 mapping_code = KeyCode.VK_Y;
                 break;
             case 406:
                 mapping_code = KeyCode.VK_B;
                 break;
-            case 428:
+            case 607:
                 mapping_code = KeyCode.VK_BACK;
                 break;
             default:

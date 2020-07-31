@@ -157,7 +157,10 @@ public class SSRConfig {
 
     public String ITV_FONT="Korean iTV SanSerifD";
 
-
+    /**
+     * AV영상 사이즈 기준이 720X480일 경우 Flag설정
+     */
+    public boolean AV_SD_MODE=false;
 
 
 }

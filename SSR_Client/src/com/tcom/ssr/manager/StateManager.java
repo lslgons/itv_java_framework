@@ -3,6 +3,7 @@ package com.tcom.ssr.manager;
 import com.tcom.platform.controller.KeyController;
 import com.tcom.platform.controller.MediaController;
 import com.tcom.platform.controller.StbController;
+import com.tcom.ssr.SSRConfig;
 import com.tcom.util.LOG;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -14,25 +15,26 @@ public class StateManager {
 
     public StateManager() {
         if(stateObj==null) {
-            LOG.print("State Manager :: 1");
             StbController stb=StbController.getInstance();
-            LOG.print("State Manager :: 2");
             KeyController key=KeyController.getInstance();
-            LOG.print("State Manager :: 3");
             MediaController media = MediaController.getInstance();
-            LOG.print("State Manager :: 4");
             JSONArray av_size = new JSONArray();
-            LOG.print("State Manager :: 5");
 
             Rectangle real_av_size = media.getCurrentVideoSize();
-            LOG.print("State Manager :: 6");
 
             LOG.print(real_av_size.toString());
-            LOG.print("State Manager :: 7");
-            av_size.add(new Integer((int)real_av_size.x));
-            av_size.add(new Integer((int)real_av_size.y));
-            av_size.add(new Integer((int)real_av_size.width));
-            av_size.add(new Integer((int)real_av_size.height));
+            if(SSRConfig.getInstance().AV_SD_MODE) {
+                av_size.add(new Integer((int)real_av_size.x*4/3));
+                av_size.add(new Integer((int)real_av_size.y*4/3));
+                av_size.add(new Integer((int)real_av_size.width*4/3));
+                av_size.add(new Integer((int)real_av_size.height*4/3));
+            } else {
+                av_size.add(new Integer((int)real_av_size.x));
+                av_size.add(new Integer((int)real_av_size.y));
+                av_size.add(new Integer((int)real_av_size.width));
+                av_size.add(new Integer((int)real_av_size.height));
+            }
+
             JSONArray enabled_key=new JSONArray();
             enabled_key.add(new Integer(key.isEnableBackKey()?1:0));
             enabled_key.add(new Integer(key.isEnableNumKey()?1:0));
@@ -58,7 +60,22 @@ public class StateManager {
         if(old_av.get(0)!=new_av.get(0) ||old_av.get(1)!=new_av.get(1)||old_av.get(2)!=new_av.get(2)||old_av.get(3)!=new_av.get(3)) {
             LOG.print("Change Video requested, "+new_av.get(0)+","+new_av.get(1)+","+new_av.get(2)+","+new_av.get(3));
             stateObj.put("av_size", new_av);
-            MediaController.getInstance().changeVideoSize(((Long)new_av.get(0)).intValue(),((Long)new_av.get(1)).intValue(),((Long)new_av.get(2)).intValue(),((Long)new_av.get(3)).intValue());
+            if(SSRConfig.getInstance().AV_SD_MODE) {
+                //720사이즈 기준이므로 *0.75
+                LOG.print("AV SD MODE : ");
+                LOG.print("X :" + (int)(((Long)new_av.get(0)).intValue()*0.75));
+                LOG.print("Y :" + (int)(((Long)new_av.get(1)).intValue()*0.75));
+                LOG.print("W :" + (int)(((Long)new_av.get(2)).intValue()*0.75));
+                LOG.print("H :" + (int)(((Long)new_av.get(3)).intValue()*0.75));
+                MediaController.getInstance().changeVideoSize(
+                        (int)(((Long)new_av.get(0)).intValue()*0.75),
+                        (int)(((Long)new_av.get(1)).intValue()*0.75),
+                        (int)(((Long)new_av.get(2)).intValue()*0.75),
+                        (int)(((Long)new_av.get(3)).intValue()*0.75));
+            } else {
+                MediaController.getInstance().changeVideoSize(((Long)new_av.get(0)).intValue(),((Long)new_av.get(1)).intValue(),((Long)new_av.get(2)).intValue(),((Long)new_av.get(3)).intValue());
+            }
+
         }
 
         //TODO VOD Play
@@ -100,6 +117,8 @@ public class StateManager {
                 ((Integer) _avSize.get(1)).intValue(),
                 ((Integer) _avSize.get(2)).intValue(),
                 ((Integer) _avSize.get(3)).intValue()};
+
+
         return avSize;
     }
     public String getVODAssetID() {

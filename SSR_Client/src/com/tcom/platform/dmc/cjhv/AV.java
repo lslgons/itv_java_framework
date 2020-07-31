@@ -60,6 +60,10 @@ public class AV implements AVInterface, VODInterface, VODEventListener {
 		LOG.print(this, "Current Rect : "+ curRect.width+", "+curRect.height);
 		LOG.print(this, "============================================");
 
+		if(curRect.width==720 && curRect.height==480) {
+			LOG.print("************* Set AV SD MODE ************* ");
+			SSRConfig.getInstance().AV_SD_MODE=true;
+		}
 
 
 		this.fullRec = new java.awt.Rectangle(this.fx, this.fy, this.fw, this.fh);

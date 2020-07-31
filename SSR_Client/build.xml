@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="CJ SSR Framework"  basedir="./" default="build">
 
-    <property name="version" value="1.6.3_bmt1" />
+    <property name="version" value="1.6.4" />
     <property name="test" value="${basedir}/test"/>
 
 
