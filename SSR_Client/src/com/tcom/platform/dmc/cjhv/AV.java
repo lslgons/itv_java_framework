@@ -63,7 +63,7 @@ public class AV implements AVInterface, VODInterface, VODEventListener {
 
 
 		this.fullRec = new java.awt.Rectangle(this.fx, this.fy, this.fw, this.fh);
-		this.curRec = null;
+		this.curRec = this.fullRec;
 
 
 	}

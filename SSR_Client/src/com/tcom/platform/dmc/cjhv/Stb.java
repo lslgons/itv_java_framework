@@ -31,6 +31,28 @@ public class Stb implements StbInterface, ApplicationModeListener, ApplicationMo
 	private ApplicationModeManager appModeManager;
 
 	public Stb() {
+
+		//ApplicationModeManager
+		try {
+			LOG.print("Find Application Mode Manager : "+SSRConfig.getInstance().XLET_CONTEXT);
+			appModeManager = (ApplicationModeManager) IxcRegistry.lookup(SSRConfig.getInstance().XLET_CONTEXT, ("10000000/3FFF/"+ApplicationModeManager.IXC_OBJECT_NAME));
+			LOG.print("Application Mode Manager adds listener");
+			appModeManager.addListener(this);
+			appModeManager.addRequestHandler(this);
+
+			//Set ApplicationMode to Full mode
+			appModeManager.changeMode(ApplicationModeManager.APP_MODE_FULL);
+
+		} catch (NotBoundException e) {
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e1) {
+			e1.printStackTrace();
+		}
+
+
+
 		//LookupEPG
 		if(SSRConfig.getInstance().XLET_CONTEXT==null) {
 			LOG.print("Xlet Context is null, lookupEPG can't attempt");
@@ -79,21 +101,7 @@ public class Stb implements StbInterface, ApplicationModeListener, ApplicationMo
 				}
 			}
 
-			//ApplicationModeManager
-			try {
-				appModeManager = (ApplicationModeManager) IxcRegistry.lookup(SSRConfig.getInstance().XLET_CONTEXT,
-						"10000000/3FFF/"+ApplicationModeManager.IXC_OBJECT_NAME);
-				appModeManager.addListener(this);
-				appModeManager.addRequestHandler(this);
 
-				//Set ApplicationMode to Full mode
-				appModeManager.changeMode(ApplicationModeManager.APP_MODE_FULL);
-
-			} catch (NotBoundException e) {
-				e.printStackTrace();
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
 
 		}
 	}

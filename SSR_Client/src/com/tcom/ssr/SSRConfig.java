@@ -48,6 +48,7 @@ public class SSRConfig {
         SCENE_HEIGHT=Integer.parseInt(config.read("SCENE_HEIGHT"));
         SSR_RESOLUTION="H"+SCENE_HEIGHT;
         DMC_NAME=config.read("DMC_NAME");
+        APP_RELEASE=config.read("APP_RELEASE");
 
 
         IS_EMUL=(System.getProperty("os.name").indexOf("Windows") > -1);

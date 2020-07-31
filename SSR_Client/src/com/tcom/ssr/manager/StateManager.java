@@ -14,15 +14,25 @@ public class StateManager {
 
     public StateManager() {
         if(stateObj==null) {
+            LOG.print("State Manager :: 1");
             StbController stb=StbController.getInstance();
+            LOG.print("State Manager :: 2");
             KeyController key=KeyController.getInstance();
+            LOG.print("State Manager :: 3");
             MediaController media = MediaController.getInstance();
+            LOG.print("State Manager :: 4");
             JSONArray av_size = new JSONArray();
+            LOG.print("State Manager :: 5");
+
             Rectangle real_av_size = media.getCurrentVideoSize();
-            av_size.add(new Integer((int)real_av_size.getX()));
-            av_size.add(new Integer((int)real_av_size.getY()));
-            av_size.add(new Integer((int)real_av_size.getWidth()));
-            av_size.add(new Integer((int)real_av_size.getHeight()));
+            LOG.print("State Manager :: 6");
+
+            LOG.print(real_av_size.toString());
+            LOG.print("State Manager :: 7");
+            av_size.add(new Integer((int)real_av_size.x));
+            av_size.add(new Integer((int)real_av_size.y));
+            av_size.add(new Integer((int)real_av_size.width));
+            av_size.add(new Integer((int)real_av_size.height));
             JSONArray enabled_key=new JSONArray();
             enabled_key.add(new Integer(key.isEnableBackKey()?1:0));
             enabled_key.add(new Integer(key.isEnableNumKey()?1:0));

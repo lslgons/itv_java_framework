@@ -43,6 +43,7 @@ public class MainXlet implements Xlet{
         System.out.println("***************************************************");
         System.out.println("==> Init Application, Request Home Page");
         dispInterface = RemoteClassLoader.loadDisplayInterface();
+        System.out.println("************** 1");
     }
 
     public void startXlet() throws XletStateChangeException {
