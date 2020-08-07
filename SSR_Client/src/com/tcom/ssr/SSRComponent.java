@@ -89,11 +89,12 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
          * FORMAT_ACTION_TYPE_OVERLAY=3 #오버레이 활성화
          * FORMAT_ACTION_TYPE_CLOSE=4 #메인 컴포넌트의 경우 앱 종료, 오버레이의 경우 오버레이 사라짐
          */
-        LOG.print("process Action... : "+action.getType());
+
         if(action==null) {
             LOG.print("No action defined");
             return;
         }
+        LOG.print("process Action... : "+action.getType());
         switch(action.getType()) {
             case SSRConstant.FORMAT_ACTION_TYPE_ACTIVATE:
                 String target= (String) action.getArguments().get(0);

@@ -49,7 +49,9 @@ public class SSRConfig {
         SSR_RESOLUTION="H"+SCENE_HEIGHT;
         DMC_NAME=config.read("DMC_NAME");
         APP_RELEASE=config.read("APP_RELEASE");
-
+        CONTEXT_ENCRYPT=config.read("CONTEXT_ENCRYPT").equalsIgnoreCase("true");
+        CONTEXT_KEY=config.read("CONTEXT_KEY");
+        CONTEXT_SALT=config.read("CONTEXT_SALT");
 
         IS_EMUL=(System.getProperty("os.name").indexOf("Windows") > -1);
         //KT OTS박스가 아닐경우 서비스 종료, SKYLIFE에서 사용됨
@@ -162,5 +164,8 @@ public class SSRConfig {
      */
     public boolean AV_SD_MODE=false;
 
+    public boolean CONTEXT_ENCRYPT=false;
+    public String CONTEXT_KEY="";
+    public String CONTEXT_SALT="";
 
 }

@@ -67,7 +67,7 @@ public class SSRConnector2 {
 				if(staticHeader == null) {
 					staticHeader = new HashMap();
 					//set Default Header
-					staticHeader.put("Accept-Language", "ko-kr,ko;q=0.8,en-us;q=0.5,en;q=0.3");
+					//staticHeader.put("Accept-Language", "ko-kr,ko;q=0.8,en-us;q=0.5,en;q=0.3");
 					staticHeader.put("Content-Type", "application/json; charset=utf-8");
 				}
 				
@@ -90,7 +90,8 @@ public class SSRConnector2 {
 					
 					return;
 				}
-	            
+				LOG.print(this,"******************************");
+				LOG.print(payload);
 	            osw.write(payload);
 	            osw.flush();
 	            

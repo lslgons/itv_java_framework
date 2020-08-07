@@ -6,6 +6,7 @@ import com.tcom.network.SSRResponse;
 import com.tcom.platform.controller.KeyController;
 import com.tcom.platform.controller.MediaController;
 import com.tcom.platform.controller.StbController;
+import com.tcom.security.SecurityClientUtil;
 import com.tcom.ssr.SSRConfig;
 import com.tcom.ssr.SSRConstant;
 import com.tcom.util.LOG;
@@ -77,7 +78,17 @@ public class DataManager {
     }
 
     public String getActivatedElementName() {
-        return (String)((JSONObject)getContext().get("_"+this.uid)).get("_activated_element");
+        return (String) getContextData("_activated_element");
+
+//        if(SSRConfig.getInstance().CONTEXT_ENCRYPT) {
+//            String enc_data = (String)((JSONObject)getContext().get("_"+this.uid)).get("_activated_element");
+//            LOG.print("*********");
+//            LOG.print(enc_data);
+//            return SecurityClientUtil.getInstance().Decrypt(enc_data);
+//        } else {
+//            return (String)((JSONObject)getContext().get("_"+this.uid)).get("_activated_element");
+//        }
+
     }
 
     public void setActivatedElementName(final String el_name) {
@@ -85,15 +96,25 @@ public class DataManager {
 //        comp_context.put("_activated_element", el_name);
         this.setContextData("_activated_element", el_name);
 
+
+
     }
 
     public Object getContextData(String key) {
-        return ((JSONObject)getContext().get("_"+this.uid)).get(key);
+        Object value = ((JSONObject)getContext().get("_"+this.uid)).get(key);
+        if((value instanceof String) && (SSRConfig.getInstance().CONTEXT_ENCRYPT)) {
+            return SecurityClientUtil.getInstance().Decrypt((String) value);
+        }
+        return value;
     }
 
     public void setContextData(String key, Object value) {
         JSONObject comp_context = (JSONObject)getContext().get("_"+this.uid);
-        comp_context.put(key, value);
+        if((value instanceof String) && (SSRConfig.getInstance().CONTEXT_ENCRYPT)) {
+            comp_context.put(key, SecurityClientUtil.getInstance().Encrypt((String) value));
+        } else {
+            comp_context.put(key, value);
+        }
     }
 
     public void removeComponentData() {
@@ -111,6 +132,7 @@ public class DataManager {
         _listener.onDataRequestStart();
         SSRConnector2.containerRequest(reqData, new SSRResponse() {
             public void onReceived(JSONObject response) {
+
                 DataManager.this.jsonData=response;
                 allocateData();
                 DataManager.this._listener.onDataReceived(((Long)response.get("status")).intValue());
