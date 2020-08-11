@@ -78,7 +78,7 @@ public class DataManager {
     }
 
     public String getActivatedElementName() {
-        return (String) getContextData("_activated_element");
+        return (String) getContextData("_activated_element", false);
 
 //        if(SSRConfig.getInstance().CONTEXT_ENCRYPT) {
 //            String enc_data = (String)((JSONObject)getContext().get("_"+this.uid)).get("_activated_element");
@@ -94,23 +94,23 @@ public class DataManager {
     public void setActivatedElementName(final String el_name) {
 //        JSONObject comp_context = (JSONObject)DataManager.getContext().get("_"+this.uid);
 //        comp_context.put("_activated_element", el_name);
-        this.setContextData("_activated_element", el_name);
+        this.setContextData("_activated_element", el_name, false);
 
 
 
     }
 
-    public Object getContextData(String key) {
+    public Object getContextData(String key, boolean encrypted) {
         Object value = ((JSONObject)getContext().get("_"+this.uid)).get(key);
-        if((value instanceof String) && (SSRConfig.getInstance().CONTEXT_ENCRYPT)) {
+        if((value instanceof String) && (SSRConfig.getInstance().CONTEXT_ENCRYPT) && encrypted) {
             return SecurityClientUtil.getInstance().Decrypt((String) value);
         }
         return value;
     }
 
-    public void setContextData(String key, Object value) {
+    public void setContextData(String key, Object value, boolean encrypted) {
         JSONObject comp_context = (JSONObject)getContext().get("_"+this.uid);
-        if((value instanceof String) && (SSRConfig.getInstance().CONTEXT_ENCRYPT)) {
+        if((value instanceof String) && (SSRConfig.getInstance().CONTEXT_ENCRYPT) && encrypted) {
             comp_context.put(key, SecurityClientUtil.getInstance().Encrypt((String) value));
         } else {
             comp_context.put(key, value);

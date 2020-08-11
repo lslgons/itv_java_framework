@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="021dde28-f8d2-4270-8490-3c3fb346c406" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../SSR_Client/src/com/tcom/network/SSRConnector2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SSR_Client/SSR Client.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../SSR_Client/SSR Client.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SSR_Client/build.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SSR_Client/build.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SSR_Client/src/com/tcom/platform/dmc/cjhv/AV.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SSR_Client/src/com/tcom/platform/dmc/cjhv/AV.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SSR_Client/src/com/tcom/platform/dmc/cjhv/Keymap.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SSR_Client/src/com/tcom/platform/dmc/cjhv/Keymap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SSR_Client/src/com/tcom/ssr/SSRConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SSR_Client/src/com/tcom/ssr/SSRConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SSR_Client/src/com/tcom/ssr/action/SSRInterval.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SSR_Client/src/com/tcom/ssr/action/SSRInterval.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SSR_Client/src/com/tcom/ssr/manager/DataManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SSR_Client/src/com/tcom/ssr/manager/DataManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SSR_Client/src/com/tcom/ssr/manager/StateManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SSR_Client/src/com/tcom/ssr/manager/StateManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +32,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554195010194" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../SSR_Client" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -60,6 +51,12 @@
       <updated>1553734765885</updated>
     </task>
     <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1597107613141">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1597107613141" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />

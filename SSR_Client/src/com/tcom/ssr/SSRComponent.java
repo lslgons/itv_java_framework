@@ -297,11 +297,11 @@ public class SSRComponent extends BaseScene implements DataManager.DataReceivedL
     }
 
     public Object getContextData(String key) {
-        return this.dataManager.getContextData(key);
+        return this.dataManager.getContextData(key, true);
     }
 
     public void setContextData(String key, Object value) {
-        this.dataManager.setContextData(key, value);
+        this.dataManager.setContextData(key, value, true);
     }
 
     public SSRElement findElementByName(String name) {
